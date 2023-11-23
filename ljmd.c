@@ -1,3 +1,7 @@
+/**
+ * Group 3 members:  Jenny, Natalia and Edward
+*/
+
 /*
  * simple lennard-jones potential MD code with velocity verlet.
  * units: Length=Angstrom, Mass=amu; Energy=kcal
