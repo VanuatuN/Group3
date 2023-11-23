@@ -16,3 +16,4 @@ static double pbc(double x, const double boxby2);
 static void azzero(double *d, const int n);
 static double wallclock();
 static int get_a_line(FILE *fp, char *buf);
+void input(FILE *fp, char *line, char *restfile, char *trajfile, char *ergfile)
