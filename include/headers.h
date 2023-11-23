@@ -1,3 +1,6 @@
+#ifndef C_HEADERS_H
+#define C_HEADERS_H
+
 struct _mdsys {
     int natoms,nfi,nsteps;
     double dt, mass, epsilon, sigma, box, rcut;
@@ -17,3 +20,4 @@ static void azzero(double *d, const int n);
 static double wallclock();
 static int get_a_line(FILE *fp, char *buf);
 void input(FILE *fp, char *line, char *restfile, char *trajfile, char *ergfile)
+#endif

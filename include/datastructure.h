@@ -1,3 +1,5 @@
+#ifndef C_DATASTRUCTURE_H
+#define C_DATASTRUCTURE_H
 #pragma once
 /* generic file- or pathname buffer length */
 #define BLEN 200
@@ -15,3 +17,4 @@ struct mdsys {
     double *fx, *fy, *fz;
 };
 typedef struct mdsys mdsys_t;
+#endif
