@@ -1,5 +1,5 @@
-#ifndef UTILITIES_H
-#define UTILITIES_H
+#ifndef C_UTILITIES_H
+#define C_UTILITIES_H
 #include <stdio.h>
 #include <string.h>
 #include <sys/time.h>

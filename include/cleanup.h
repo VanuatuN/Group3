@@ -1,5 +1,5 @@
-#ifndef CLEANUP_H
-#define CLEANUP_H
+#ifndef C_CLEANUP_H
+#define C_CLEANUP_H
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>

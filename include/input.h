@@ -1,5 +1,5 @@
-#ifndef INPUT_H
-#define INPUT_H
+#ifndef C_INPUT_H
+#define C_INPUT_H
 #include <stdio.h>
 #include <string.h>
 #include "datastructure.h"

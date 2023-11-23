@@ -1,5 +1,5 @@
-#ifndef DATASTRUCTURE_H
-#define DATASTRUCTURE_H
+#ifndef C_DATASTRUCTURE_H
+#define C_DATASTRUCTURE_H
 /* a few physical constants */
 extern const double kboltz;// = 0.0019872067;     /* boltzman constant in kcal/mol/K */
 extern const double mvsq2e; // = 2390.05736153349; /* m*v^2 in kcal/mol */
