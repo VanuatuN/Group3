@@ -1,4 +1,8 @@
-#include "headers.h"
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include "datastructure.h"
+#include "utilities.h"
 
 /* compute forces */
 static void force(mdsys_t *sys)

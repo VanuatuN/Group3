@@ -1,8 +1,3 @@
-# CMakeLists.txt
-
-cmake_minimum_required(VERSION 3.10)
-project(MD_SIMULATION)
-
 project(MD_SIMULATION
     VERSION 1
 	DESCRIPTION "Simulation"
@@ -11,21 +6,24 @@ project(MD_SIMULATION
 # Optionally set compiler options
 set(CMAKE_CXX_FLAGS "-Wall")  # Set compiler flags (e.g., -Wall for C)
 
-
 # Define the sources for the library
 set(LIB_SOURCES
     src/utilities.c
     src/compute_force.c
-#    src/verlet.c
     src/input.c
     src/output.c
     src/cleanup.c
 )
 
+
+# Create the library
+add_library(mdlib ${LIB_SOURCES})
+
 # Define the sources for the main executable
 set(MAIN_SOURCES
     src/main.c
 )
+
 
 # Create the library
 add_library(mdlib STATIC ${LIB_SOURCES})

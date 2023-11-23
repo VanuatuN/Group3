@@ -1,4 +1,10 @@
-#include "headers.h"
+#include <stdio.h>
+#include <string.h>
+#include <sys/time.h>
+#include <stdlib.h>
+#include <ctype.h>
+#include "datastructure.h"
+
 /* helper function: read a line and then return
    the first string with whitespace stripped off */
 static int get_a_line(FILE *fp, char *buf)
