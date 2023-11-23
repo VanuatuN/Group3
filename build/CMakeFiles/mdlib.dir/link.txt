@@ -1,2 +1,0 @@
-/usr/bin/ar qc libmdlib.a CMakeFiles/mdlib.dir/src/utilities.c.o CMakeFiles/mdlib.dir/src/compute_force.c.o CMakeFiles/mdlib.dir/src/input.c.o CMakeFiles/mdlib.dir/src/output.c.o CMakeFiles/mdlib.dir/src/cleanup.c.o
-/usr/bin/ranlib libmdlib.a
