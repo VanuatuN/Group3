@@ -16,7 +16,7 @@ set(CMAKE_CXX_FLAGS "-Wall")  # Set compiler flags (e.g., -Wall for C)
 set(LIB_SOURCES
     src/utilities.c
     src/compute_force.c
-    src/verlet.c
+#    src/verlet.c
     src/input.c
     src/output.c
     src/cleanup.c
@@ -35,10 +35,10 @@ add_executable(ljmd_main ${MAIN_SOURCES})
 target_link_libraries(ljmd_main PRIVATE mdlib)
 
 
-default: check
+#default: check
 
-clean:
-	rm -f *.xyz *.dat
+#clean:
+#	rm -f *.xyz *.dat
 
 #check: ../ljmd-serial.x
 #	../ljmd-serial.x < argon_108.inp

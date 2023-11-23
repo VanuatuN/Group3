@@ -1,6 +1,6 @@
 #include "headers.h"
 
-void input(FILE *fp, char *line, char *restfile, char *trajfile, char *ergfile){
+static int input(get_a_line, char *line, char *restfile, char *trajfile, char *ergfile){
     /* read input file */
     if(get_a_line(stdin,line)) return 1;
     sys.natoms=atoi(line);
