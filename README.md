@@ -1,4 +1,4 @@
 # Group3
-Jenny - jalmerol-mhpc
-Edward
+Edward -  ed-ntim
+Jenny  -  jalmerol-mhpc
 Natalia 
