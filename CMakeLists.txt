@@ -1,33 +1,30 @@
 cmake_minimum_required(VERSION 3.10)
-project(MD_SIMULATION
-    VERSION 1
-	DESCRIPTION "Simulation"
-    LANGUAGES C)  # Specify the programming language (e.g., CXX for C++)
 
-# Optionally set compiler options
-set(CMAKE_CXX_FLAGS "-Wall")  # Set compiler flags (e.g., -Wall for C)
+project(MD_SIMULATION)
 
-# Include directories
-include_directories(include)
-
-# Define the sources for the library
-# Define the sources for the library
-set(LIB_SOURCES
+# Add your source files here
+set(SOURCES
     src/utilities.c
     src/compute_force.c
     src/input.c
     src/output.c
     src/cleanup.c
-)
-
-# Create the library
-add_library(mdlib ${LIB_SOURCES})
-
-# Define the sources for the main executable
-set(MAIN_SOURCES
     src/main.c
+    src/datastructure.c
 )
 
-# Create the main executable and link with the library
-add_executable(ljmd_main ${MAIN_SOURCES})
-target_link_libraries(ljmd_main PUBLIC mdlib)
+# Add your header files here
+set(HEADERS
+    include/datastructure.h
+    include/utilities.h
+    include/compute_force.h
+    include/input.h
+    include/output.h
+    include/cleanup.h
+)
+
+# Create an executable or library
+add_executable(md ${SOURCES} ${HEADERS})
+
+# Specify include directories
+target_include_directories(md PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)

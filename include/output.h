@@ -1,6 +1,5 @@
-#ifndef C_OUTPUT_H
-#define C_OUTPUT_H
-
+#ifndef OUTPUT_H
+#define OUTPUT_H
 #include <stdio.h>
 #include <string.h>
 #include <sys/time.h>

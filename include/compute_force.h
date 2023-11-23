@@ -1,5 +1,5 @@
-#ifndef C_COMPUTE_FORCE_H
-#define C_COMPUTE_FORCE_H
+#ifndef COMPUTE_FORCE_H
+#define COMPUTE_FORCE_H
 #include <stdio.h>
 #include <string.h>
 #include <math.h>

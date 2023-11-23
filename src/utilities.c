@@ -5,9 +5,12 @@
 #include <ctype.h>
 #include "datastructure.h"
 
+const double kboltz = 0.0019872067;     /* boltzman constant in kcal/mol/K */
+const double mvsq2e = 2390.05736153349; /* m*v^2 in kcal/mol */
+
 /* helper function: read a line and then return
    the first string with whitespace stripped off */
-int get_a_line(FILE *fp, char *buf)
+int get_a_line(FILE *fp, char *buf, int BLEN)
 {
     char tmp[BLEN], *ptr;
 
@@ -36,7 +39,7 @@ int get_a_line(FILE *fp, char *buf)
 
 /* helper function: get current time in seconds since epoch */
 
-static double wallclock()
+double wallclock()
 {
         struct timeval t;
         gettimeofday(&t,0);
@@ -44,7 +47,7 @@ static double wallclock()
 }
 
 /* helper function: zero out an array */
-static void azzero(double *d, const int n)
+void azzero(double *d, const int n)
 {
     int i;
     for (i=0; i<n; ++i) {
@@ -53,7 +56,7 @@ static void azzero(double *d, const int n)
 }
 
 /* helper function: apply minimum image convention */
-static double pbc(double x, const double boxby2)
+double pbc(double x, const double boxby2)
 {
     while (x >  boxby2) x -= 2.0*boxby2;
     while (x < -boxby2) x += 2.0*boxby2;
@@ -61,7 +64,7 @@ static double pbc(double x, const double boxby2)
 }
 
 /* compute kinetic energy */
-static void ekin(mdsys_t *sys)
+void ekin(mdsys_t *sys)
 {
     int i;
 
