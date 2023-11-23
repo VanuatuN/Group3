@@ -1,4 +1,3 @@
-# Group3
-Edward -  ed-ntim
-Jenny  -  jalmerol-mhpc
-Natalia 
+Edward  -  ed-ntim
+Jenny   -  jalmerol-mhpc
+Natalia -  VanuatuN 
