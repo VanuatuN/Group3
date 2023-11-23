@@ -39,7 +39,7 @@ int main(int argc, char **argv)
 
     t_start = wallclock();
 
-    input(stdin, line, restfile, trajfile, ergfile, &sys, nprint);
+    input(stdin, line, restfile, trajfile, ergfile, &sys, nprint, BLEN);
 
     /* allocate memory */
     sys.rx=(double *)malloc(sys.natoms*sizeof(double));

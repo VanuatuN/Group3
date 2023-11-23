@@ -7,7 +7,7 @@
 
 /* helper function: read a line and then return
    the first string with whitespace stripped off */
-static int get_a_line(FILE *fp, char *buf)
+int get_a_line(FILE *fp, char *buf, int BLEN)
 {
     char tmp[BLEN], *ptr;
 

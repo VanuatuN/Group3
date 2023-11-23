@@ -4,5 +4,5 @@
 #include "datastructure.h"
 #include "utilities.h"
 
-static void velverlet(mdsys_t *sys);
-static void force(mdsys_t *sys);
+void velverlet(mdsys_t *sys);
+void force(mdsys_t *sys);

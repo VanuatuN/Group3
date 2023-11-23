@@ -5,4 +5,4 @@
 #include "datastructure.h"
 #include "utilities.h"
 
-static void output(mdsys_t *sys, FILE *erg, FILE *traj);
+void output(mdsys_t *sys, FILE *erg, FILE *traj);
