@@ -46,7 +46,7 @@ void force(mdsys_t *sys)
 }
 
 /* velocity verlet */
-static void velverlet(mdsys_t *sys)
+void velverlet(mdsys_t *sys)
 {
     int i;
 

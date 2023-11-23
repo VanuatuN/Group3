@@ -14,6 +14,7 @@
 #include <ctype.h>
 #include <stdlib.h>
 #include <math.h>
+#include "utilities.h"
 #include "cleanup.h"
 #include "datastructure.h"
 #include "input.h"
@@ -42,15 +43,7 @@ int main(int argc, char **argv)
     input(stdin, line, restfile, trajfile, ergfile, &sys, nprint, BLEN);
 
     /* allocate memory */
-    sys.rx=(double *)malloc(sys.natoms*sizeof(double));
-    sys.ry=(double *)malloc(sys.natoms*sizeof(double));
-    sys.rz=(double *)malloc(sys.natoms*sizeof(double));
-    sys.vx=(double *)malloc(sys.natoms*sizeof(double));
-    sys.vy=(double *)malloc(sys.natoms*sizeof(double));
-    sys.vz=(double *)malloc(sys.natoms*sizeof(double));
-    sys.fx=(double *)malloc(sys.natoms*sizeof(double));
-    sys.fy=(double *)malloc(sys.natoms*sizeof(double));
-    sys.fz=(double *)malloc(sys.natoms*sizeof(double));
+    init_mdsys(&sys);
 
     /* read restart */
     fp=fopen(restfile,"r");
@@ -100,7 +93,12 @@ int main(int argc, char **argv)
     }
     /**************************************************/
 
-    cleanup(erg, traj, &sys, t_start);
+    /* clean up: close files, free memory */
+    printf("Simulation Done. Run time: %10.3fs\n", wallclock()-t_start);
+    fclose(erg);
+    fclose(traj);
+
+    cleanup_mdsys(&sys);
     return 0;
 }
 
