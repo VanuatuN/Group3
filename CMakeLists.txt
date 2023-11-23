@@ -28,3 +28,5 @@ add_executable(md ${SOURCES} ${HEADERS})
 
 # Specify include directories
 target_include_directories(md PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_link_libraries(md PRIVATE m)
+
