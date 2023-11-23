@@ -1,4 +1,0 @@
-/mnt/f/mystuff/MHPC2324/P1.6/Group3/build/CMakeFiles/mdlib.dir
-/mnt/f/mystuff/MHPC2324/P1.6/Group3/build/CMakeFiles/ljmd_main.dir
-/mnt/f/mystuff/MHPC2324/P1.6/Group3/build/CMakeFiles/edit_cache.dir
-/mnt/f/mystuff/MHPC2324/P1.6/Group3/build/CMakeFiles/rebuild_cache.dir
