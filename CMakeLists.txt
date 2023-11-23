@@ -1,8 +1,6 @@
 # CMakeLists.txt
 
 cmake_minimum_required(VERSION 3.10)
-project(MD_SIMULATION)
-
 project(MD_SIMULATION
     VERSION 1
 	DESCRIPTION "Simulation"
