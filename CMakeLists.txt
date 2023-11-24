@@ -37,7 +37,7 @@ target_include_directories(md_lib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 add_executable(md src/main.c)
 
 # Link the executable against the library
-target_link_libraries(md PRIVATE md_lib)
+target_link_libraries(md PRIVATE md_lib m)
 
 option(ENABLE_TESTING "Enable building unit tests" ON)
 if(ENABLE_TESTING)
