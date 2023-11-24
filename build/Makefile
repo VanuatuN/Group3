@@ -297,6 +297,30 @@ src/utilities.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/md.dir/build.make CMakeFiles/md.dir/src/utilities.c.s
 .PHONY : src/utilities.c.s
 
+src/velverlet.o: src/velverlet.c.o
+.PHONY : src/velverlet.o
+
+# target to build an object file
+src/velverlet.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/md.dir/build.make CMakeFiles/md.dir/src/velverlet.c.o
+.PHONY : src/velverlet.c.o
+
+src/velverlet.i: src/velverlet.c.i
+.PHONY : src/velverlet.i
+
+# target to preprocess a source file
+src/velverlet.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/md.dir/build.make CMakeFiles/md.dir/src/velverlet.c.i
+.PHONY : src/velverlet.c.i
+
+src/velverlet.s: src/velverlet.c.s
+.PHONY : src/velverlet.s
+
+# target to generate assembly for a file
+src/velverlet.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/md.dir/build.make CMakeFiles/md.dir/src/velverlet.c.s
+.PHONY : src/velverlet.c.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -327,6 +351,9 @@ help:
 	@echo "... src/utilities.o"
 	@echo "... src/utilities.i"
 	@echo "... src/utilities.s"
+	@echo "... src/velverlet.o"
+	@echo "... src/velverlet.i"
+	@echo "... src/velverlet.s"
 .PHONY : help
 
 
