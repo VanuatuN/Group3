@@ -97,10 +97,24 @@ CMakeFiles/md.dir/src/compute_force.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/md.dir/src/compute_force.c.s"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/empuza/MHPC/Group3/src/compute_force.c -o CMakeFiles/md.dir/src/compute_force.c.s
 
+CMakeFiles/md.dir/src/velverlet.c.o: CMakeFiles/md.dir/flags.make
+CMakeFiles/md.dir/src/velverlet.c.o: /Users/empuza/MHPC/Group3/src/velverlet.c
+CMakeFiles/md.dir/src/velverlet.c.o: CMakeFiles/md.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/empuza/MHPC/Group3/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/md.dir/src/velverlet.c.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/md.dir/src/velverlet.c.o -MF CMakeFiles/md.dir/src/velverlet.c.o.d -o CMakeFiles/md.dir/src/velverlet.c.o -c /Users/empuza/MHPC/Group3/src/velverlet.c
+
+CMakeFiles/md.dir/src/velverlet.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/md.dir/src/velverlet.c.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/empuza/MHPC/Group3/src/velverlet.c > CMakeFiles/md.dir/src/velverlet.c.i
+
+CMakeFiles/md.dir/src/velverlet.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/md.dir/src/velverlet.c.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/empuza/MHPC/Group3/src/velverlet.c -o CMakeFiles/md.dir/src/velverlet.c.s
+
 CMakeFiles/md.dir/src/input.c.o: CMakeFiles/md.dir/flags.make
 CMakeFiles/md.dir/src/input.c.o: /Users/empuza/MHPC/Group3/src/input.c
 CMakeFiles/md.dir/src/input.c.o: CMakeFiles/md.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/empuza/MHPC/Group3/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/md.dir/src/input.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/empuza/MHPC/Group3/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/md.dir/src/input.c.o"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/md.dir/src/input.c.o -MF CMakeFiles/md.dir/src/input.c.o.d -o CMakeFiles/md.dir/src/input.c.o -c /Users/empuza/MHPC/Group3/src/input.c
 
 CMakeFiles/md.dir/src/input.c.i: cmake_force
@@ -114,7 +128,7 @@ CMakeFiles/md.dir/src/input.c.s: cmake_force
 CMakeFiles/md.dir/src/output.c.o: CMakeFiles/md.dir/flags.make
 CMakeFiles/md.dir/src/output.c.o: /Users/empuza/MHPC/Group3/src/output.c
 CMakeFiles/md.dir/src/output.c.o: CMakeFiles/md.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/empuza/MHPC/Group3/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/md.dir/src/output.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/empuza/MHPC/Group3/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/md.dir/src/output.c.o"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/md.dir/src/output.c.o -MF CMakeFiles/md.dir/src/output.c.o.d -o CMakeFiles/md.dir/src/output.c.o -c /Users/empuza/MHPC/Group3/src/output.c
 
 CMakeFiles/md.dir/src/output.c.i: cmake_force
@@ -128,7 +142,7 @@ CMakeFiles/md.dir/src/output.c.s: cmake_force
 CMakeFiles/md.dir/src/cleanup.c.o: CMakeFiles/md.dir/flags.make
 CMakeFiles/md.dir/src/cleanup.c.o: /Users/empuza/MHPC/Group3/src/cleanup.c
 CMakeFiles/md.dir/src/cleanup.c.o: CMakeFiles/md.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/empuza/MHPC/Group3/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/md.dir/src/cleanup.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/empuza/MHPC/Group3/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object CMakeFiles/md.dir/src/cleanup.c.o"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/md.dir/src/cleanup.c.o -MF CMakeFiles/md.dir/src/cleanup.c.o.d -o CMakeFiles/md.dir/src/cleanup.c.o -c /Users/empuza/MHPC/Group3/src/cleanup.c
 
 CMakeFiles/md.dir/src/cleanup.c.i: cmake_force
@@ -142,7 +156,7 @@ CMakeFiles/md.dir/src/cleanup.c.s: cmake_force
 CMakeFiles/md.dir/src/main.c.o: CMakeFiles/md.dir/flags.make
 CMakeFiles/md.dir/src/main.c.o: /Users/empuza/MHPC/Group3/src/main.c
 CMakeFiles/md.dir/src/main.c.o: CMakeFiles/md.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/empuza/MHPC/Group3/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object CMakeFiles/md.dir/src/main.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/empuza/MHPC/Group3/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building C object CMakeFiles/md.dir/src/main.c.o"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/md.dir/src/main.c.o -MF CMakeFiles/md.dir/src/main.c.o.d -o CMakeFiles/md.dir/src/main.c.o -c /Users/empuza/MHPC/Group3/src/main.c
 
 CMakeFiles/md.dir/src/main.c.i: cmake_force
@@ -156,7 +170,7 @@ CMakeFiles/md.dir/src/main.c.s: cmake_force
 CMakeFiles/md.dir/src/datastructure.c.o: CMakeFiles/md.dir/flags.make
 CMakeFiles/md.dir/src/datastructure.c.o: /Users/empuza/MHPC/Group3/src/datastructure.c
 CMakeFiles/md.dir/src/datastructure.c.o: CMakeFiles/md.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/empuza/MHPC/Group3/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building C object CMakeFiles/md.dir/src/datastructure.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/empuza/MHPC/Group3/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building C object CMakeFiles/md.dir/src/datastructure.c.o"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/md.dir/src/datastructure.c.o -MF CMakeFiles/md.dir/src/datastructure.c.o.d -o CMakeFiles/md.dir/src/datastructure.c.o -c /Users/empuza/MHPC/Group3/src/datastructure.c
 
 CMakeFiles/md.dir/src/datastructure.c.i: cmake_force
@@ -171,6 +185,7 @@ CMakeFiles/md.dir/src/datastructure.c.s: cmake_force
 md_OBJECTS = \
 "CMakeFiles/md.dir/src/utilities.c.o" \
 "CMakeFiles/md.dir/src/compute_force.c.o" \
+"CMakeFiles/md.dir/src/velverlet.c.o" \
 "CMakeFiles/md.dir/src/input.c.o" \
 "CMakeFiles/md.dir/src/output.c.o" \
 "CMakeFiles/md.dir/src/cleanup.c.o" \
@@ -182,6 +197,7 @@ md_EXTERNAL_OBJECTS =
 
 md: CMakeFiles/md.dir/src/utilities.c.o
 md: CMakeFiles/md.dir/src/compute_force.c.o
+md: CMakeFiles/md.dir/src/velverlet.c.o
 md: CMakeFiles/md.dir/src/input.c.o
 md: CMakeFiles/md.dir/src/output.c.o
 md: CMakeFiles/md.dir/src/cleanup.c.o
@@ -189,7 +205,7 @@ md: CMakeFiles/md.dir/src/main.c.o
 md: CMakeFiles/md.dir/src/datastructure.c.o
 md: CMakeFiles/md.dir/build.make
 md: CMakeFiles/md.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/Users/empuza/MHPC/Group3/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Linking C executable md"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/Users/empuza/MHPC/Group3/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Linking C executable md"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/md.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
