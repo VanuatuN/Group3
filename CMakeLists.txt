@@ -14,6 +14,8 @@ set(SOURCES
     src/cleanup.c
     src/main.c
     src/datastructure.c
+    # tests/test_compute_force.cpp
+    # tests/test_utils.cpp
 )
 
 # Add your header files here
@@ -36,6 +38,9 @@ target_include_directories(md_lib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 # Create an executable
 add_executable(md src/main.c)
 
+# Enable debugging symbols
+set(CMAKE_BUILD_TYPE Debug)
+
 # Link the executable against the library
 target_link_libraries(md PRIVATE md_lib m)
 
@@ -48,11 +53,18 @@ if(ENABLE_TESTING)
 
   set(TEST_SOURCES
     tests/test_compute_force.cpp
+    test/test_utils.cpp
   )
-  add_executable(test_compute_force ${TEST_SOURCES})
-  target_include_directories(test_compute_force PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
-  target_link_libraries(test_compute_force PRIVATE GTest::GTest GTest::Main md_lib)
-  add_test(NAME Force COMMAND test_compute_force)
+  add_executable(tests ${SOURCES} ${HEADERS})
+  # Link the executable against GTest and your library
+  target_link_libraries(tests PRIVATE GTest::GTest GTest::Main)
+  # Specify include directories
+  target_include_directories(tests PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include ${CMAKE_CURRENT_SOURCE_DIR}/src )
+  # Add tests
+  # add_test(NAME TestComputeForce COMMAND tests)
+  add_test(NAME TestUtils COMMAND tests)
+  # Specify the C++ standard
+  set_target_properties(tests PROPERTIES CXX_STANDARD 14  CXX_STANDARD_REQUIRED YES CXX_EXTENSIONS NO )
 endif()
 
 
