@@ -15,7 +15,6 @@ struct mdsys {
 typedef struct mdsys mdsys_t;
 
 extern void init_mdsys(mdsys_t *sys);
-extern void update_mdsys(mdsys_t *sys);
 extern void cleanup_mdsys(mdsys_t *sys);
 
 #endif // DATASTRUCTURE_H

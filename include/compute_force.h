@@ -6,7 +6,6 @@
 #include "datastructure.h"
 #include "utilities.h"
 
-void velverlet(mdsys_t *sys);
 void force(mdsys_t *sys);
 
 #endif
