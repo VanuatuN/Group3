@@ -16,11 +16,6 @@ void init_mdsys(mdsys_t *sys) {
     sys->fz = (double *)malloc(sys->natoms * sizeof(double));
 }
 
-// Function to update the mdsys_t structure for one time step
-void update_mdsys(mdsys_t *sys) {
-    // Update code here
-}
-
 // Function to free resources associated with the mdsys_t structure
 void cleanup_mdsys(mdsys_t *sys) {
     // Free memory for arrays

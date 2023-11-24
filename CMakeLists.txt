@@ -6,6 +6,7 @@ project(MD_SIMULATION)
 set(SOURCES
     src/utilities.c
     src/compute_force.c
+    src/velverlet.c
     src/input.c
     src/output.c
     src/cleanup.c
@@ -17,6 +18,7 @@ set(SOURCES
 set(HEADERS
     include/datastructure.h
     include/utilities.h
+    include/velverlet.h
     include/compute_force.h
     include/input.h
     include/output.h
