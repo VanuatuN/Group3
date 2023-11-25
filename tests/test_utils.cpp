@@ -77,8 +77,49 @@ TEST(TestAzzero, doubles) {
 }
 
 
+TEST(Utilities, GetALine) {
+    // Test the get_a_line function
 
-// Add more tests for other utility functions as needed
+    // Example content for a temporary file
+    const char* fileContent =
+        "This is line 1\n"
+        "   # Comment line\n"
+        "  Line 3 with trailing spaces    \n"
+        "  \n"; // Empty line
+
+    // Create a temporary file for testing
+    FILE* testFile = fopen("test_get_a_line.txt", "w+");
+    if (testFile != nullptr) {
+        fputs(fileContent, testFile);
+        fclose(testFile);
+
+        // Open the temporary file for reading
+        FILE* readFile = fopen("test_get_a_line.txt", "r");
+
+        // Buffer for storing lines
+        const int BLEN = 256;
+        char line[BLEN];
+
+        // Test get_a_line function
+        ASSERT_EQ(get_a_line(readFile, line, BLEN), 0);
+        EXPECT_STREQ(line, "This is line 1");
+
+        ASSERT_EQ(get_a_line(readFile, line, BLEN), 0);
+        EXPECT_STREQ(line, "");
+
+        ASSERT_EQ(get_a_line(readFile, line, BLEN), 0);
+        EXPECT_STREQ(line, "  Line 3 with trailing spaces");
+
+        ASSERT_EQ(get_a_line(readFile, line, BLEN), 0);
+        EXPECT_STREQ(line, "");
+
+        fclose(readFile);
+        remove("test_get_a_line.txt");
+    } else {
+        FAIL() << "Error creating temporary file.";
+    }
+}
+
 
 
 int main(int argc, char **argv) {
