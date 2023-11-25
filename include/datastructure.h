@@ -1,8 +1,11 @@
 #ifndef C_DATASTRUCTURE_H
 #define C_DATASTRUCTURE_H
-/* a few physical constants */
-extern const double kboltz;// = 0.0019872067;     /* boltzman constant in kcal/mol/K */
-extern const double mvsq2e; // = 2390.05736153349; /* m*v^2 in kcal/mol */
+// /* a few physical constants */
+// extern const double kboltz = 0.0019872067;     /* boltzman constant in kcal/mol/K */
+// extern const double mvsq2e = 2390.05736153349; /* m*v^2 in kcal/mol */
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 struct mdsys {
     int natoms,nfi,nsteps;
@@ -16,5 +19,7 @@ typedef struct mdsys mdsys_t;
 
 extern void init_mdsys(mdsys_t *sys);
 extern void cleanup_mdsys(mdsys_t *sys);
-
+#ifdef __cplusplus
+}
+#endif
 #endif // DATASTRUCTURE_H

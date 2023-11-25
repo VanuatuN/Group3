@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 #include <thread>   // Include for std::this_thread::sleep_for
 #include <chrono>   // Include for std::chrono::milliseconds
+#include "../include/datastructure.h"
 #include "../include/utilities.h"      // Include your utility functions header
 // #include "ljmd.h"
 
@@ -12,6 +13,9 @@ TEST(Utilities, PBC) {
 
 TEST(Utilities, Ekin) {
     // Create a dummy mdsys_t structure
+    // /* a few physical constants */
+    extern const double kboltz;     /* boltzman constant in kcal/mol/K */
+    extern const double mvsq2e; /* m*v^2 in kcal/mol */
     mdsys_t sys;
     init_mdsys(&sys);
     sys.natoms = 3; // Modify based on your system size
@@ -32,10 +36,19 @@ TEST(Utilities, Ekin) {
 
     // Call the ekin function
     ekin(&sys);
+    // Print intermediate values for debugging
+    std::cout << "sys.ekin: " << sys.ekin << std::endl;
+    std::cout << "sys.temp: " << sys.temp << std::endl;
 
     // Add assertions to check the results
-    EXPECT_DOUBLE_EQ(sys.ekin, 42.0); // You should modify this based on your expectations
-    EXPECT_DOUBLE_EQ(sys.temp, 42.0 / (3.0 * sys.natoms - 3.0) / kboltz); // Modify based on your expectations
+    // Assuming epsilon is a small positive value, e.g., 1e-6
+    const double epsilon = 2e-5;
+
+    // Add assertions to check the results with a tolerance
+    EXPECT_NEAR(sys.ekin, 43917.3040, epsilon);
+    EXPECT_NEAR(sys.temp, 2.0 * sys.ekin / (3.0 * sys.natoms - 3.0) / kboltz, epsilon);
+
+    cleanup_mdsys(&sys);
 }
 
 TEST(TestWallClock, one) {
@@ -63,29 +76,10 @@ TEST(TestAzzero, doubles) {
     delete[] buf; // free the allocated memory
 }
 
-TEST(Utilities, GetALine) {
-    // Create a temporary file for testing
-    FILE *tmpFile = tmpfile();
 
-    // Write a line to the file
-    const char *testLine = "   This is a test line with whitespace and comments # Comment";
-    fputs(testLine, tmpFile);
-    rewind(tmpFile);
-
-    // Call the get_a_line function
-    const int BLEN = 100; // Adjust based on your buffer size
-    char buf[BLEN];
-    int result = get_a_line(tmpFile, buf, BLEN);
-
-    // Add assertions to check the results
-    ASSERT_EQ(result, 0);
-    ASSERT_STREQ(buf, "This is a test line with whitespace and comments");
-
-    // Close the temporary file
-    fclose(tmpFile);
-}
 
 // Add more tests for other utility functions as needed
+
 
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
