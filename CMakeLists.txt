@@ -35,3 +35,26 @@ add_executable(md src/main.c)
 
 # Link the executable against the library
 target_link_libraries(md PRIVATE md_lib)
+
+option(ENABLE_TESTING "Enable building unit tests" ON)
+if(ENABLE_TESTING)
+  enable_testing()
+  enable_language(CXX)
+
+  find_package(GTest REQUIRED)
+
+  set(TEST_SOURCES
+    tests/test_compute_force.cpp
+    tests/test_datastructure.cpp
+  )
+  add_executable(test_compute_force ${TEST_SOURCES})
+  target_include_directories(test_compute_force PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+  target_link_libraries(test_compute_force PRIVATE GTest::GTest GTest::Main md_lib)
+  add_test(NAME Force COMMAND test_compute_force)
+
+  add_executable(test_datastructure ${TEST_SOURCES})
+  target_include_directories(test_datastructure PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+  target_link_libraries(test_datastructure PRIVATE GTest::GTest GTest::Main md_lib)
+  add_test(NAME DataStructure COMMAND test_datastructure)
+
+endif()
