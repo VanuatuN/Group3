@@ -11,8 +11,6 @@ set(SOURCES
     src/velverlet.c
     src/input.c
     src/output.c
-    src/cleanup.c
-    src/main.c
     src/datastructure.c
 )
 
@@ -24,7 +22,6 @@ set(HEADERS
     include/compute_force.h
     include/input.h
     include/output.h
-    include/cleanup.h
 )
 
 # Create a library target for common code

@@ -7,6 +7,14 @@
 #include "datastructure.h"
 #include "utilities.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 void output(mdsys_t *sys, FILE *erg, FILE *traj);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

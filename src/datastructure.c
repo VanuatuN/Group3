@@ -1,7 +1,8 @@
 // datastructure.c
-
+#include <stdio.h>
 #include "datastructure.h"
 #include <stdlib.h>
+#include "utilities.h"
 
 // Function to initialize the mdsys_t structure
 void init_mdsys(mdsys_t *sys) {
@@ -28,4 +29,26 @@ void cleanup_mdsys(mdsys_t *sys) {
     free(sys->fx);
     free(sys->fy);
     free(sys->fz);
+}
+
+void read_restart(mdsys_t *sys, const char *restfile){
+    /* read restart */
+    int i;
+    FILE *fp;
+    fp=fopen(restfile,"r");
+    if(fp) {
+        for (i=0; i<sys->natoms; ++i) {
+            fscanf(fp,"%lf%lf%lf",sys->rx+i, sys->ry+i, sys->rz+i);
+        }
+        for (i=0; i<sys->natoms; ++i) {
+            fscanf(fp,"%lf%lf%lf",sys->vx+i, sys->vy+i, sys->vz+i);
+        }
+        fclose(fp);
+        azzero(sys->fx, sys->natoms);
+        azzero(sys->fy, sys->natoms);
+        azzero(sys->fz, sys->natoms);
+    } else {
+        perror("cannot read restart file");
+        // return 3;
+    }
 }
