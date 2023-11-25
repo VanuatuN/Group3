@@ -1,20 +1,12 @@
-/*
- * simple lennard-jones potential MD code with velocity verlet.
- * units: Length=Angstrom, Mass=amu; Energy=kcal
- *
- * baseline c version.
- */
-
 #ifndef LJMD_H
 #define LJMD_H
 
+#include <stdio.h>
+
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
-/* structure to hold the complete information
- * about the MD system */
 struct _mdsys {
     int natoms;
     double mass;
@@ -22,16 +14,15 @@ struct _mdsys {
     double *vx;
     double *fx;
 };
+
 typedef struct _mdsys mdsys_t;
 
-/* velocity verlet */
-extern void verlet_1(mdsys_t *sys);
-extern void verlet_2(mdsys_t *sys);
-
-/* helper functions */
-extern void azzero(double *d, const int n);
-extern double wallclock();
-
+// Function declarations
+int get_a_line(FILE *fp, char *buf, int BLEN);
+double wallclock();
+void azzero(double *d, const int n);
+double pbc(double x, const double boxby2);
+void ekin(mdsys_t *sys);
 
 #ifdef __cplusplus
 }

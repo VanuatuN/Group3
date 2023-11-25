@@ -8,10 +8,8 @@
 #include "datastructure.h"
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
-
 extern int get_a_line(FILE *fp, char *buf, int BLEN);
 extern double wallclock();
 extern void azzero(double *d, const int n);
@@ -20,5 +18,4 @@ extern void ekin(mdsys_t *sys);
 #ifdef __cplusplus
 }
 #endif
-
 #endif

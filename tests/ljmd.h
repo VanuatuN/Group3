@@ -24,9 +24,14 @@ struct _mdsys {
 };
 typedef struct _mdsys mdsys_t;
 
-/* velocity verlet */
-extern void verlet_1(mdsys_t *sys);
-extern void verlet_2(mdsys_t *sys);
+// /* velocity verlet */
+// extern void verlet_1(mdsys_t *sys);
+// extern void verlet_2(mdsys_t *sys);
+extern int get_a_line(FILE *fp, char *buf, int BLEN);
+extern double wallclock();
+extern void azzero(double *d, const int n);
+extern double pbc(double x, const double boxby2);
+extern void ekin(mdsys_t *sys);
 
 /* helper functions */
 extern void azzero(double *d, const int n);

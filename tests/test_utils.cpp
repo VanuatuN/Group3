@@ -1,9 +1,9 @@
 #include <gtest/gtest.h>
-#include "datastructure.h" // Include your data structure header
-// Include your C functions here
-extern "C" {
-#include "utilities.h"      // Include your utility functions header
-}
+#include <thread>   // Include for std::this_thread::sleep_for
+#include <chrono>   // Include for std::chrono::milliseconds
+#include "../include/utilities.h"      // Include your utility functions header
+// #include "ljmd.h"
+
 TEST(Utilities, PBC) {
     // Example test for the pbc function
     double result = pbc(5.0, 10.0);
@@ -13,6 +13,7 @@ TEST(Utilities, PBC) {
 TEST(Utilities, Ekin) {
     // Create a dummy mdsys_t structure
     mdsys_t sys;
+    init_mdsys(&sys);
     sys.natoms = 3; // Modify based on your system size
     sys.mass = 1.0; // Modify based on your particle mass
 
@@ -59,7 +60,7 @@ TEST(TestAzzero, doubles) {
     ASSERT_DOUBLE_EQ(buf[5], 0.0);
     ASSERT_DOUBLE_EQ(buf[9], 0.0);
 
-    delete[] buf; // Don't forget to free the allocated memory
+    delete[] buf; // free the allocated memory
 }
 
 TEST(Utilities, GetALine) {
