@@ -45,38 +45,16 @@ if(ENABLE_TESTING)
 
   set(TEST_SOURCES
     tests/test_compute_force.cpp
+    tests/test_datastructure.cpp
   )
   add_executable(test_compute_force ${TEST_SOURCES})
   target_include_directories(test_compute_force PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
   target_link_libraries(test_compute_force PRIVATE GTest::GTest GTest::Main md_lib)
   add_test(NAME Force COMMAND test_compute_force)
+
+  add_executable(test_datastructure ${TEST_SOURCES})
+  target_include_directories(test_datastructure PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+  target_link_libraries(test_datastructure PRIVATE GTest::GTest GTest::Main md_lib)
+  add_test(NAME DataStructure COMMAND test_datastructure)
+
 endif()
-
-
-# # Download and configure GoogleTest
-# include(FetchContent)
-# FetchContent_Declare(
-#     googletest
-#     URL https://github.com/google/googletest/archive/refs/tags/release-1.11.0.zip
-#     DOWNLOAD_EXTRACT_TIMESTAMP true
-# )
-# FetchContent_MakeAvailable(googletest)
-
-# set(TEST_SOURCES
-#     tests/test_compute_force.cpp
-#     ${SOURCES} # Add this line if compute_force.c contains the implementation
-# )
-
-# add_executable(test_md ${TEST_SOURCES})
-
-# # Include directories for the test target
-# target_include_directories(test_md PRIVATE
-#     ${CMAKE_CURRENT_SOURCE_DIR}/src
-#     ${CMAKE_CURRENT_SOURCE_DIR}/include
-# )
-
-# target_link_libraries(test_md gtest_main)
-
-# include(GoogleTest)
-# # gtest_discover_tests(test_md TIMEOUT 1000)
-# gtest_discover_tests(test_md TIMEOUT 300 PROPERTIES WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}" DISCOVERY_TIMEOUT 60 TEST_DISCOVERY_TIMEOUT 60 TEST_RUN_TIMEOUT 300 TEST_RUN_OUTPUT_VARIABLE TEST_OUTPUT PARALLEL_LEVEL 4)
