@@ -13,9 +13,7 @@ set(SOURCES
     src/cleanup.c
     src/main.c
     src/datastructure.c
-    # tests/test_compute_force.cpp
-    # tests/test_utils.cpp
-)
+  )
 
 # Add your header files here
 set(HEADERS
@@ -27,7 +25,7 @@ set(HEADERS
     include/output.h
     include/cleanup.h
     include/ljmd.h 
-)
+  )
 
 # Create a library target for common code
 add_library(md_lib SHARED ${SOURCES} ${HEADERS})
