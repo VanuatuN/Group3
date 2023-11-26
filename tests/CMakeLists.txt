@@ -41,7 +41,7 @@ set(CMAKE_BUILD_TYPE Debug)
 # Link the executable against the library
 target_link_libraries(md PRIVATE md_lib m)
 
-option(ENABLE_TESTING "Enable building unit tests" OFF) 
+option(ENABLE_TESTING "Enable building unit tests" ON)
 if(ENABLE_TESTING)
     enable_testing()
     enable_language(CXX)
@@ -59,7 +59,7 @@ if(ENABLE_TESTING)
         tests/test_utils.cpp
       )
     add_library(testlib SHARED ${TEST_SOURCES} ${HEADERS})
-    add_executable(tests ${TEST_SOURCES} ${HEADERS}) 
+    add_executable(tests ${TEST_SOURCES} ${HEADERS})
 
     # Specify include directories
     target_include_directories(tests PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
