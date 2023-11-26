@@ -47,48 +47,29 @@ if(ENABLE_TESTING)
 
   find_package(GTest REQUIRED)
 
-  set(TEST_SOURCES
+  set(TEST_FORCE
     tests/test_compute_force.cpp
   )
-  add_executable(test_compute_force ${TEST_SOURCES})
+  add_executable(test_compute_force ${TEST_FORCE})
   target_include_directories(test_compute_force PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
   target_link_libraries(test_compute_force PRIVATE GTest::GTest GTest::Main md_lib)
   add_test(NAME Force COMMAND test_compute_force)
 
-  set(TEST_SOURCES
+  set(TEST_DSTRUCT
     tests/test_datastructure.cpp
   )
 
-  add_executable(test_datastructure ${TEST_SOURCES})
+  add_executable(test_datastructure ${TEST_DSTRUCT})
   target_include_directories(test_datastructure PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
   target_link_libraries(test_datastructure PRIVATE GTest::GTest GTest::Main md_lib)
   add_test(NAME DataStructure COMMAND test_datastructure)
 
-
-# #Unit Testing for Helper Functions (Utilities.c)
-
-  # Download and include GoogleTest manually
-  include(FetchContent)
-  FetchContent_Declare(
-                        googletest
-                        URL https://github.com/google/googletest/archive/refs/tags/release-1.11.0.zip
-                        DOWNLOAD_EXTRACT_TIMESTAMP true
-                      )
-  FetchContent_MakeAvailable(googletest)
-
-  set(TEST_SOURCES
+  set(TEST_UTILS
       tests/test_utils.cpp
       )
-  add_library(testlib SHARED ${TEST_SOURCES} ${HEADERS})
-  add_executable(tests ${TEST_SOURCES} ${HEADERS})
 
-  # Specify include directories
-  target_include_directories(tests PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
-  # Link the executable against GTest and program libraries
-  target_link_libraries(tests PRIVATE gtest gtest_main testlib md_lib m)
-  # Add tests
-  include(GoogleTest)
-  gtest_discover_tests(tests TIMEOUT 1000)
-  # Specify the C++ standard
-  set_target_properties(tests PROPERTIES CXX_STANDARD 14  CXX_STANDARD_REQUIRED YES CXX_EXTENSIONS YES)
+  add_executable(test_utils ${TEST_UTILS})
+  target_include_directories(test_utils PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+  target_link_libraries(test_utils PRIVATE GTest::GTest GTest::Main md_lib)
+  add_test(NAME Utils COMMAND test_utils)
 endif()
