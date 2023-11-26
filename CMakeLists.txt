@@ -12,7 +12,7 @@ set(SOURCES
     src/input.c
     src/output.c
     src/datastructure.c
-)
+  )
 
 # Add your header files here
 set(HEADERS
@@ -25,7 +25,7 @@ set(HEADERS
 )
 
 # Create a library target for common code
-add_library(md_lib STATIC ${SOURCES} ${HEADERS})
+add_library(md_lib SHARED ${SOURCES} ${HEADERS})
 
 # Specify include directories
 target_include_directories(md_lib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
@@ -33,9 +33,13 @@ target_include_directories(md_lib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 # Create an executable
 add_executable(md src/main.c)
 
-# Link the executable against the library
-target_link_libraries(md PRIVATE md_lib)
+# Enable debugging symbols
+set(CMAKE_BUILD_TYPE Debug)
 
+# Link the executable against the library
+target_link_libraries(md PRIVATE md_lib m)
+
+#Unit test for compute force function
 option(ENABLE_TESTING "Enable building unit tests" ON)
 if(ENABLE_TESTING)
   enable_testing()
@@ -60,4 +64,31 @@ if(ENABLE_TESTING)
   target_link_libraries(test_datastructure PRIVATE GTest::GTest GTest::Main md_lib)
   add_test(NAME DataStructure COMMAND test_datastructure)
 
+
+# #Unit Testing for Helper Functions (Utilities.c)
+
+  # Download and include GoogleTest manually
+  include(FetchContent)
+  FetchContent_Declare(
+                        googletest
+                        URL https://github.com/google/googletest/archive/refs/tags/release-1.11.0.zip
+                        DOWNLOAD_EXTRACT_TIMESTAMP true
+                      )
+  FetchContent_MakeAvailable(googletest)
+
+  set(TEST_SOURCES
+      tests/test_utils.cpp
+      )
+  add_library(testlib SHARED ${TEST_SOURCES} ${HEADERS})
+  add_executable(tests ${TEST_SOURCES} ${HEADERS})
+
+  # Specify include directories
+  target_include_directories(tests PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+  # Link the executable against GTest and program libraries
+  target_link_libraries(tests PRIVATE gtest gtest_main testlib md_lib m)
+  # Add tests
+  include(GoogleTest)
+  gtest_discover_tests(tests TIMEOUT 1000)
+  # Specify the C++ standard
+  set_target_properties(tests PROPERTIES CXX_STANDARD 14  CXX_STANDARD_REQUIRED YES CXX_EXTENSIONS YES)
 endif()
