@@ -5,6 +5,9 @@
 #include "utilities.h"
 #include "compute_force.h"
 
+// /* a few physical constants */
+extern const double kboltz;     /* boltzman constant in kcal/mol/K */
+extern const double mvsq2e; /* m*v^2 in kcal/mol */
 void update_half1(mdsys_t *sys, int i)
 {
     /* first part: propagate velocities by half and positions by full step */

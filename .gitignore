@@ -1,1 +1,5 @@
 build/
+*.x
+*.swp
+examples/
+
