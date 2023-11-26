@@ -24,7 +24,6 @@ set(HEADERS
     include/input.h
     include/output.h
     include/cleanup.h
-    include/ljmd.h 
   )
 
 # Create a library target for common code
@@ -57,9 +56,8 @@ if(ENABLE_TESTING)
     FetchContent_MakeAvailable(googletest)
 
     set(TEST_SOURCES
-        # tests/test_compute_force.cpp
         tests/test_utils.cpp
-    )
+      )
     add_library(testlib SHARED ${TEST_SOURCES} ${HEADERS})
     add_executable(tests ${TEST_SOURCES} ${HEADERS})
 
@@ -71,5 +69,5 @@ if(ENABLE_TESTING)
     include(GoogleTest)
     gtest_discover_tests(tests TIMEOUT 1000)
     # Specify the C++ standard
-    set_target_properties(tests PROPERTIES CXX_STANDARD 14  CXX_STANDARD_REQUIRED YES CXX_EXTENSIONS YES )
+    set_target_properties(tests PROPERTIES CXX_STANDARD 14  CXX_STANDARD_REQUIRED YES CXX_EXTENSIONS YES)
 endif()
