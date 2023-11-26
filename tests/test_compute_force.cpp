@@ -33,6 +33,16 @@ TEST(ComputeForce, TwoParticleInsideCutoff) {
     EXPECT_DOUBLE_EQ(sys.fx[0], 0.054706442224795614);
     EXPECT_DOUBLE_EQ(sys.fy[0], 0.072941922966394165);
     EXPECT_DOUBLE_EQ(sys.fz[0], 0.0);
+
+    free(sys.rx);
+    free(sys.ry);
+    free(sys.rz);
+    free(sys.vx);
+    free(sys.vy);
+    free(sys.vz);
+    free(sys.fx);
+    free(sys.fy);
+    free(sys.fz);
 }
 
 TEST(ComputeForce, TwoParticleInsideCutoffNearCuttoff) {
@@ -65,6 +75,16 @@ TEST(ComputeForce, TwoParticleInsideCutoffNearCuttoff) {
     EXPECT_DOUBLE_EQ(sys.fx[0], 0.0);
     EXPECT_DOUBLE_EQ(sys.fy[0], 0.0028679847024252691);
     EXPECT_DOUBLE_EQ(sys.fz[0], 0.0);
+
+    free(sys.rx);
+    free(sys.ry);
+    free(sys.rz);
+    free(sys.vx);
+    free(sys.vy);
+    free(sys.vz);
+    free(sys.fx);
+    free(sys.fy);
+    free(sys.fz);
 }
 
 TEST(ComputeForce, TwoParticleOutsideCutoff) {
@@ -97,6 +117,16 @@ TEST(ComputeForce, TwoParticleOutsideCutoff) {
     EXPECT_DOUBLE_EQ(sys.fx[0], 0.0);
     EXPECT_DOUBLE_EQ(sys.fy[0], 0.0);
     EXPECT_DOUBLE_EQ(sys.fz[0], 0.0);
+
+    free(sys.rx);
+    free(sys.ry);
+    free(sys.rz);
+    free(sys.vx);
+    free(sys.vy);
+    free(sys.vz);
+    free(sys.fx);
+    free(sys.fy);
+    free(sys.fz);
 }
 
 TEST(ComputeForce, TwoParticleInsideCutoffPBC) {
@@ -129,6 +159,16 @@ TEST(ComputeForce, TwoParticleInsideCutoffPBC) {
     EXPECT_DOUBLE_EQ(sys.fx[0], 7.2526871094147392e+17);
     EXPECT_DOUBLE_EQ(sys.fy[0], 0.0);
     EXPECT_DOUBLE_EQ(sys.fz[0], 0.0);
+
+    free(sys.rx);
+    free(sys.ry);
+    free(sys.rz);
+    free(sys.vx);
+    free(sys.vy);
+    free(sys.vz);
+    free(sys.fx);
+    free(sys.fy);
+    free(sys.fz);
 }
 
 TEST(ComputeForce, TwoParticleInsideCutoffPBC1) {
@@ -161,4 +201,14 @@ TEST(ComputeForce, TwoParticleInsideCutoffPBC1) {
     EXPECT_DOUBLE_EQ(sys.fx[0], 0.0);
     EXPECT_DOUBLE_EQ(sys.fy[0], 0.0);
     EXPECT_DOUBLE_EQ(sys.fz[0], -0.024984372427535984);
+    
+    free(sys.rx);
+    free(sys.ry);
+    free(sys.rz);
+    free(sys.vx);
+    free(sys.vy);
+    free(sys.vz);
+    free(sys.fx);
+    free(sys.fy);
+    free(sys.fz);
 }
