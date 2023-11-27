@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.12)  # Set a valid CMake version
 project(MD_SIMULATION LANGUAGES C CXX)
 
 set(CMAKE_CXX_STANDARD 14)
-# add_definitions(-DREFACTOR)
+add_definitions(-DREFACTOR)
 
 # Add your source files here
 set(SOURCES
@@ -96,6 +96,6 @@ if(ENABLE_TESTING)
    gtest_discover_tests(test_utils TIMEOUT 1000)
    gtest_discover_tests(test_compute_force TIMEOUT 1000)
    # Specify the C++ standard
-   set_target_properties(test_utils PROPERTIES CXX_STANDARD 17  CXX_STANDARD_REQUIRED YES CXX_EXTENSIONS YES)
-   set_target_properties(test_compute_force PROPERTIES CXX_STANDARD 17  CXX_STANDARD_REQUIRED YES CXX_EXTENSIONS YES)
+   set_target_properties(test_utils PROPERTIES CXX_STANDARD 14  CXX_STANDARD_REQUIRED YES CXX_EXTENSIONS YES)
+   set_target_properties(test_compute_force PROPERTIES CXX_STANDARD 14  CXX_STANDARD_REQUIRED YES CXX_EXTENSIONS YES)
 endif()
