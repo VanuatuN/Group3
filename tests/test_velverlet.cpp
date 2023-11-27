@@ -32,8 +32,6 @@ TEST_F(VelocityVerletTest, UpdateHalf1) {
     int i = 0; // or any other valid index
     sys->dt = 5.0; // set your desired time step
     
-    std::string restfile = "../examples/argon_2.rest";
-    read_restart(sys, restfile.c_str());
 
     // Save initial state for comparison
     double initial_rx = sys->rx[i];
