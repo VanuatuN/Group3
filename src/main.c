@@ -41,13 +41,7 @@ int main(int argc, char **argv)
     double t_start;
 
     #if defined(_MPI)
-    // MPI
-    int N, rank, npes;
-
-    MPI_Init(&argc, &argv);
-    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-    MPI_Comm_size(MPI_COMM_WORLD, &npes);
-    printf("%d", rank)
+    MPI_Init(NULL, NULL);
     #endif
 
     printf("LJMD version %3.1f\n", LJMD_VERSION);
@@ -99,6 +93,10 @@ int main(int argc, char **argv)
     fclose(traj);
 
     cleanup_mdsys(&sys);
+
+    #if defined(_MPI)
+    MPI_Finalize();
+    #endif
     return 0;
 }
 
