@@ -41,10 +41,19 @@ int main(int argc, char **argv)
     double t_start;
 
     #if defined(_MPI)
-    MPI_Init(NULL, NULL);
+    MPI_Init(&argc, &argv);
+    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+    MPI_Comm_size(MPI_COMM_WORLD, &npes);
+    sys.syscomm = MPI_COMM_WORLD;
+    sys.rank = rank;
+    sys.npes = npes;
+
+    init_mdsys_mpi(&sys);
+
+    if (rank == 0) {
     #endif
 
-    printf("LJMD version %3.1f\n", LJMD_VERSION);
+    // printf("LJMD version %3.1f\n", LJMD_VERSION);
 
     t_start = wallclock();
 
@@ -59,7 +68,17 @@ int main(int argc, char **argv)
     /* initialize forces and energies.*/
     sys.nfi=0;
 
-    force(&sys);
+    #if defined(_MPI)
+    } // if (rank == 0)
+    #endif
+    
+    printf("LJMD version %3.1f\n", LJMD_VERSION);
+    force(&sys); // ALL ranks
+
+    #if defined(_MPI)
+    if (rank == 0) {
+    #endif
+
     ekin(&sys);
 
     erg=fopen(ergfile,"w");
@@ -72,6 +91,10 @@ int main(int argc, char **argv)
 
     /* reset timer */
     t_start = wallclock();
+
+    #if defined(_MPI)
+    } // if (rank == 0)
+    #endif
 
     /**************************************************/
     /* main MD loop */
@@ -87,6 +110,9 @@ int main(int argc, char **argv)
     }
     /**************************************************/
 
+    #if defined(_MPI)
+    if (rank == 0) {
+    #endif
     /* clean up: close files, free memory */
     printf("Simulation Done. Run time: %10.3fs\n", wallclock()-t_start);
     fclose(erg);
@@ -95,6 +121,11 @@ int main(int argc, char **argv)
     cleanup_mdsys(&sys);
 
     #if defined(_MPI)
+    } // if (rank == 0)
+    #endif
+
+    #if defined(_MPI)
+    cleanup_mdsys_mpi(&sys);
     MPI_Finalize();
     #endif
     return 0;
