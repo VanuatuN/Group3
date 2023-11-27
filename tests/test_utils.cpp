@@ -1,8 +1,8 @@
-#include <gtest/gtest.h>
+#include "gtest/gtest.h"
 #include <thread>   // Include for std::this_thread::sleep_for
 #include <chrono>   // Include for std::chrono::milliseconds
-#include "../include/datastructure.h"
-#include "../include/utilities.h"      // Include your utility functions header
+#include "datastructure.h"
+#include "utilities.h"      // Include your utility functions header
 
 TEST(Utilities, PBC) {
     // Example test for the pbc function

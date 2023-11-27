@@ -52,7 +52,7 @@ if(ENABLE_TESTING)
   )
   add_executable(test_compute_force ${TEST_FORCE})
   target_include_directories(test_compute_force PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
-  target_link_libraries(test_compute_force PRIVATE GTest::GTest GTest::Main md_lib m)
+  target_link_libraries(test_compute_force PRIVATE GTest::GTest GTest::Main md_lib)
   add_test(NAME Force COMMAND test_compute_force)
 
   set(TEST_DSTRUCT
@@ -80,6 +80,6 @@ if(ENABLE_TESTING)
 
   add_executable(test_utils ${TEST_UTILS})
   target_include_directories(test_utils PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
-  target_link_libraries(test_utils PRIVATE GTest::GTest GTest::Main md_lib m)
+  target_link_libraries(test_utils PRIVATE GTest::GTest GTest::Main md_lib)
   add_test(NAME Utils COMMAND test_utils)
 endif()
