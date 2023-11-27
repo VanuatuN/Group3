@@ -70,7 +70,7 @@ if(ENABLE_TESTING)
 
   add_executable(test_velverlet ${TEST_SOURCES})
   target_include_directories(test_velverlet PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
-  target_link_libraries(test_velverlet PRIVATE GTest::GTest GTest::Main md_lib m)
+  target_link_libraries(test_velverlet PRIVATE GTest::GTest GTest::Main md_lib)
   add_test(NAME Vervelet COMMAND test_velverlet)
   
 
