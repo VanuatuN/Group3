@@ -63,6 +63,16 @@ if(ENABLE_TESTING)
   target_include_directories(test_datastructure PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
   target_link_libraries(test_datastructure PRIVATE GTest::GTest GTest::Main md_lib)
   add_test(NAME DataStructure COMMAND test_datastructure)
+  
+  set(TEST_SOURCES
+    tests/test_velverlet.cpp
+  )
+
+  add_executable(test_velverlet ${TEST_SOURCES})
+  target_include_directories(test_velverlet PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+  target_link_libraries(test_velverlet PRIVATE GTest::GTest GTest::Main md_lib)
+  add_test(NAME Vervelet COMMAND velverlet)
+  
 
 
 # #Unit Testing for Helper Functions (Utilities.c)
