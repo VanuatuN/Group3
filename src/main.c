@@ -21,6 +21,10 @@
 #include "compute_force.h"
 #include "velverlet.h"
 
+#if defined(_MPI)
+    #include "mpi.h"
+#endif
+
 /* generic file- or pathname buffer length */
 #define BLEN 200
 #define LJMD_VERSION 1.0
@@ -36,6 +40,16 @@ int main(int argc, char **argv)
     mdsys_t sys;
     double t_start;
 
+    #if defined(_MPI)
+    // MPI
+    int N, rank, npes;
+
+    MPI_Init(&argc, &argv);
+    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+    MPI_Comm_size(MPI_COMM_WORLD, &npes);
+    printf("%d", rank)
+    #endif
+
     printf("LJMD version %3.1f\n", LJMD_VERSION);
 
     t_start = wallclock();
@@ -50,6 +64,7 @@ int main(int argc, char **argv)
 
     /* initialize forces and energies.*/
     sys.nfi=0;
+
     force(&sys);
     ekin(&sys);
 

@@ -2,7 +2,24 @@ cmake_minimum_required(VERSION 3.12)  # Set a valid CMake version
 
 project(MD_SIMULATION LANGUAGES C CXX)
 
+option(USE_MPI "Use MPI for compilation" OFF)
+
+set(COMMON_FLAGS "${COMMON_FLAGS} -Wall -O2")
+
 set(CMAKE_CXX_STANDARD 14)
+
+if(USE_MPI)
+    find_package(MPI REQUIRED)
+    set(CMAKE_C_COMPILER ${MPI_C_COMPILER})
+
+    include_directories(SYSTEM ${MPI_C_INCLUDE_PATH})
+
+    set(MPI_FLAGS "${MPI_C_COMPILE_FLAGS}")
+    
+    set(MPI_LIBRARIES "${MPI_C_LIBRARIES}")
+else()
+    set(CMAKE_C_COMPILER gcc)
+endif()
 
 # Add your source files here
 set(SOURCES
@@ -33,11 +50,8 @@ target_include_directories(md_lib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 # Create an executable
 add_executable(md src/main.c)
 
-# Enable debugging symbols
-set(CMAKE_BUILD_TYPE Debug)
-
-# Link the executable against the library
-target_link_libraries(md PRIVATE md_lib m)
+# Link the executable against the library and MPI libraries
+target_link_libraries(md PRIVATE md_lib m ${MPI_LIBRARIES})
 
 #Unit test for compute force function
 option(ENABLE_TESTING "Enable building unit tests" ON)
