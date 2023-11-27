@@ -101,7 +101,6 @@ CMakeFiles/md.dir/src/main.c.o: /Users/empuza/MHPC/Group3/src/main.c \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/usr/include/sys/_types/_clock_t.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/usr/include/sys/_select.h \
   /Users/empuza/MHPC/Group3/include/datastructure.h \
-  /Users/empuza/MHPC/Group3/include/cleanup.h \
   /Users/empuza/MHPC/Group3/include/input.h \
   /Users/empuza/MHPC/Group3/include/output.h \
   /Users/empuza/MHPC/Group3/include/compute_force.h \

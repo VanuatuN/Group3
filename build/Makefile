@@ -65,6 +65,16 @@ CMAKE_BINARY_DIR = /Users/empuza/MHPC/Group3/build
 #=============================================================================
 # Targets provided globally by CMake.
 
+# Special rule for the target test
+test:
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Running tests..."
+	/opt/homebrew/Cellar/cmake/3.27.7/bin/ctest --force-new-ctest-process $(ARGS)
+.PHONY : test
+
+# Special rule for the target test
+test/fast: test
+.PHONY : test/fast
+
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Running CMake cache editor..."
@@ -84,51 +94,6 @@ rebuild_cache:
 # Special rule for the target rebuild_cache
 rebuild_cache/fast: rebuild_cache
 .PHONY : rebuild_cache/fast
-
-# Special rule for the target list_install_components
-list_install_components:
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Available install components are: \"Unspecified\""
-.PHONY : list_install_components
-
-# Special rule for the target list_install_components
-list_install_components/fast: list_install_components
-.PHONY : list_install_components/fast
-
-# Special rule for the target install
-install: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Install the project..."
-	/opt/homebrew/Cellar/cmake/3.27.7/bin/cmake -P cmake_install.cmake
-.PHONY : install
-
-# Special rule for the target install
-install/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Install the project..."
-	/opt/homebrew/Cellar/cmake/3.27.7/bin/cmake -P cmake_install.cmake
-.PHONY : install/fast
-
-# Special rule for the target install/local
-install/local: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Installing only the local directory..."
-	/opt/homebrew/Cellar/cmake/3.27.7/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
-.PHONY : install/local
-
-# Special rule for the target install/local
-install/local/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Installing only the local directory..."
-	/opt/homebrew/Cellar/cmake/3.27.7/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
-.PHONY : install/local/fast
-
-# Special rule for the target install/strip
-install/strip: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Installing the project stripped..."
-	/opt/homebrew/Cellar/cmake/3.27.7/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
-.PHONY : install/strip
-
-# Special rule for the target install/strip
-install/strip/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Installing the project stripped..."
-	/opt/homebrew/Cellar/cmake/3.27.7/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
-.PHONY : install/strip/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -162,6 +127,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named md_lib
+
+# Build rule for target.
+md_lib: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 md_lib
+.PHONY : md_lib
+
+# fast build rule for target.
+md_lib/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/md_lib.dir/build.make CMakeFiles/md_lib.dir/build
+.PHONY : md_lib/fast
+
+#=============================================================================
 # Target rules for targets named md
 
 # Build rule for target.
@@ -175,100 +153,50 @@ md/fast:
 .PHONY : md/fast
 
 #=============================================================================
-# Target rules for targets named test_md
+# Target rules for targets named test_compute_force
 
 # Build rule for target.
-test_md: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_md
-.PHONY : test_md
+test_compute_force: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_compute_force
+.PHONY : test_compute_force
 
 # fast build rule for target.
-test_md/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_md.dir/build.make CMakeFiles/test_md.dir/build
-.PHONY : test_md/fast
+test_compute_force/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_compute_force.dir/build.make CMakeFiles/test_compute_force.dir/build
+.PHONY : test_compute_force/fast
 
 #=============================================================================
-# Target rules for targets named gmock
+# Target rules for targets named test_datastructure
 
 # Build rule for target.
-gmock: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 gmock
-.PHONY : gmock
+test_datastructure: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_datastructure
+.PHONY : test_datastructure
 
 # fast build rule for target.
-gmock/fast:
-	$(MAKE) $(MAKESILENT) -f _deps/googletest-build/googlemock/CMakeFiles/gmock.dir/build.make _deps/googletest-build/googlemock/CMakeFiles/gmock.dir/build
-.PHONY : gmock/fast
+test_datastructure/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_datastructure.dir/build.make CMakeFiles/test_datastructure.dir/build
+.PHONY : test_datastructure/fast
 
 #=============================================================================
-# Target rules for targets named gmock_main
+# Target rules for targets named test_velverlet
 
 # Build rule for target.
-gmock_main: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 gmock_main
-.PHONY : gmock_main
+test_velverlet: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_velverlet
+.PHONY : test_velverlet
 
 # fast build rule for target.
-gmock_main/fast:
-	$(MAKE) $(MAKESILENT) -f _deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/build.make _deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/build
-.PHONY : gmock_main/fast
-
-#=============================================================================
-# Target rules for targets named gtest
-
-# Build rule for target.
-gtest: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 gtest
-.PHONY : gtest
-
-# fast build rule for target.
-gtest/fast:
-	$(MAKE) $(MAKESILENT) -f _deps/googletest-build/googletest/CMakeFiles/gtest.dir/build.make _deps/googletest-build/googletest/CMakeFiles/gtest.dir/build
-.PHONY : gtest/fast
-
-#=============================================================================
-# Target rules for targets named gtest_main
-
-# Build rule for target.
-gtest_main: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 gtest_main
-.PHONY : gtest_main
-
-# fast build rule for target.
-gtest_main/fast:
-	$(MAKE) $(MAKESILENT) -f _deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/build.make _deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/build
-.PHONY : gtest_main/fast
-
-src/cleanup.o: src/cleanup.c.o
-.PHONY : src/cleanup.o
-
-# target to build an object file
-src/cleanup.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/md.dir/build.make CMakeFiles/md.dir/src/cleanup.c.o
-.PHONY : src/cleanup.c.o
-
-src/cleanup.i: src/cleanup.c.i
-.PHONY : src/cleanup.i
-
-# target to preprocess a source file
-src/cleanup.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/md.dir/build.make CMakeFiles/md.dir/src/cleanup.c.i
-.PHONY : src/cleanup.c.i
-
-src/cleanup.s: src/cleanup.c.s
-.PHONY : src/cleanup.s
-
-# target to generate assembly for a file
-src/cleanup.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/md.dir/build.make CMakeFiles/md.dir/src/cleanup.c.s
-.PHONY : src/cleanup.c.s
+test_velverlet/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_velverlet.dir/build.make CMakeFiles/test_velverlet.dir/build
+.PHONY : test_velverlet/fast
 
 src/compute_force.o: src/compute_force.c.o
 .PHONY : src/compute_force.o
 
 # target to build an object file
 src/compute_force.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/md.dir/build.make CMakeFiles/md.dir/src/compute_force.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/md_lib.dir/build.make CMakeFiles/md_lib.dir/src/compute_force.c.o
 .PHONY : src/compute_force.c.o
 
 src/compute_force.i: src/compute_force.c.i
@@ -276,7 +204,7 @@ src/compute_force.i: src/compute_force.c.i
 
 # target to preprocess a source file
 src/compute_force.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/md.dir/build.make CMakeFiles/md.dir/src/compute_force.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/md_lib.dir/build.make CMakeFiles/md_lib.dir/src/compute_force.c.i
 .PHONY : src/compute_force.c.i
 
 src/compute_force.s: src/compute_force.c.s
@@ -284,7 +212,7 @@ src/compute_force.s: src/compute_force.c.s
 
 # target to generate assembly for a file
 src/compute_force.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/md.dir/build.make CMakeFiles/md.dir/src/compute_force.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/md_lib.dir/build.make CMakeFiles/md_lib.dir/src/compute_force.c.s
 .PHONY : src/compute_force.c.s
 
 src/datastructure.o: src/datastructure.c.o
@@ -292,7 +220,7 @@ src/datastructure.o: src/datastructure.c.o
 
 # target to build an object file
 src/datastructure.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/md.dir/build.make CMakeFiles/md.dir/src/datastructure.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/md_lib.dir/build.make CMakeFiles/md_lib.dir/src/datastructure.c.o
 .PHONY : src/datastructure.c.o
 
 src/datastructure.i: src/datastructure.c.i
@@ -300,7 +228,7 @@ src/datastructure.i: src/datastructure.c.i
 
 # target to preprocess a source file
 src/datastructure.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/md.dir/build.make CMakeFiles/md.dir/src/datastructure.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/md_lib.dir/build.make CMakeFiles/md_lib.dir/src/datastructure.c.i
 .PHONY : src/datastructure.c.i
 
 src/datastructure.s: src/datastructure.c.s
@@ -308,7 +236,7 @@ src/datastructure.s: src/datastructure.c.s
 
 # target to generate assembly for a file
 src/datastructure.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/md.dir/build.make CMakeFiles/md.dir/src/datastructure.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/md_lib.dir/build.make CMakeFiles/md_lib.dir/src/datastructure.c.s
 .PHONY : src/datastructure.c.s
 
 src/input.o: src/input.c.o
@@ -316,7 +244,7 @@ src/input.o: src/input.c.o
 
 # target to build an object file
 src/input.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/md.dir/build.make CMakeFiles/md.dir/src/input.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/md_lib.dir/build.make CMakeFiles/md_lib.dir/src/input.c.o
 .PHONY : src/input.c.o
 
 src/input.i: src/input.c.i
@@ -324,7 +252,7 @@ src/input.i: src/input.c.i
 
 # target to preprocess a source file
 src/input.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/md.dir/build.make CMakeFiles/md.dir/src/input.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/md_lib.dir/build.make CMakeFiles/md_lib.dir/src/input.c.i
 .PHONY : src/input.c.i
 
 src/input.s: src/input.c.s
@@ -332,7 +260,7 @@ src/input.s: src/input.c.s
 
 # target to generate assembly for a file
 src/input.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/md.dir/build.make CMakeFiles/md.dir/src/input.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/md_lib.dir/build.make CMakeFiles/md_lib.dir/src/input.c.s
 .PHONY : src/input.c.s
 
 src/main.o: src/main.c.o
@@ -364,7 +292,7 @@ src/output.o: src/output.c.o
 
 # target to build an object file
 src/output.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/md.dir/build.make CMakeFiles/md.dir/src/output.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/md_lib.dir/build.make CMakeFiles/md_lib.dir/src/output.c.o
 .PHONY : src/output.c.o
 
 src/output.i: src/output.c.i
@@ -372,7 +300,7 @@ src/output.i: src/output.c.i
 
 # target to preprocess a source file
 src/output.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/md.dir/build.make CMakeFiles/md.dir/src/output.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/md_lib.dir/build.make CMakeFiles/md_lib.dir/src/output.c.i
 .PHONY : src/output.c.i
 
 src/output.s: src/output.c.s
@@ -380,7 +308,7 @@ src/output.s: src/output.c.s
 
 # target to generate assembly for a file
 src/output.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/md.dir/build.make CMakeFiles/md.dir/src/output.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/md_lib.dir/build.make CMakeFiles/md_lib.dir/src/output.c.s
 .PHONY : src/output.c.s
 
 src/utilities.o: src/utilities.c.o
@@ -388,7 +316,7 @@ src/utilities.o: src/utilities.c.o
 
 # target to build an object file
 src/utilities.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/md.dir/build.make CMakeFiles/md.dir/src/utilities.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/md_lib.dir/build.make CMakeFiles/md_lib.dir/src/utilities.c.o
 .PHONY : src/utilities.c.o
 
 src/utilities.i: src/utilities.c.i
@@ -396,7 +324,7 @@ src/utilities.i: src/utilities.c.i
 
 # target to preprocess a source file
 src/utilities.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/md.dir/build.make CMakeFiles/md.dir/src/utilities.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/md_lib.dir/build.make CMakeFiles/md_lib.dir/src/utilities.c.i
 .PHONY : src/utilities.c.i
 
 src/utilities.s: src/utilities.c.s
@@ -404,7 +332,7 @@ src/utilities.s: src/utilities.c.s
 
 # target to generate assembly for a file
 src/utilities.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/md.dir/build.make CMakeFiles/md.dir/src/utilities.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/md_lib.dir/build.make CMakeFiles/md_lib.dir/src/utilities.c.s
 .PHONY : src/utilities.c.s
 
 src/velverlet.o: src/velverlet.c.o
@@ -412,7 +340,7 @@ src/velverlet.o: src/velverlet.c.o
 
 # target to build an object file
 src/velverlet.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/md.dir/build.make CMakeFiles/md.dir/src/velverlet.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/md_lib.dir/build.make CMakeFiles/md_lib.dir/src/velverlet.c.o
 .PHONY : src/velverlet.c.o
 
 src/velverlet.i: src/velverlet.c.i
@@ -420,7 +348,7 @@ src/velverlet.i: src/velverlet.c.i
 
 # target to preprocess a source file
 src/velverlet.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/md.dir/build.make CMakeFiles/md.dir/src/velverlet.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/md_lib.dir/build.make CMakeFiles/md_lib.dir/src/velverlet.c.i
 .PHONY : src/velverlet.c.i
 
 src/velverlet.s: src/velverlet.c.s
@@ -428,7 +356,7 @@ src/velverlet.s: src/velverlet.c.s
 
 # target to generate assembly for a file
 src/velverlet.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/md.dir/build.make CMakeFiles/md.dir/src/velverlet.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/md_lib.dir/build.make CMakeFiles/md_lib.dir/src/velverlet.c.s
 .PHONY : src/velverlet.c.s
 
 tests/test_compute_force.o: tests/test_compute_force.cpp.o
@@ -436,7 +364,7 @@ tests/test_compute_force.o: tests/test_compute_force.cpp.o
 
 # target to build an object file
 tests/test_compute_force.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_md.dir/build.make CMakeFiles/test_md.dir/tests/test_compute_force.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_compute_force.dir/build.make CMakeFiles/test_compute_force.dir/tests/test_compute_force.cpp.o
 .PHONY : tests/test_compute_force.cpp.o
 
 tests/test_compute_force.i: tests/test_compute_force.cpp.i
@@ -444,7 +372,7 @@ tests/test_compute_force.i: tests/test_compute_force.cpp.i
 
 # target to preprocess a source file
 tests/test_compute_force.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_md.dir/build.make CMakeFiles/test_md.dir/tests/test_compute_force.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_compute_force.dir/build.make CMakeFiles/test_compute_force.dir/tests/test_compute_force.cpp.i
 .PHONY : tests/test_compute_force.cpp.i
 
 tests/test_compute_force.s: tests/test_compute_force.cpp.s
@@ -452,8 +380,56 @@ tests/test_compute_force.s: tests/test_compute_force.cpp.s
 
 # target to generate assembly for a file
 tests/test_compute_force.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_md.dir/build.make CMakeFiles/test_md.dir/tests/test_compute_force.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_compute_force.dir/build.make CMakeFiles/test_compute_force.dir/tests/test_compute_force.cpp.s
 .PHONY : tests/test_compute_force.cpp.s
+
+tests/test_datastructure.o: tests/test_datastructure.cpp.o
+.PHONY : tests/test_datastructure.o
+
+# target to build an object file
+tests/test_datastructure.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_datastructure.dir/build.make CMakeFiles/test_datastructure.dir/tests/test_datastructure.cpp.o
+.PHONY : tests/test_datastructure.cpp.o
+
+tests/test_datastructure.i: tests/test_datastructure.cpp.i
+.PHONY : tests/test_datastructure.i
+
+# target to preprocess a source file
+tests/test_datastructure.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_datastructure.dir/build.make CMakeFiles/test_datastructure.dir/tests/test_datastructure.cpp.i
+.PHONY : tests/test_datastructure.cpp.i
+
+tests/test_datastructure.s: tests/test_datastructure.cpp.s
+.PHONY : tests/test_datastructure.s
+
+# target to generate assembly for a file
+tests/test_datastructure.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_datastructure.dir/build.make CMakeFiles/test_datastructure.dir/tests/test_datastructure.cpp.s
+.PHONY : tests/test_datastructure.cpp.s
+
+tests/test_velverlet.o: tests/test_velverlet.cpp.o
+.PHONY : tests/test_velverlet.o
+
+# target to build an object file
+tests/test_velverlet.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_velverlet.dir/build.make CMakeFiles/test_velverlet.dir/tests/test_velverlet.cpp.o
+.PHONY : tests/test_velverlet.cpp.o
+
+tests/test_velverlet.i: tests/test_velverlet.cpp.i
+.PHONY : tests/test_velverlet.i
+
+# target to preprocess a source file
+tests/test_velverlet.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_velverlet.dir/build.make CMakeFiles/test_velverlet.dir/tests/test_velverlet.cpp.i
+.PHONY : tests/test_velverlet.cpp.i
+
+tests/test_velverlet.s: tests/test_velverlet.cpp.s
+.PHONY : tests/test_velverlet.s
+
+# target to generate assembly for a file
+tests/test_velverlet.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_velverlet.dir/build.make CMakeFiles/test_velverlet.dir/tests/test_velverlet.cpp.s
+.PHONY : tests/test_velverlet.cpp.s
 
 # Help Target
 help:
@@ -462,20 +438,13 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... edit_cache"
-	@echo "... install"
-	@echo "... install/local"
-	@echo "... install/strip"
-	@echo "... list_install_components"
 	@echo "... rebuild_cache"
-	@echo "... gmock"
-	@echo "... gmock_main"
-	@echo "... gtest"
-	@echo "... gtest_main"
+	@echo "... test"
 	@echo "... md"
-	@echo "... test_md"
-	@echo "... src/cleanup.o"
-	@echo "... src/cleanup.i"
-	@echo "... src/cleanup.s"
+	@echo "... md_lib"
+	@echo "... test_compute_force"
+	@echo "... test_datastructure"
+	@echo "... test_velverlet"
 	@echo "... src/compute_force.o"
 	@echo "... src/compute_force.i"
 	@echo "... src/compute_force.s"
@@ -500,6 +469,12 @@ help:
 	@echo "... tests/test_compute_force.o"
 	@echo "... tests/test_compute_force.i"
 	@echo "... tests/test_compute_force.s"
+	@echo "... tests/test_datastructure.o"
+	@echo "... tests/test_datastructure.i"
+	@echo "... tests/test_datastructure.s"
+	@echo "... tests/test_velverlet.o"
+	@echo "... tests/test_velverlet.i"
+	@echo "... tests/test_velverlet.s"
 .PHONY : help
 
 
