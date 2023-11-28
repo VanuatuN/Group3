@@ -15,6 +15,8 @@ else()
     set(CMAKE_C_COMPILER gcc)
 endif()
 
+add_definitions(-O3)
+
 set(SOURCES
     src/utilities.c
     src/compute_force.c
@@ -44,7 +46,7 @@ if(USE_MPI)
     target_compile_definitions(md PRIVATE _MPI)
 endif()
 
-#Unit test for compute force function
+#Unit tests
 option(ENABLE_TESTING "Enable building unit tests" ON)
 if(ENABLE_TESTING)
   enable_testing()
