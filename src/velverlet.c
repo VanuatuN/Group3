@@ -39,7 +39,7 @@ void velverlet(mdsys_t *sys)
 {
     int i;
     #if defined(_MPI)
-    if (sys.rank == 0) {
+    if (sys->rank == 0) {
     #endif
     /* first part: propagate velocities by half and positions by full step */
     update_half1(sys, i);
@@ -50,7 +50,7 @@ void velverlet(mdsys_t *sys)
     force(sys);
 
     #if defined(_MPI)
-    if (sys.rank == 0) {
+    if (sys->rank == 0) {
     #endif
     update_half2(sys, i);
     #if defined(_MPI)
