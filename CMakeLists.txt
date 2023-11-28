@@ -3,6 +3,8 @@ cmake_minimum_required(VERSION 3.12)  # Set a valid CMake version
 project(MD_SIMULATION LANGUAGES C CXX)
 
 set(CMAKE_CXX_STANDARD 14)
+
+#Add Definition
 # add_definitions(-DREFACTOR)
 
 # Add your source files here
@@ -30,7 +32,7 @@ add_library(md_lib SHARED ${SOURCES} ${HEADERS})
 
 # Specify include directories
 target_include_directories(md_lib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
-add_compile_options(-O3)
+
 # Create an executable
 add_executable(md src/main.c)
 
@@ -47,7 +49,7 @@ if(ENABLE_TESTING)
   enable_language(CXX)
 
   find_package(GTest REQUIRED)
-      # Download and include GoogleTest manually
+      # Download and include GoogleTest manually 
       include(FetchContent)
       FetchContent_Declare(
           googletest
@@ -60,8 +62,8 @@ if(ENABLE_TESTING)
     tests/test_compute_force.cpp
   )
   add_executable(test_compute_force ${TEST_FORCE})
-  target_include_directories(test_compute_force PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
-  target_link_libraries(test_compute_force PUBLIC GTest::GTest GTest::Main md_lib)
+  target_include_directories(test_compute_force PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+  target_link_libraries(test_compute_force PRIVATE GTest::GTest GTest::Main md_lib)
   # add_test(NAME Force COMMAND test_compute_force)
 
   set(TEST_DSTRUCT
@@ -88,10 +90,10 @@ if(ENABLE_TESTING)
       )
 
   add_executable(test_utils ${TEST_UTILS})
-  target_include_directories(test_utils PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
-  target_link_libraries(test_utils PUBLIC GTest::GTest GTest::Main md_lib)
+  target_include_directories(test_utils PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+  target_link_libraries(test_utils PRIVATE GTest::GTest GTest::Main md_lib)
   # add_test(NAME Utils COMMAND test_utils)
-   # Add tests
+  # Add tests
    include(GoogleTest)
    gtest_discover_tests(test_utils TIMEOUT 1000)
    gtest_discover_tests(test_compute_force TIMEOUT 1000)

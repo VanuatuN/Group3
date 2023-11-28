@@ -18,7 +18,7 @@ void force(mdsys_t *sys)
     azzero(sys->fz,sys->natoms);
 
     for(i=0; i < (sys->natoms); ++i) {
-        for(j=0; j < (sys->natoms); ++j) {
+        for(j= 0; j < (sys->natoms); ++j) {
 
             /* particles have no interactions with themselves */
             if (i==j) continue;

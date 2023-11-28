@@ -40,7 +40,7 @@ int main(int argc, char **argv)
 
     t_start = wallclock();
 
-    input(stdin, line, restfile, trajfile, ergfile, &sys, nprint, BLEN);
+    input(stdin, line, restfile, trajfile, ergfile, &sys, &nprint, BLEN);
 
     /* allocate memory */
     init_mdsys(&sys);
