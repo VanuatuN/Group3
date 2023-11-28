@@ -74,7 +74,6 @@ int main(int argc, char **argv)
     #if defined(_MPI)
     if (sys.rank == 0) {
     #endif
-
     ekin(&sys);
     erg=fopen(ergfile,"w");
     traj=fopen(trajfile,"w");
@@ -85,10 +84,10 @@ int main(int argc, char **argv)
     output(&sys, erg, traj);
 
     t_start = wallclock(); /* reset timer */
-
     #if defined(_MPI)
     } // if (rank == 0)
     #endif
+
     /**************************************************/
     /* main MD loop */
     for(sys.nfi=1; sys.nfi <= sys.nsteps; ++sys.nfi) {
@@ -101,6 +100,8 @@ int main(int argc, char **argv)
         #if defined(_MPI)
         } // if (rank == 0)
         #endif
+
+        MPI_Barrier(sys.syscomm);
         /* propagate system and recompute energies */
         velverlet(&sys);
 
@@ -121,20 +122,19 @@ int main(int argc, char **argv)
     printf("Simulation Done. Run time: %10.3fs\n", wallclock()-t_start);
     fclose(erg);
     fclose(traj);
-
     cleanup_mdsys(&sys);
-
     #if defined(_MPI)
     } // if (rank == 0)
     #endif
 
     #if defined(_MPI)
     if (sys.rank != 0){
-    cleanup_mpi_r(&sys);
+        cleanup_mpi_r(&sys);
     }
     cleanup_mpi_c(&sys);
     MPI_Finalize();
     #endif
+
     return 0;
 }
 

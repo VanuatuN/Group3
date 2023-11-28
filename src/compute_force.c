@@ -20,7 +20,7 @@ void force(mdsys_t *sys)
     int ii;
     
     #if defined(_MPI)
-    double epotsum = 0;
+    double epotsum = 0.0;
     step = sys->npes;
     azzero(sys->cx, sys->natoms);
     azzero(sys->cy, sys->natoms);
@@ -29,7 +29,7 @@ void force(mdsys_t *sys)
     MPI_Bcast(sys->rx, sys->natoms, MPI_DOUBLE, 0, sys->syscomm);
     MPI_Bcast(sys->ry, sys->natoms, MPI_DOUBLE, 0, sys->syscomm);
     MPI_Bcast(sys->rz, sys->natoms, MPI_DOUBLE, 0, sys->syscomm);
-
+    
     #else
     azzero(sys->fx, sys->natoms);
     azzero(sys->fy, sys->natoms);
@@ -56,7 +56,7 @@ void force(mdsys_t *sys)
                 double r6, rinv;
                 rinv = 1.0 / rsq;
                 r6 = rinv * rinv * rinv;
-                ffac = (12.0 * c12 * r6 - 6.0 * c6) * r6 * rinv;
+                ffac = (12.0 * c12 * r6 - 6.0 * c6) * r6 * rinv; // replace with morse
 
                 #if defined(_MPI)
                 // Update forces using vectorized operations

@@ -51,7 +51,7 @@ void init_params(mdsys_t *sys){
     MPI_Bcast(&sys->rcut, 1, MPI_DOUBLE, 0, sys->syscomm);
     MPI_Bcast(&sys->epsilon, 1, MPI_DOUBLE, 0, sys->syscomm);
     MPI_Bcast(&sys->sigma, 1, MPI_DOUBLE, 0, sys->syscomm);
-    MPI_Bcast(&sys->nsteps, 1, MPI_DOUBLE, 0, sys->syscomm);
+    MPI_Bcast(&sys->nsteps, 1, MPI_INT, 0, sys->syscomm);
     MPI_Bcast(&sys->dt, 1, MPI_DOUBLE, 0, sys->syscomm);
 }
 #endif
