@@ -4,6 +4,9 @@
 #include "datastructure.h"
 #include "utilities.h"
 #include "compute_force.h"
+#if defined(USE_MPI)
+#include "mpi.h"
+#endif
 
 // /* a few physical constants */
 extern const double kboltz;     /* boltzman constant in kcal/mol/K */
@@ -35,15 +38,24 @@ void update_half2(mdsys_t *sys, int i)
 void velverlet(mdsys_t *sys)
 {
     int i;
-
+    #if defined(_MPI)
+    if (sys.rank == 0) {
+    #endif
     /* first part: propagate velocities by half and positions by full step */
     update_half1(sys, i);
-
+    #if defined(_MPI)
+    }
+    #endif
     /* compute forces and potential energy */
     force(sys);
 
+    #if defined(_MPI)
+    if (sys.rank == 0) {
+    #endif
     update_half2(sys, i);
-
+    #if defined(_MPI)
+    }
+    #endif
     /* second part: propagate velocities by another half step */
     
 }

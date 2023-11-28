@@ -3,6 +3,9 @@
 #include "datastructure.h"
 #include <stdlib.h>
 #include "utilities.h"
+#if defined(_MPI)
+#include "mpi.h"
+#endif
 
 // Function to initialize the mdsys_t structure
 void init_mdsys(mdsys_t *sys) {
@@ -16,6 +19,20 @@ void init_mdsys(mdsys_t *sys) {
     sys->fy = (double *)malloc(sys->natoms * sizeof(double));
     sys->fz = (double *)malloc(sys->natoms * sizeof(double));
 }
+
+#if defined(_MPI)
+void init_mdsys_mpi(mdsys_t *sys) {
+    sys->cx = (double *)malloc(sys->natoms * sizeof(double));
+    sys->cy = (double *)malloc(sys->natoms * sizeof(double));
+    sys->cz = (double *)malloc(sys->natoms * sizeof(double));
+}
+
+void cleanup_mdsys_mpi(mdsys_t *sys){
+    free(sys->cx);
+    free(sys->cy);
+    free(sys->cz);
+}
+#endif
 
 // Function to free resources associated with the mdsys_t structure
 void cleanup_mdsys(mdsys_t *sys) {
