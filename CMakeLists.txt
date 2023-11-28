@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD 14)
 
 #Add Definition
 # add_definitions(-DREFACTOR)
-
+# add_definitions(-O3)
 # Add your source files here
 set(SOURCES
     src/utilities.c
