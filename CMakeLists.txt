@@ -3,7 +3,6 @@ cmake_minimum_required(VERSION 3.12)  # Set a valid CMake version
 project(MD_SIMULATION LANGUAGES C CXX)
 
 set(CMAKE_CXX_STANDARD 14)
-add_definitions(-DREFACTOR)
 
 # Add your source files here
 set(SOURCES
