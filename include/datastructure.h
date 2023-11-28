@@ -33,8 +33,11 @@ void cleanup_mdsys(mdsys_t *sys);
 void read_restart(mdsys_t *sys, const char *restfile);
 
 #if defined(_MPI)
-   void init_mdsys_mpi(mdsys_t *sys);
-   void cleanup_mdsys_mpi(mdsys_t *sys);
+   void init_mpi_c(mdsys_t *sys);
+   void init_mpi_r(mdsys_t *sys);
+   void cleanup_mpi_r(mdsys_t *sys);
+   void cleanup_mpi_c(mdsys_t *sys);
+   void init_params(mdsys_t *sys);
 #endif
 
 #ifdef __cplusplus

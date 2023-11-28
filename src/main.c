@@ -48,27 +48,33 @@ int main(int argc, char **argv)
     sys.rank = rank;
     sys.npes = npes;
 
-    printf("rank %d", sys.rank);
-    init_mdsys_mpi(&sys);
+    printf("Rank: %d \n", sys.rank);
 
-    if (rank == 0) {
+    if (sys.rank == 0) {
     #endif
     printf("LJMD version %3.1f\n", LJMD_VERSION);
     t_start = wallclock();
     input(stdin, line, restfile, trajfile, ergfile, &sys, nprint, BLEN);
     init_mdsys(&sys); /* allocate memory */
     read_restart(&sys, restfile); /* read restart */
-    
+    #if defined(_MPI)
+    } //end if rank == 0
+    #endif
+
+    #if defined(_MPI)
+    init_params(&sys);
+    init_mpi_c(&sys);
+    if(sys.rank != 0){
+        init_mpi_r(&sys); 
+    }
+    #endif
+
     /* initialize forces and energies.*/
     sys.nfi=0;
-    #if defined(_MPI)
-    } // if (rank == 0)
-    #endif
-    
     force(&sys); // ALL ranks
 
     #if defined(_MPI)
-    if (rank == 0) {
+    if (sys.rank == 0) {
     #endif
 
     ekin(&sys);
@@ -88,19 +94,30 @@ int main(int argc, char **argv)
     /**************************************************/
     /* main MD loop */
     for(sys.nfi=1; sys.nfi <= sys.nsteps; ++sys.nfi) {
-
+        #if defined(_MPI)
+        if (sys.rank == 0) {
+        #endif
         /* write output, if requested */
         if ((sys.nfi % nprint) == 0)
             output(&sys, erg, traj);
-
+        #if defined(_MPI)
+        } // if (rank == 0)
+        #endif
         /* propagate system and recompute energies */
         velverlet(&sys);
+
+        #if defined(_MPI)
+        if (sys.rank == 0) {
+        #endif
         ekin(&sys);
+        #if defined(_MPI)
+        } // if (rank == 0)
+        #endif
     }
     /**************************************************/
 
     #if defined(_MPI)
-    if (rank == 0) {
+    if (sys.rank == 0) {
     #endif
     /* clean up: close files, free memory */
     printf("Simulation Done. Run time: %10.3fs\n", wallclock()-t_start);
@@ -114,7 +131,10 @@ int main(int argc, char **argv)
     #endif
 
     #if defined(_MPI)
-    cleanup_mdsys_mpi(&sys);
+    if (sys.rank != 0){
+    cleanup_mpi_r(&sys);
+    }
+    cleanup_mpi_c(&sys);
     MPI_Finalize();
     #endif
     return 0;

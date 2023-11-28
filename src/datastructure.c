@@ -21,16 +21,38 @@ void init_mdsys(mdsys_t *sys) {
 }
 
 #if defined(_MPI)
-void init_mdsys_mpi(mdsys_t *sys) {
+void init_mpi_c(mdsys_t *sys) {
     sys->cx = (double *)malloc(sys->natoms * sizeof(double));
     sys->cy = (double *)malloc(sys->natoms * sizeof(double));
     sys->cz = (double *)malloc(sys->natoms * sizeof(double));
 }
 
-void cleanup_mdsys_mpi(mdsys_t *sys){
+void init_mpi_r(mdsys_t *sys) {
+    sys->rx = (double *)malloc(sys->natoms * sizeof(double));
+    sys->ry = (double *)malloc(sys->natoms * sizeof(double));
+    sys->rz = (double *)malloc(sys->natoms * sizeof(double));
+}
+
+void cleanup_mpi_c(mdsys_t *sys){
     free(sys->cx);
     free(sys->cy);
     free(sys->cz);
+}
+
+void cleanup_mpi_r(mdsys_t *sys){
+    free(sys->rx);
+    free(sys->ry);
+    free(sys->rz);
+}
+
+void init_params(mdsys_t *sys){
+    MPI_Bcast(&sys->natoms, 1, MPI_INT, 0, sys->syscomm);
+    MPI_Bcast(&sys->box, 1, MPI_DOUBLE, 0, sys->syscomm);
+    MPI_Bcast(&sys->rcut, 1, MPI_DOUBLE, 0, sys->syscomm);
+    MPI_Bcast(&sys->epsilon, 1, MPI_DOUBLE, 0, sys->syscomm);
+    MPI_Bcast(&sys->sigma, 1, MPI_DOUBLE, 0, sys->syscomm);
+    MPI_Bcast(&sys->nsteps, 1, MPI_DOUBLE, 0, sys->syscomm);
+    MPI_Bcast(&sys->dt, 1, MPI_DOUBLE, 0, sys->syscomm);
 }
 #endif
 
