@@ -48,13 +48,11 @@ int main(int argc, char **argv)
     sys.rank = rank;
     sys.npes = npes;
 
-    printf("Rank: %d \n", sys.rank);
-
     if (sys.rank == 0) {
     #endif
     printf("LJMD version %3.1f\n", LJMD_VERSION);
     t_start = wallclock();
-    input(stdin, line, restfile, trajfile, ergfile, &sys, nprint, BLEN);
+    input(stdin, line, restfile, trajfile, ergfile, &sys, &nprint, BLEN);
     init_mdsys(&sys); /* allocate memory */
     read_restart(&sys, restfile); /* read restart */
     #if defined(_MPI)
