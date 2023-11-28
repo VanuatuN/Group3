@@ -34,7 +34,7 @@ typedef struct mdsys mdsys_t;
 /* main */
 int main(int argc, char **argv)
 {
-    int nprint, i;
+    int nprint, i, rank = 0, npes = 1;
     char restfile[BLEN], trajfile[BLEN], ergfile[BLEN], line[BLEN];
     FILE *fp,*traj,*erg;
     mdsys_t sys;
@@ -48,31 +48,23 @@ int main(int argc, char **argv)
     sys.rank = rank;
     sys.npes = npes;
 
+    printf("rank %d", sys.rank);
     init_mdsys_mpi(&sys);
 
     if (rank == 0) {
     #endif
-
-    // printf("LJMD version %3.1f\n", LJMD_VERSION);
-
+    printf("LJMD version %3.1f\n", LJMD_VERSION);
     t_start = wallclock();
-
     input(stdin, line, restfile, trajfile, ergfile, &sys, nprint, BLEN);
-
-    /* allocate memory */
-    init_mdsys(&sys);
-
-    /* read restart */
-    read_restart(&sys, restfile);
-
+    init_mdsys(&sys); /* allocate memory */
+    read_restart(&sys, restfile); /* read restart */
+    
     /* initialize forces and energies.*/
     sys.nfi=0;
-
     #if defined(_MPI)
     } // if (rank == 0)
     #endif
     
-    printf("LJMD version %3.1f\n", LJMD_VERSION);
     force(&sys); // ALL ranks
 
     #if defined(_MPI)
@@ -80,7 +72,6 @@ int main(int argc, char **argv)
     #endif
 
     ekin(&sys);
-
     erg=fopen(ergfile,"w");
     traj=fopen(trajfile,"w");
 
@@ -89,13 +80,11 @@ int main(int argc, char **argv)
     printf("     NFI            TEMP            EKIN                 EPOT              ETOT\n");
     output(&sys, erg, traj);
 
-    /* reset timer */
-    t_start = wallclock();
+    t_start = wallclock(); /* reset timer */
 
     #if defined(_MPI)
     } // if (rank == 0)
     #endif
-
     /**************************************************/
     /* main MD loop */
     for(sys.nfi=1; sys.nfi <= sys.nsteps; ++sys.nfi) {
