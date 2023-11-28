@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.12)  # Set a valid CMake version
 project(MD_SIMULATION LANGUAGES C CXX)
 
 set(CMAKE_CXX_STANDARD 14)
-add_definitions(-DREFACTOR)
+# add_definitions(-DREFACTOR)
 
 # Add your source files here
 set(SOURCES
@@ -30,7 +30,7 @@ add_library(md_lib SHARED ${SOURCES} ${HEADERS})
 
 # Specify include directories
 target_include_directories(md_lib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
-
+add_compile_options(-O3)
 # Create an executable
 add_executable(md src/main.c)
 

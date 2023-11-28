@@ -78,7 +78,7 @@ void force(mdsys_t *sys)
                 r6 = rinv * rinv * rinv;
                 ffac = (12.0 * c12 * r6 - 6.0 * c6) * r6 * rinv;
 
-                sys->epot += r6 * (c12 * r6 - c6);
+                
 
                 // Update forces using vectorized operations
                 sys->fx[i] += rx * ffac;
@@ -89,7 +89,7 @@ void force(mdsys_t *sys)
                 sys->fx[j] -= rx * ffac;
                 sys->fy[j] -= ry * ffac;
                 sys->fz[j] -= rz * ffac;
-                
+                sys->epot += r6 * (c12 * r6 - c6);
             }
         }
     }
