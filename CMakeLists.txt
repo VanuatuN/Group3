@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.12)
 
 project(MD_SIMULATION LANGUAGES C CXX)
 
-option(USE_MPI "Use MPI for compilation" ON)
+option(USE_MPI "Use MPI for compilation" OFF)
 set(CMAKE_CXX_STANDARD 17)
 
 if(USE_MPI)
