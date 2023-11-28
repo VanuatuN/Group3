@@ -17,9 +17,9 @@ void force(mdsys_t *sys)
     double ffac, rx, ry, rz, rsq;
     int step = 1;
     sys->epot = 0.0;
+    int ii;
     
     #if defined(_MPI)
-    int ii;
     double epotsum = 0;
     step = sys->npes;
     azzero(sys->cx, sys->natoms);
@@ -41,12 +41,14 @@ void force(mdsys_t *sys)
         #if defined(_MPI)
         ii =  i + sys->rank;
         if (ii >=(sys->natoms-1)) break;
+        #else
+        ii = i;
         #endif
-        for (int j = i + 1; j < (sys->natoms); ++j)
+        for (int j = ii + 1; j < (sys->natoms); ++j)
         {
-            rx = pbc(sys->rx[i] - sys->rx[j], 0.5 * sys->box);
-            ry = pbc(sys->ry[i] - sys->ry[j], 0.5 * sys->box);
-            rz = pbc(sys->rz[i] - sys->rz[j], 0.5 * sys->box);
+            rx = pbc(sys->rx[ii] - sys->rx[j], 0.5 * sys->box);
+            ry = pbc(sys->ry[ii] - sys->ry[j], 0.5 * sys->box);
+            rz = pbc(sys->rz[ii] - sys->rz[j], 0.5 * sys->box);
             rsq = rx * rx + ry * ry + rz * rz;
 
             if (rsq < rcsq)
@@ -58,9 +60,9 @@ void force(mdsys_t *sys)
 
                 #if defined(_MPI)
                 // Update forces using vectorized operations
-                sys->cx[i] += rx * ffac;
-                sys->cy[i] += ry * ffac;
-                sys->cz[i] += rz * ffac;
+                sys->cx[ii] += rx * ffac;
+                sys->cy[ii] += ry * ffac;
+                sys->cz[ii] += rz * ffac;
 
                 // Newton's third law: opposite force on particle j
                 sys->cx[j] -= rx * ffac;
@@ -70,9 +72,9 @@ void force(mdsys_t *sys)
                 epotsum += r6 * (c12 * r6 - c6);
                 #else
                 // Update forces using vectorized operations
-                sys->fx[i] += rx * ffac;
-                sys->fy[i] += ry * ffac;
-                sys->fz[i] += rz * ffac;
+                sys->fx[ii] += rx * ffac;
+                sys->fy[ii] += ry * ffac;
+                sys->fz[ii] += rz * ffac;
 
                 // Newton's third law: opposite force on particle j
                 sys->fx[j] -= rx * ffac;
