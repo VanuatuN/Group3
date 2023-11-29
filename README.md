@@ -53,44 +53,44 @@ Figure 1: Animation of the simulation of Argon (108 atoms) in a cubic box for 10
 ## II. Individual Level
 
 ## **********  Group 3 Directory Structure  **********
-.\
-├── CMakeLists.txt                ! CMake program for building the ljmd simulation program\
-├── README.md                     ! Group & project description\
-├── examples                      : Input files and their corresponding output files\
-│   ├── argon_108.dat\
-│   ├── argon_108.inp\
-│   ├── argon_108.rest
-│   ├── argon_108.xyz
-│   ├── argon_2.rest
-│   ├── argon_2916.dat
-│   ├── argon_2916.inp
-│   ├── argon_2916.rest
-│   ├── argon_2916.xyz
-│   ├── argon_78732.inp
-│   └── argon_78732.rest
-├── include                        : Header files: contains function declarations
-│   ├── cleanup.h
-│   ├── compute_force.h
-│   ├── datastructure.h
-│   ├── input.h
-│   ├── output.h
-│   ├── utilities.h
-│   └── velverlet.h
-├── src                            : Source files : contains fucntion description
-│   ├── cleanup.c                  ! Memory deacllocation
-│   ├── compute_force.c            ! Force computation kernel
-│   ├── datastructure.c            ! Data types and structure definition
-│   ├── input.c                    ! Input algorithm
-│   ├── main.c                     ! Main program in C
-│   ├── main.cpp                   ! Main program in C++
-│   ├── output.c                   ! Data output algorithm
-│   ├── utilities.c                ! Helper functions (e.g get_a_line, pbc...)
-│   └── velverlet.c                ! Velocity Verlet computation kernel
-└── tests                          : Google Tests files
-    ├── test_compute_force.cpp     ! GTest (C++) program to check the correctness of the force computation kernel
-    ├── test_datastructure.cpp     ! GTest (C++) program to check the accuracy of data handling
-    ├── test_utils.cpp             ! GTest (C++) progrma to check helper functions used in the main program
-    └── test_velverlet.cpp         ! GTest (C++) program to check that velocities are computed correctly
+.<br>
+├── CMakeLists.txt                ! CMake program for building the ljmd simulation program<br>
+├── README.md                     ! Group & project description<br>
+├── examples                      : Input files and their corresponding output files<br>
+│   ├── argon_108.dat<br>
+│   ├── argon_108.inp<br>
+│   ├── argon_108.rest<br>
+│   ├── argon_108.xyz<br>
+│   ├── argon_2.rest<br>
+│   ├── argon_2916.dat<br>
+│   ├── argon_2916.inp<br>
+│   ├── argon_2916.rest<br>
+│   ├── argon_2916.xyz<br>
+│   ├── argon_78732.inp<br>
+│   └── argon_78732.rest<br>
+├── include                        : Header files: contains function declarations<br>
+│   ├── cleanup.h<br>
+│   ├── compute_force.h<br>
+│   ├── datastructure.h<br>
+│   ├── input.h<br>
+│   ├── output.h<br>
+│   ├── utilities.h<br>
+│   └── velverlet.h<br>
+├── src                            : Source files : contains fucntion description<br>
+│   ├── cleanup.c                  ! Memory deacllocation<br>
+│   ├── compute_force.c            ! Force computation kernel<br>
+│   ├── datastructure.c            ! Data types and structure definition<br>
+│   ├── input.c                    ! Input algorithm<br>
+│   ├── main.c                     ! Main program in C<br>
+│   ├── main.cpp                   ! Main program in C++<br>
+│   ├── output.c                   ! Data output algorithm<br>
+│   ├── utilities.c                ! Helper functions (e.g get_a_line, pbc...)<br>
+│   └── velverlet.c                ! Velocity Verlet computation kernel<br>
+└── tests                          : Google Tests files<br>
+    ├── test_compute_force.cpp     ! GTest (C++) program to check the correctness of the force computation kernel<br>
+    ├── test_datastructure.cpp     ! GTest (C++) program to check the accuracy of data handling<br>
+    ├── test_utils.cpp             ! GTest (C++) progrma to check helper functions used in the main program<br>
+    └── test_velverlet.cpp         ! GTest (C++) program to check that velocities are computed correctly<br>
 
 4 directories, 33 files
 
@@ -106,7 +106,7 @@ Figure 1: Animation of the simulation of Argon (108 atoms) in a cubic box for 10
 
 ## Benchmark report (b):
 
-## Benchmark report (C):
+## Benchmark report (c):
 
 ## Acknowledgments
 
