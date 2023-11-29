@@ -77,15 +77,15 @@ Figure 1: Animation of the simulation of Argon (108 atoms) in a cubic box for 10
 │   ├── utilities.h<br>
 │   └── velverlet.h<br>
 ├── src                            : Source files : contains fucntion description<br>
-│   ├── cleanup.c                  ! Memory deacllocation<br>
-│   ├── compute_force.c            ! Force computation kernel<br>
-│   ├── datastructure.c            ! Data types and structure definition<br>
-│   ├── input.c                    ! Input algorithm<br>
-│   ├── main.c                     ! Main program in C<br>
-│   ├── main.cpp                   ! Main program in C++<br>
-│   ├── output.c                   ! Data output algorithm<br>
-│   ├── utilities.c                ! Helper functions (e.g get_a_line, pbc...)<br>
-│   └── velverlet.c                ! Velocity Verlet computation kernel<br>
+│   ├── cleanup.c                  - Memory deacllocation<br>
+│   ├── compute_force.c            - Force computation kernel<br>
+│   ├── datastructure.c            - Data types and structure definition<br>
+│   ├── input.c                    - Input algorithm<br>
+│   ├── main.c                     - Main program in C<br>
+│   ├── main.cpp                   - Main program in C++<br>
+│   ├── output.c                   - Data output algorithm<br>
+│   ├── utilities.c                - Helper functions (e.g get_a_line, pbc...)<br>
+│   └── velverlet.c                - Velocity Verlet computation kernel<br>
 └── tests                          : Google Tests files<br>
     ├── test_compute_force.cpp     ! GTest (C++) program to check the correctness of the force computation kernel<br>
     ├── test_datastructure.cpp     ! GTest (C++) program to check the accuracy of data handling<br>
