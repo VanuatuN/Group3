@@ -53,7 +53,6 @@ Figure 1: Animation of the simulation of Argon (108 atoms) in a cubic box for 10
 ## II. Individual Level
 
 ## **********  Group 3 Directory Structure  **********
-</pre>
 ```C
 .<br>
 ├── CMakeLists.txt                ! CMake program for building the ljmd simulation program<br>
