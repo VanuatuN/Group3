@@ -97,6 +97,7 @@ Summary: 4 directories, 33 files
 
 ## How to build (Serial code):
 
+
 ## How to build (With MPI parallelism):
 
 ## How to build (With OpenMP parallelism):
@@ -104,6 +105,7 @@ Summary: 4 directories, 33 files
 
 
 ## Benchmark report (a):
+
 
 ## Benchmark report (b):
 
