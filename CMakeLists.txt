@@ -10,7 +10,7 @@ set(CMAKE_CXX_STANDARD 17)
 
 if(USE_MPI)
     find_package(MPI REQUIRED)
-    message(STATUS "MPI include path: ${MPI_C_NCLUDE_PATH}")
+    message(STATUS "MPI include path: ${MPI_C_INCLUDE_PATH}")
     message(STATUS "MPI libraries: ${MPI_C_LIBRARIES}")
     set(CMAKE_C_COMPILER ${MPI_C_COMPILER})
     include_directories(SYSTEM ${MPI_C_INCLUDE_PATH})
