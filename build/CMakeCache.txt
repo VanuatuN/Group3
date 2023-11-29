@@ -228,6 +228,9 @@ MD_SIMULATION_IS_TOP_LEVEL:STATIC=ON
 //Value Computed by CMake
 MD_SIMULATION_SOURCE_DIR:STATIC=/Users/empuza/MHPC/Group3
 
+//No help, variable specified on the command line.
+USE_OPENMP:UNINITIALIZED=ON
+
 
 ########################
 # INTERNAL cache entries
