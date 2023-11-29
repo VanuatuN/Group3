@@ -5,3 +5,4 @@ examples/
 .vscode
 dump.txt
 original_cmakelist.txt
+buildmorse/
