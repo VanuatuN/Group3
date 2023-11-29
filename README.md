@@ -34,13 +34,13 @@ quantum mechanical calculations to better represent the specific properties of a
 
 
 ## Simulation/Programming steps
-1. Read in parameters and initial status and compute what is missing (e.g. accelerations)
-2. Integrate Equations of motion with Velocity Verlet for a given number of steps
-a) Propagate all velocities for half a step
-b) Propagate all positions for a full step
-c) Compute forces on all atoms to get accelerations
-d) Propagate all velocities for half a step
-e) Output intermediate results, if needed
+1. Read in parameters and initial status and compute what is missing (e.g. accelerations) <br>
+2. Integrate Equations of motion with Velocity Verlet for a given number of steps <br>
+a) Propagate all velocities for half a step <br>
+b) Propagate all positions for a full step <br>
+c) Compute forces on all atoms to get accelerations <br>
+d) Propagate all velocities for half a step <br>
+e) Output intermediate results, if needed <br> 
 
 ## Expected output:
 ![Animation](ljmd.gif)\
