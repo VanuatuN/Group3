@@ -29,7 +29,7 @@ and the second term $\( \left(\frac{\sigma}{r}\right)^6 \)$ represents the repul
 ## Usage
 
 To utilize this model for liquid argon simulations, follow the instructions in the provided codebase. 
-Make sure to adjust the values of $\( \epsilon \) and \( \sigma \)$ based on experimental data or 
+Make sure to adjust the values of $\( \epsilon \)$ and $\( \sigma \)$ based on experimental data or 
 quantum mechanical calculations to better represent the specific properties of argon.
 
 
