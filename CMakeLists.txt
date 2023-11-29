@@ -1,10 +1,22 @@
-cmake_minimum_required(VERSION 3.12)  # Set a valid CMake version
+cmake_minimum_required(VERSION 3.12)
 
 project(MD_SIMULATION LANGUAGES C CXX)
 
-set(CMAKE_CXX_STANDARD 14)
+option(USE_MPI "Use MPI for compilation" OFF)
+set(CMAKE_CXX_STANDARD 17)
 
-# Add your source files here
+if(USE_MPI)
+    find_package(MPI REQUIRED)
+    set(CMAKE_C_COMPILER ${MPI_C_COMPILER})
+    include_directories(SYSTEM ${MPI_C_INCLUDE_PATH})
+    add_definitions(-D_MPI)
+    set(MPI_LIBRARIES "${MPI_C_LIBRARIES}")
+else()
+    set(CMAKE_C_COMPILER gcc)
+endif()
+
+add_definitions(-O3)
+
 set(SOURCES
     src/utilities.c
     src/compute_force.c
@@ -12,9 +24,8 @@ set(SOURCES
     src/input.c
     src/output.c
     src/datastructure.c
-  )
+)
 
-# Add your header files here
 set(HEADERS
     include/datastructure.h
     include/utilities.h
@@ -24,22 +35,18 @@ set(HEADERS
     include/output.h
 )
 
-# Create a library target for common code
 add_library(md_lib SHARED ${SOURCES} ${HEADERS})
-
-# Specify include directories
 target_include_directories(md_lib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
-
-# Create an executable
 add_executable(md src/main.c)
-
-# Enable debugging symbols
-set(CMAKE_BUILD_TYPE Debug)
-
-# Link the executable against the library
 target_link_libraries(md PRIVATE md_lib m)
 
-#Unit test for compute force function
+if(USE_MPI)
+    target_include_directories(md_lib SYSTEM PRIVATE ${MPI_C_INCLUDE_PATH})
+    target_include_directories(md SYSTEM PRIVATE ${MPI_C_INCLUDE_PATH})
+    target_compile_definitions(md PRIVATE _MPI)
+endif()
+
+#Unit tests
 option(ENABLE_TESTING "Enable building unit tests" ON)
 if(ENABLE_TESTING)
   enable_testing()

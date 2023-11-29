@@ -2,6 +2,9 @@
 #ifndef C_COMPUTE_FORCE_H
 #define C_COMPUTE_FORCE_H
 #include "datastructure.h"
+#if defined(_MPI)
+#include "mpi.h"
+#endif
 
 #ifdef __cplusplus
 extern "C" {
