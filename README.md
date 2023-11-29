@@ -14,7 +14,6 @@ model commonly employed in molecular dynamics (MD) simulations to describe inter
 ## Lennard-Jones Potential Equation
 
 The Lennard-Jones potential is expressed by the following equation:
-$\sum_{n=1}^{10} n^2$
 
 $\[ V(r) = 4 \epsilon \left[ \left(\frac{\sigma}{r}\right)^{12} - \left(\frac{\sigma}{r}\right)^6 \right] \]$
 
@@ -24,13 +23,13 @@ Where:
 - $\( \sigma \)$ is the finite distance at which the inter-particle potential is zero, representing the distance at which 
 the repulsive forces dominate.
 
-The first term \( \left(\frac{\sigma}{r}\right)^{12} \) represents the attractive forces, 
-and the second term \( \left(\frac{\sigma}{r}\right)^6 \) represents the repulsive forces.
+The first term $\( \left(\frac{\sigma}{r}\right)^{12} \)$ represents the attractive forces, 
+and the second term $\( \left(\frac{\sigma}{r}\right)^6 \)$ represents the repulsive forces.
 
 ## Usage
 
 To utilize this model for liquid argon simulations, follow the instructions in the provided codebase. 
-Make sure to adjust the values of \( \epsilon \) and \( \sigma \) based on experimental data or 
+Make sure to adjust the values of $\( \epsilon \) and \( \sigma \)$ based on experimental data or 
 quantum mechanical calculations to better represent the specific properties of argon.
 
 
