@@ -105,7 +105,7 @@ Summary: 4 directories, 33 files
 
 
 ## Benchmark report (a):
-
+![Alt text](image.png)
 
 ## Benchmark report (b):
 
