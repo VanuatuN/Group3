@@ -105,8 +105,7 @@ Summary: 4 directories, 33 files
 
 
 ## Benchmark report (a):
-![Image](image.png)
-
+![Serial code with different optimizations](md_serial-1.png)
 ## Benchmark report (b):
 
 ## Benchmark report (c):
