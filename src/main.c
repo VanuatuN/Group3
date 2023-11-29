@@ -101,7 +101,6 @@ int main(int argc, char **argv)
         } // if (rank == 0)
         #endif
 
-        MPI_Barrier(sys.syscomm);
         /* propagate system and recompute energies */
         velverlet(&sys);
 
