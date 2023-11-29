@@ -14,11 +14,9 @@ model commonly employed in molecular dynamics (MD) simulations to describe inter
 ## Lennard-Jones Potential Equation
 
 The Lennard-Jones potential is expressed by the following equation:
-<div style="text-align: center;">
 
 $\[ V(r) = 4 \epsilon \left[ \left(\frac{\sigma}{r}\right)^{12} - \left(\frac{\sigma}{r}\right)^6 \right] \]$
 
-</div>
 
 Where:
 - $\( V(r) \)$ is the potential energy between two particles as a function of their separation distance $\( r \)$.
