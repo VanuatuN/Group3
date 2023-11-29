@@ -229,6 +229,9 @@ MD_SIMULATION_IS_TOP_LEVEL:STATIC=ON
 MD_SIMULATION_SOURCE_DIR:STATIC=/Users/empuza/MHPC/Group3
 
 //No help, variable specified on the command line.
+USE_MPI:UNINITIALIZED=ON
+
+//No help, variable specified on the command line.
 USE_OPENMP:UNINITIALIZED=ON
 
 
