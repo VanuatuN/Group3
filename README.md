@@ -1,9 +1,9 @@
-## GROUP 3
+# GROUP 3
 - Edward  -  ed-ntim
 - Jenny   -  jalmerol-mhpc
 - Natalia -  VanuatuN 
 
-# PROJECT:  LJ MD Model for Liquid Argon
+## PROJECT:  LJ MD Model for Liquid Argon
 
 ## Overview
 
@@ -51,14 +51,30 @@ Figure 1: Animation of the simulation of Argon (108 atoms) in a cubic box for 10
 
 ## I. Group Level
 
+- break down the single file ljmd.c into multiple files (force compute, verlet time integration (split
+into two functions in one file), input, output, utilities, cleanup, main function, and header for data
+structures and prototypes); update the CMakeLists.txt file accordingly so that you build one
+executable from main.cpp and a library, mdlib.
+- set up some simple unit tests with the googletest library (write C++ code that allocates/fills
+data structure(s), calls the respective functions and uses assertions to check if the result is as
+expected) and integrate those tests into the CMake procedure so the tests can be run with ctest.
+For example:
+a) compute forces for a few 2-3 particle systems with atoms inside/outside the cutoff (directly
+and with images via PBC)
+b) compute part of the time integration for given positions, forces and velocities (no call to
+force())
+c) compute kinetic energy for given velocities and mass
+d) create a minimal input file (containing a few atoms) and matching restart on the fly and verify
+that that data is read correctly
+
 ## II. Individual Level
 
 ## **********  Group 3 Directory Structure  **********
 ```C
 .
-├── CMakeLists.txt                ! CMake program for building the ljmd simulation program
-├── README.md                     ! Group & project description
-├── examples                      : Input files and their corresponding output files
+├── CMakeLists.txt                     ! CMake program for building the ljmd simulation program
+├── README.md                          ! Group & project description
+├── examples                           : Input files and their corresponding output files
 │   ├── argon_108.dat
 │   ├── argon_108.inp
 │   ├── argon_108.rest
@@ -70,30 +86,28 @@ Figure 1: Animation of the simulation of Argon (108 atoms) in a cubic box for 10
 │   ├── argon_2916.xyz
 │   ├── argon_78732.inp
 │   └── argon_78732.rest
-├── include                        : Header files: contains function declarations
-│   ├── cleanup.h
-│   ├── compute_force.h
+├── include                          : Header files: contains function declarations
+│   ├── compute_force.h              
 │   ├── datastructure.h
 │   ├── input.h
 │   ├── output.h
 │   ├── utilities.h
 │   └── velverlet.h
-├── src                            : Source files : contains fucntion description
-│   ├── cleanup.c                  ! Memory deacllocation
-│   ├── compute_force.c            ! Force computation kernel
-│   ├── datastructure.c            ! Data types and structure definition
-│   ├── input.c                    ! Input algorithm
-│   ├── main.c                     ! Main program in C
-│   ├── main.cpp                   ! Main program in C++
-│   ├── output.c                   ! Data output algorithm<br>
-│   ├── utilities.c                ! Helper functions (e.g get_a_line, pbc...)
-│   └── velverlet.c                ! Velocity Verlet computation kernel
-└── tests                          : Google Tests files
-    ├── test_compute_force.cpp     ! GTest (C++) program to check the correctness of the force computation kernel
-    ├── test_datastructure.cpp     ! GTest (C++) program to check the accuracy of data handling
-    ├── test_utils.cpp             ! GTest (C++) progrma to check helper functions used in the main program
-    └── test_velverlet.cpp         ! GTest (C++) program to check that velocities are computed correctly
-Summary: 4 directories, 33 files
+├── src                              : Source files : contains fucntion description
+│   ├── compute_force.c              ! Force computation kernel
+│   ├── datastructure.c              ! Data types and structure definition
+│   ├── input.c                      ! Input algorithm
+│   ├── main.c                       ! Main program in C
+│   ├── output.c                     ! Data output algorithm
+│   ├── utilities.c                  ! Helper functions (e.g get_a_line, pbc...)
+│   └── velverlet.c                  ! Velocity Verlet computation kernel
+└── tests                            : Google Tests files
+    ├── test_compute_force.cpp       ! GTest (C++) program to check if force computation functions
+    ├── test_datastructure.cpp       ! GTest (C++) program to check the accuracy of data handling
+    ├── test_utils.cpp               ! GTest (C++) program to check helper functions used in the main program
+    └── test_velverlet.cpp           ! GTest (C++) program to check that velocities are computed
+
+4 directories, 30 files
 ```
 
 ## How to build (Serial code):
