@@ -73,15 +73,15 @@ CMakeFiles/md.dir/src/main.c.o: CMakeFiles/md.dir/flags.make
 CMakeFiles/md.dir/src/main.c.o: /Users/empuza/MHPC/Group3/src/main.c
 CMakeFiles/md.dir/src/main.c.o: CMakeFiles/md.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/empuza/MHPC/Group3/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/md.dir/src/main.c.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/md.dir/src/main.c.o -MF CMakeFiles/md.dir/src/main.c.o.d -o CMakeFiles/md.dir/src/main.c.o -c /Users/empuza/MHPC/Group3/src/main.c
+	gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/md.dir/src/main.c.o -MF CMakeFiles/md.dir/src/main.c.o.d -o CMakeFiles/md.dir/src/main.c.o -c /Users/empuza/MHPC/Group3/src/main.c
 
 CMakeFiles/md.dir/src/main.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/md.dir/src/main.c.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/empuza/MHPC/Group3/src/main.c > CMakeFiles/md.dir/src/main.c.i
+	gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/empuza/MHPC/Group3/src/main.c > CMakeFiles/md.dir/src/main.c.i
 
 CMakeFiles/md.dir/src/main.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/md.dir/src/main.c.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/empuza/MHPC/Group3/src/main.c -o CMakeFiles/md.dir/src/main.c.s
+	gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/empuza/MHPC/Group3/src/main.c -o CMakeFiles/md.dir/src/main.c.s
 
 # Object files for target md
 md_OBJECTS = \
@@ -92,7 +92,7 @@ md_EXTERNAL_OBJECTS =
 
 md: CMakeFiles/md.dir/src/main.c.o
 md: CMakeFiles/md.dir/build.make
-md: libmd_lib.a
+md: libmd_lib.dylib
 md: CMakeFiles/md.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/Users/empuza/MHPC/Group3/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking C executable md"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/md.dir/link.txt --verbose=$(VERBOSE)

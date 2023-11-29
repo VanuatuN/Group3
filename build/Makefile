@@ -191,6 +191,19 @@ test_velverlet/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_velverlet.dir/build.make CMakeFiles/test_velverlet.dir/build
 .PHONY : test_velverlet/fast
 
+#=============================================================================
+# Target rules for targets named test_utils
+
+# Build rule for target.
+test_utils: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_utils
+.PHONY : test_utils
+
+# fast build rule for target.
+test_utils/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_utils.dir/build.make CMakeFiles/test_utils.dir/build
+.PHONY : test_utils/fast
+
 src/compute_force.o: src/compute_force.c.o
 .PHONY : src/compute_force.o
 
@@ -407,6 +420,30 @@ tests/test_datastructure.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_datastructure.dir/build.make CMakeFiles/test_datastructure.dir/tests/test_datastructure.cpp.s
 .PHONY : tests/test_datastructure.cpp.s
 
+tests/test_utils.o: tests/test_utils.cpp.o
+.PHONY : tests/test_utils.o
+
+# target to build an object file
+tests/test_utils.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_utils.dir/build.make CMakeFiles/test_utils.dir/tests/test_utils.cpp.o
+.PHONY : tests/test_utils.cpp.o
+
+tests/test_utils.i: tests/test_utils.cpp.i
+.PHONY : tests/test_utils.i
+
+# target to preprocess a source file
+tests/test_utils.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_utils.dir/build.make CMakeFiles/test_utils.dir/tests/test_utils.cpp.i
+.PHONY : tests/test_utils.cpp.i
+
+tests/test_utils.s: tests/test_utils.cpp.s
+.PHONY : tests/test_utils.s
+
+# target to generate assembly for a file
+tests/test_utils.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_utils.dir/build.make CMakeFiles/test_utils.dir/tests/test_utils.cpp.s
+.PHONY : tests/test_utils.cpp.s
+
 tests/test_velverlet.o: tests/test_velverlet.cpp.o
 .PHONY : tests/test_velverlet.o
 
@@ -444,6 +481,7 @@ help:
 	@echo "... md_lib"
 	@echo "... test_compute_force"
 	@echo "... test_datastructure"
+	@echo "... test_utils"
 	@echo "... test_velverlet"
 	@echo "... src/compute_force.o"
 	@echo "... src/compute_force.i"
@@ -472,6 +510,9 @@ help:
 	@echo "... tests/test_datastructure.o"
 	@echo "... tests/test_datastructure.i"
 	@echo "... tests/test_datastructure.s"
+	@echo "... tests/test_utils.o"
+	@echo "... tests/test_utils.i"
+	@echo "... tests/test_utils.s"
 	@echo "... tests/test_velverlet.o"
 	@echo "... tests/test_velverlet.i"
 	@echo "... tests/test_velverlet.s"
