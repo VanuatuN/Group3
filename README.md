@@ -53,8 +53,10 @@ Figure 1: Animation of the simulation of Argon (108 atoms) in a cubic box for 10
 ## II. Individual Level
 
 ## **********  Group 3 Directory Structure  **********
+</pre>
+```C
 .<br>
-├── CMakeLists.txt                <nbs>! CMake program for building the ljmd simulation program<br>
+├── CMakeLists.txt                ! CMake program for building the ljmd simulation program<br>
 ├── README.md                     ! Group & project description<br>
 ├── examples                      : Input files and their corresponding output files<br>
 │   ├── argon_108.dat<br>
@@ -91,8 +93,9 @@ Figure 1: Animation of the simulation of Argon (108 atoms) in a cubic box for 10
     ├── test_datastructure.cpp     ! GTest (C++) program to check the accuracy of data handling<br>
     ├── test_utils.cpp             ! GTest (C++) progrma to check helper functions used in the main program<br>
     └── test_velverlet.cpp         ! GTest (C++) program to check that velocities are computed correctly<br>
-
+```
 4 directories, 33 files
+</pre>
 
 ## How to build (Serial code):
 
