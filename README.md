@@ -1,7 +1,7 @@
 ## GROUP 3
-Edward  -  ed-ntim
-Jenny   -  jalmerol-mhpc
-Natalia -  VanuatuN 
+- Edward  -  ed-ntim
+- Jenny   -  jalmerol-mhpc
+- Natalia -  VanuatuN 
 
 # PROJECT:  LJ MD Model for Liquid Argon
 
@@ -43,7 +43,7 @@ d) Propagate all velocities for half a step
 e) Output intermediate results, if needed
 
 ## Expected output:
-![Animation](ljmd.gif)
+![Animation](ljmd.gif)\
 Figure 1: Animation of the simulation of Argon (108 atoms) in a cubic box for 10000 MD steps
 
 ## Goals:
@@ -53,12 +53,12 @@ Figure 1: Animation of the simulation of Argon (108 atoms) in a cubic box for 10
 ## II. Individual Level
 
 ## **********  Group 3 Directory Structure  **********
-.
-├── CMakeLists.txt                ! CMake program for building the ljmd simulation program
-├── README.md                     ! Group & project description
-├── examples                      : Input files and their corresponding output files
-│   ├── argon_108.dat
-│   ├── argon_108.inp
+.\
+├── CMakeLists.txt                ! CMake program for building the ljmd simulation program\
+├── README.md                     ! Group & project description\
+├── examples                      : Input files and their corresponding output files\
+│   ├── argon_108.dat\
+│   ├── argon_108.inp\
 │   ├── argon_108.rest
 │   ├── argon_108.xyz
 │   ├── argon_2.rest
