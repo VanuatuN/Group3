@@ -1,0 +1,3 @@
+cmake -S . -B build -DUSE_MPI=ON -DUSE_OpenMP=ON 
+
+mpirun -np 2 env OMP_NUM_THREADS=2 ./md < argon_108.inp                     
