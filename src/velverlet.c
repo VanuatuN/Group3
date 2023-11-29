@@ -45,8 +45,13 @@ void velverlet(mdsys_t *sys)
     #if defined(_MPI)
     }
     #endif
+
     /* compute forces and potential energy */
-    force(sys);
+    #if defined(_MORSE)
+        morse_force(sys);
+    #else
+        force(sys);
+    #endif
 
     #if defined(_MPI)
     if (sys->rank == 0) {

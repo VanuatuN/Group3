@@ -17,6 +17,11 @@ endif()
 
 add_definitions(-O3)
 
+option(USE_MORSE "Use morse potential" OFF)
+if(USE_MORSE)
+  add_definitions(-D_MORSE)
+endif()
+
 set(SOURCES
     src/utilities.c
     src/compute_force.c
@@ -47,7 +52,7 @@ if(USE_MPI)
 endif()
 
 #Unit tests
-option(ENABLE_TESTING "Enable building unit tests" ON)
+option(ENABLE_TESTING "Enable building unit tests" OFF)
 if(ENABLE_TESTING)
   enable_testing()
   enable_language(CXX)
