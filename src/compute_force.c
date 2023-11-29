@@ -4,13 +4,12 @@
 #include "datastructure.h"
 #include "utilities.h"
 
-#if defined(USE_MPI)
+#if defined(_MPI)
 #include "mpi.h"
 #endif
 
-#if defined(USE_OPENMP)
+#if defined(_OPENMP)
 #include "omp.h"
- printf("Thread %d reporting\n", thid,nthds);
 #endif
 
 /* compute forces */
@@ -60,7 +59,7 @@ void force(mdsys_t *sys)
       //double c6 = sys->epsilon*pow(sys->sigma,6);
       //double c12 = sys->epsilon*pow(sys->sigma,12);
 
-  #if defined(USE_OPENMP)
+  #if defined(_OPENMP)
   #pragma omp parallel private(fx,fy,fz,i,j,rx,ry,rz,rsq,rsq_inv,r6,ffac,offset) reduction(+:epot)
   #endif
     {
@@ -69,9 +68,13 @@ void force(mdsys_t *sys)
         int thid; // thread id
         int nthds; // number of threads
 
-    #if defined(USE_OPENMP)
+    #if defined(_OPENMP)
         thid = omp_get_thread_num();
         nthds = omp_get_num_threads();
+        #pragma omp critical
+        {
+            printf("Thread %d reporting\n", thid, nthds);
+        }
      #else
         thid = 0;
         nthds = 1;
@@ -88,7 +91,7 @@ void force(mdsys_t *sys)
         azzero(fz,sys->natoms);
         
         // main loop
-     #if defined(USE_OPENMP)
+     #if defined(_OPENMP)
      #ifndef CHUNKSIZE
      #define CHUNKSIZE 1
      #endif
@@ -123,7 +126,7 @@ void force(mdsys_t *sys)
         }
 
         // after a work sharing construct an omp barrier is implied
-#if defined(USE_OPENMP)
+#if defined(_OPENMP)
 #pragma omp for
 #endif
             

@@ -9,6 +9,10 @@ extern "C" {
 #include "mpi.h"
 #endif
 
+#if defined(_OPENMP)
+#include "omp.h"
+#endif
+
 /* a few physical constants */
 extern const double kboltz; // = 0.0019872067;     /* boltzmann constant in kcal/mol/K */
 extern const double mvsq2e; // = 2390.05736153349; /* m*v^2 in kcal/mol */

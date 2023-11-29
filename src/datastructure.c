@@ -7,6 +7,10 @@
 #include "mpi.h"
 #endif
 
+#if defined(_OPENMP)
+#include "omp.h"
+#endif
+
 // Function to initialize the mdsys_t structure
 void init_mdsys(mdsys_t *sys) {
     sys->rx = (double *)malloc(sys->natoms * sizeof(double));

@@ -46,10 +46,6 @@ int main(int argc, char **argv)
     
     #ifdef _OPENMP
     int nthds = omp_get_max_threads(); // openmp
-        #pragma omp critical
-        {
-            printf("Thread %d reporting\n", thid,nthds);
-        }
     #else
     int nthds = 1;
     #endif
