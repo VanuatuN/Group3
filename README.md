@@ -107,7 +107,7 @@ Summary: 4 directories, 33 files
 
 ## Benchmark report (b):
 
-## Benchmark report ():
+## Benchmark report (c):
 
 ## Acknowledgments
 
