@@ -97,18 +97,45 @@ Summary: 4 directories, 33 files
 
 ## How to build (Serial code):
 
+To compile the default serial code with No optimizations, use the following commands:
+```C
+cmake -S . - B build
+cmake --build build
+cd build
+ctest
+```
+To compile with -O3 optimization, uncomment "# add_definitions(-O3)" in the 
+"#Add Definitions" section of the CMakeLists.txt file, and repeat the compilation steps.
 
-## How to build (With MPI parallelism):
+To compile with Refactoring, uncomment "# add_definitions(-DREFACTOR)"
+in the "#Add Definitions" section of the CMakeLists.txt file, and repeat the compilation steps.
 
-## How to build (With OpenMP parallelism):
+To compile with both -O3 and  Refactoring optimizations, uncomment both 
+and repeat the compilation steps. 
+
+## How to Build (With MPI parallelism):
+
+## How to Build (With OpenMP parallelism):
 
 
+## How to Run (Serial code):
+```C
+cd examples/
+../build/./md < argon_108.inp > output.dat
+more output.dat       
+```
+## How to Run (With MPI parallelism):
 
-## Benchmark report (a):
-![Serial code with different optimizations](md_serial-1.png)
-## Benchmark report (b):
+## How to Run (With OpenMP parallelism):
 
-## Benchmark report (c):
+## Benchmark Report (a):
+
+![Serial code with different optimizations](md_serial-1.png)<br>
+Figure 2: Scaling plot of the MD Runtimes(s) vs. Number of Atoms using different optimisation schemes 
+
+## Benchmark Report (b):
+
+## Benchmark Report (c):
 
 ## Acknowledgments
 
