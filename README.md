@@ -14,13 +14,14 @@ model commonly employed in molecular dynamics (MD) simulations to describe inter
 ## Lennard-Jones Potential Equation
 
 The Lennard-Jones potential is expressed by the following equation:
+$\sum_{n=1}^{10} n^2$
 
-\[ V(r) = 4 \epsilon \left[ \left(\frac{\sigma}{r}\right)^{12} - \left(\frac{\sigma}{r}\right)^6 \right] \]
+$\[ V(r) = 4 \epsilon \left[ \left(\frac{\sigma}{r}\right)^{12} - \left(\frac{\sigma}{r}\right)^6 \right] \]$
 
 Where:
-- \( V(r) \) is the potential energy between two particles as a function of their separation distance \( r \).
-- \( \epsilon \) is the depth of the potential well, representing the strength of the attractive forces between particles.
-- \( \sigma \) is the finite distance at which the inter-particle potential is zero, representing the distance at which 
+- $\( V(r) \)$ is the potential energy between two particles as a function of their separation distance $\( r \)$.
+- $\( \epsilon \)$ is the depth of the potential well, representing the strength of the attractive forces between particles.
+- $\( \sigma \)$ is the finite distance at which the inter-particle potential is zero, representing the distance at which 
 the repulsive forces dominate.
 
 The first term \( \left(\frac{\sigma}{r}\right)^{12} \) represents the attractive forces, 
