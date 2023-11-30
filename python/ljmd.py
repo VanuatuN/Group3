@@ -6,7 +6,6 @@ except ImportError:
     _MPI = False
 
 mdlib = CDLL('../buildserial/libmd_lib.dylib')
-BLEN = 200
 
 class MDSYS(Structure):
     _fields_ = (
@@ -48,7 +47,7 @@ def init_params(md, params, restart, xyz, data):
     md.nprint = int(params[11])
 
 if __name__ == "__main__":
-    md = MDSYS(natoms=0)  # Provide the appropriate value for natoms
+    md = MDSYS()
     BLEN = 200
     LJMD_VERSION = 1.0
     file_path = 'argon_108.inp'
@@ -74,20 +73,23 @@ if __name__ == "__main__":
 
     md.nfi = 0
     mdlib.force(byref(md))
-
     mdlib.ekin(byref(md))
 
     efile = ergfile[0].encode('utf-8')
     tfile = trajfile[0].encode('utf-8')
-    erg = open(efile, "w")
-    traj = open(tfile, "w")
+    # erg = open(efile, "w")
+    # traj = open(tfile, "w")
+
+    erg = mdlib.openfile(efile, "w")
+    traj = mdlib.openfile(tfile, "w")
 
     print("Startup time: ", mdlib.wallclock()-t_start)
     print("Starting simulation with ", md.natoms, " atoms for ", md.nsteps)
     print("     NFI            TEMP            EKIN                 EPOT              ETOT")
 
     t_start = mdlib.wallclock()
-    for i in range(md.nfi + 1, md.nsteps, 1):
+    for i in range(md.nfi + 1, md.nsteps):
+      md.nfi = i
       if ((md.nfi % md.nprint)):
           mdlib.output(byref(md), erg, traj)
       mdlib.velverlet(byref(md))
@@ -96,4 +98,8 @@ if __name__ == "__main__":
     print("Simulation Done. Run time: ", mdlib.wallclock()-t_start)
     erg.close()
     traj.close()
+
+    # mdlib.closefile(erg)
+    # mdlib.closefile(traj)
+
     mdlib.cleanup_mdsys(byref(md))
