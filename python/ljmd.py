@@ -6,6 +6,7 @@ except ImportError:
     _MPI = False
 
 mdlib = CDLL('../buildserial/libmd_lib.dylib')
+BLEN = 200
 
 class MDSYS(Structure):
     _fields_ = (
@@ -39,9 +40,9 @@ def init_params(md, params, restart, xyz, data):
     md.sigma = float(params[3])
     md.rcut = float(params[4])
     md.box = float(params[5])
-    restart[0] = params[6]
-    xyz[0] = params[7]
-    data[0] = params[8]
+    restfile[0] = params[6]
+    trajfile[0] = params[7]
+    ergfile[0] = params[8]
     md.nsteps = int(params[9])
     md.dt = float(params[10])
     md.nprint = int(params[11])
@@ -52,9 +53,9 @@ if __name__ == "__main__":
     LJMD_VERSION = 1.0
     file_path = 'argon_108.inp'
     params = []
-    restart = [None]
-    xyz = [None]
-    data = [None]
+    restfile = [None]
+    trajfile = [None]
+    ergfile = [None]
 
     if _MPI:
         comm = MPI.COMM_WORLD
@@ -64,10 +65,35 @@ if __name__ == "__main__":
     print("LJMD_VERSION ", LJMD_VERSION)
     t_start = mdlib.wallclock()
 
-    if _MPI:
-        md.cx = (c_double * md.natoms)()
-
     params = read_params(file_path)
-    init_params(md, params, restart, xyz, data)
+    init_params(md, params, restfile, trajfile, ergfile)
     
+    rfile = restfile[0].encode('utf-8')
     mdlib.init_mdsys(byref(md))
+    mdlib.read_restart(byref(md), rfile)
+
+    md.nfi = 0
+    mdlib.force(byref(md))
+
+    mdlib.ekin(byref(md))
+
+    efile = ergfile[0].encode('utf-8')
+    tfile = trajfile[0].encode('utf-8')
+    erg = open(efile, "w")
+    traj = open(tfile, "w")
+
+    print("Startup time: ", mdlib.wallclock()-t_start)
+    print("Starting simulation with ", md.natoms, " atoms for ", md.nsteps)
+    print("     NFI            TEMP            EKIN                 EPOT              ETOT")
+
+    t_start = mdlib.wallclock()
+    for i in range(md.nfi + 1, md.nsteps, 1):
+      if ((md.nfi % md.nprint)):
+          mdlib.output(byref(md), erg, traj)
+      mdlib.velverlet(byref(md))
+      mdlib.ekin(byref(md))
+
+    print("Simulation Done. Run time: ", mdlib.wallclock()-t_start)
+    erg.close()
+    traj.close()
+    mdlib.cleanup_mdsys(byref(md))
