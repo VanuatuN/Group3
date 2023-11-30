@@ -3,9 +3,12 @@
 #include "datastructure.h"
 #include <stdlib.h>
 #include "utilities.h"
+#include <math.h>
+
 #if defined(_MPI)
 #include "mpi.h"
 #endif
+
 
 #if defined(_OPENMP)
 #include "omp.h"

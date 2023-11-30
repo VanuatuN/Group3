@@ -308,11 +308,8 @@ PKG_CONFIG_EXECUTABLE:FILEPATH=PKG_CONFIG_EXECUTABLE-NOTFOUND
 //Use MPI for compilation
 USE_MPI:BOOL=ON
 
-//Use OpenMP for compilation
-USE_OPENMP:BOOL=OFF
-
-//No help, variable specified on the command line.
-USE_OpenMP:UNINITIALIZED=ON
+//Enable OpenMP
+USE_OpenMP:BOOL=ON
 
 
 ########################
@@ -468,6 +465,12 @@ FIND_PACKAGE_MESSAGE_DETAILS_MPI:INTERNAL=[TRUE][TRUE][c ][v3.1()]
 FIND_PACKAGE_MESSAGE_DETAILS_MPI_C:INTERNAL=[/opt/homebrew/Cellar/open-mpi/4.1.6/lib/libmpi.dylib][mpi][/opt/homebrew/Cellar/open-mpi/4.1.6/include][TRUE][v3.1()]
 //Details about finding MPI_CXX
 FIND_PACKAGE_MESSAGE_DETAILS_MPI_CXX:INTERNAL=[/opt/homebrew/Cellar/open-mpi/4.1.6/lib/libmpi.dylib][mpi][/opt/homebrew/Cellar/open-mpi/4.1.6/include][TRUE][v3.1()]
+//Details about finding OpenMP
+FIND_PACKAGE_MESSAGE_DETAILS_OpenMP:INTERNAL=[TRUE][TRUE][c ][v()]
+//Details about finding OpenMP_C
+FIND_PACKAGE_MESSAGE_DETAILS_OpenMP_C:INTERNAL=[-Xpreprocessor -fopenmp][omp][v()]
+//Details about finding OpenMP_CXX
+FIND_PACKAGE_MESSAGE_DETAILS_OpenMP_CXX:INTERNAL=[-Xpreprocessor -fopenmp][omp][v()]
 //ADVANCED property for variable: MPIEXEC_EXECUTABLE
 MPIEXEC_EXECUTABLE-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: MPIEXEC_MAX_NUMPROCS
@@ -520,6 +523,14 @@ MPI_RESULT_CXX_test_mpi_normal:INTERNAL=TRUE
 MPI_RESULT_C_test_mpi_normal:INTERNAL=TRUE
 //ADVANCED property for variable: MPI_mpi_LIBRARY
 MPI_mpi_LIBRARY-ADVANCED:INTERNAL=1
+//CXX compiler's OpenMP specification date
+OpenMP_CXX_SPEC_DATE:INTERNAL=
+//C compiler's OpenMP specification date
+OpenMP_C_SPEC_DATE:INTERNAL=
+//Result of TRY_COMPILE
+OpenMP_SPECTEST_CXX_:INTERNAL=FALSE
+//Result of TRY_COMPILE
+OpenMP_SPECTEST_C_:INTERNAL=FALSE
 //ADVANCED property for variable: PKG_CONFIG_ARGN
 PKG_CONFIG_ARGN-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: PKG_CONFIG_EXECUTABLE
