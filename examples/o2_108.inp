@@ -1,0 +1,13 @@
+108               # natoms
+16.0              # mass in AMU
+1.208             # xm constant - separation between atoms  (in angstrom)
+2.655             # B constant (adjustable constant) (1/angstrom)
+5.214             # D constant - pair potential (eV)
+8.5               # rcut in angstrom
+17.1580           # box length (in angstrom)
+argon_108.rest    # restart
+o2_108.xyz     # trajectory
+o2_108.dat     # energies
+10000             # nr MD steps
+5.0               # MD time step (in fs)
+100               # output print frequency

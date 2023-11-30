@@ -4,13 +4,10 @@
 #include "datastructure.h"
 #include "utilities.h"
 #include "compute_force.h"
-#if defined(_MPI)
+#if defined(USE_MPI)
 #include "mpi.h"
 #endif
 
-#if defined(_OPENMP)
-#include "omp.h"
-#endif
 // /* a few physical constants */
 extern const double kboltz;     /* boltzman constant in kcal/mol/K */
 extern const double mvsq2e; /* m*v^2 in kcal/mol */

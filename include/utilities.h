@@ -7,10 +7,12 @@
 #include <ctype.h>
 #include "datastructure.h"
 
+extern const double kboltz;   /* boltzman constant in kcal/mol/K */
+extern const double mvsq2e; /* m*v^2 in kcal/mol */
+
 #ifdef __cplusplus
 extern "C" {
 #endif
-
 extern int get_a_line(FILE *fp, char *buf, int BLEN);
 extern double wallclock();
 extern void azzero(double *d, const int n);

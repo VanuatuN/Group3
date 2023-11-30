@@ -24,8 +24,7 @@
 #if defined(_MPI)
     #include "mpi.h"
 #endif
-
-#if defined(_OPENMP)
+#if defined (_OPENMP)
     #include "omp.h"
 #endif
 
@@ -43,15 +42,13 @@ int main(int argc, char **argv)
     FILE *fp,*traj,*erg;
     mdsys_t sys;
     double t_start;
-    
+
     #ifdef _OPENMP
-    int nthds = omp_get_max_threads(); // openmp
-    #else
-    int nthds = 1;
+     int thrid = omp_get_thread_num();
+     int nthds = omp_get_max_threads(); // openmp
+     printf("Threads number %d\n", nthds,thrid);
     #endif
-    #ifdef TIMING
-    double timer = 0; // for recording time
-    #endif
+
 
     #if defined(_MPI)
     MPI_Init(&argc, &argv);
@@ -114,7 +111,6 @@ int main(int argc, char **argv)
         } // if (rank == 0)
         #endif
 
-        MPI_Barrier(sys.syscomm);
         /* propagate system and recompute energies */
         velverlet(&sys);
 
