@@ -92,9 +92,6 @@ cd examples/
 ../build/./md < argon_108.inp > output.dat
 more output.dat       
 ```
-### How to Run (With MPI parallelism):
-
-### How to Run (With OpenMP parallelism):
 
 ### Benchmark Report (a):
 
@@ -108,7 +105,7 @@ more output.dat
 **Figure 3:** Plot of speedup of serial code with different optimization configurations (purple : -O3 compiler flag, green: Refactoring of force computation kernel, blue: combination of -O3 and refactoring) vs. Number of atoms (system size).
 ### Performance Analysis
 
-**Table 1:** Summary of performance counter statistics for the LJMD code compiled with different optimization options for simulation of 108 Ar-atoms (best case)
+**Table 1:** Summary of performance counter statistics for the LJMD code compiled with different optimization options for simulation of 108 Ar-atoms **(Best case)**
 
 
 | Metric                             | No Optimization | -O3 Optimization | Refactoring | -O3 Optimization + Refactoring |
@@ -127,38 +124,39 @@ more output.dat
 
 **Cache Metrics (References and Misses):**
 
-Influence: Cache references and misses are crucial for understanding memory access efficiency. The permutation of these metrics across different configurations indicates how well the code utilizes the cache hierarchy.
-Observation: Cache references increase significantly with optimization, suggesting better cache utilization. The -O3 Optimization + Refactoring configuration stands out with both high references and low misses, indicating improved memory access patterns.
+Cache references and misses help to understand memory access efficiency. Comparison of cache metrics across different configurations show how well the code utilizes the cache hierarchy.\
+Cache references increase significantly with optimization, suggesting better cache utilization. The combination of "-O3" Optimization and Refactoring stands out with both high references and low misses, indicating improved memory access patterns.
 
 **Instructions per Cycle:**
 
-Influence: Instructions per cycle reflect the efficiency of the code's execution. Lower values typically indicate better instruction-level parallelism and more efficient execution.
-Observation: The instruction per cycle metric remains relatively stable across configurations. This suggests that, while optimizations impact other aspects, the efficiency of instruction execution is consistent.
+Instructions per cycle shows efficiency of the code's execution. Lower values typically indicate better instruction-level parallelism and more efficient execution. The instruction per cycle metric remains relatively stable across the different configurations. This suggests that, while configuration type affected other aspects of performance, the efficiency of instruction execution is consistent.
 
 **Branch Metrics (Branches and Branch Misses):**
 
-Influence: Branches and branch misses provide insights into control flow efficiency. Optimizing branch prediction can significantly impact overall performance.
-Observation: The number of branches executed per second increases with optimization, indicating potential changes in the control flow. However, the increase in branch misses in some configurations suggests that, while optimizations may improve overall execution speed, they could also introduce more challenging branch prediction scenarios.
+Branches and branch misses relate to control flow efficiency (for loops, if conditions, etc). The number of branches executed per second increased with optimization, indicating potential changes in the control flow. However, the increase in branch misses in some configurations suggests that, while optimizations may improve overall execution speed, they could possibly complicate branch prediction scenarios.
 
 **CPU Cycles:**
 
-Influence: CPU cycles represent the total computational work done by the CPU. This metric is influenced by the efficiency of instruction execution and memory access patterns.
-Observation: CPU cycles per second remain relatively consistent across all configurations, indicating that the optimizations do not significantly impact the overall computational workload.
+CPU cycles represent the total computational work done by the CPU. This metric is influenced by the efficiency of instruction execution and memory access patterns.\
+CPU cycles per second remain relatively consistent across all configurations, indicating that the optimizations do not significantly impact the overall computational workload.
 
 **User Time, System Time, and Elapsed Time:**
 
-Influence: User time reflects the time spent executing the code, while system time accounts for time spent in the operating system kernel. Elapsed time is the overall time taken for code execution.
-Observation: User time decreases significantly with optimization, indicating improved overall runtime efficiency. The combination of -O3 optimization and refactoring provides the lowest user and system times, suggesting a balanced approach to optimization.
+User time reflects the time spent executing the code, while system time accounts for time spent in the cluster's OS kernel. Elapsed time is the overall time taken for code execution.
+User time decreases significantly with optimization, indicating improved overall runtime efficiency. The combination of -O3 optimization and refactoring provides the lowest user and system times, suggesting a balanced approach to optimization.
 
-**Summary and Permutation of Metrics:**
+**Worst Case Performance :**
 
-Influence: The summary provides a comprehensive view of the trade-offs and benefits of different optimization configurations.
-Observation: The permutation of metrics reveals that while some optimizations may improve certain aspects (e.g., cache efficiency), they could introduce challenges in others (e.g., increased branch misses). The combination of -O3 optimization and refactoring appears to strike a balance, resulting in the most favorable overall performance.
-In conclusion, the permutation and combination of metrics offer a nuanced understanding of how different aspects of code optimization impact performance. It highlights the need for a holistic approach, considering the interplay of various metrics to achieve optimal results.
+The worst-case scenario (Ar-78732 atoms) confirmed the scalability of the LJMD code under different optimization configurations, with the larger dataset affecting certain metrics but maintaining similar trends observed in the smaller dataset (refer to perf_summary_78732.dat for details).
+The combination of -O3 optimization and refactoring continued to stand out as providing a balanced improvement in user and system times while maintaining reasonable cache misses and branch mispredictions, irrespective of the dataset size.
 
-The worst-case scenario confirms the scalability of the LJMD code under different optimization configurations, with the larger dataset affecting certain metrics but maintaining similar trends observed in the smaller dataset.
-The combination of -O3 optimization and refactoring continues to stand out as providing a balanced improvement in user and system times while maintaining reasonable cache misses and branch mispredictions, irrespective of the dataset size.
-In summary, the LJMD code demonstrates scalability in its performance characteristics across different dataset sizes, and the optimization configurations continue to show consistent trends in improving efficiency, particularly in the -O3 optimization and refactoring combination.
+**Summary :**
+
+In summary, there are trade-offs and benefits of different optimization configurations.
+The permutation of metrics reveals that while some optimizations may improve certain aspects (e.g., cache efficiency), they could introduce challenges in others (e.g., increased branch misses). The combination of -O3 optimization and refactoring appears to strike a balance, resulting in the most favorable overall performance.
+In conclusion, the performance counters provided a nuanced understanding of how different aspects of code optimization impact efficiency. It highlights the need for a holistic approach, considering the interplay of various metrics to achieve optimal results.
+
+
 
 ### Benchmark Report (b):
 
@@ -166,4 +164,4 @@ In summary, the LJMD code demonstrates scalability in its performance characteri
 
 ### Acknowledgments
 
-This model is based on the widely accepted Lennard-Jones potential and may require further customization for specific applications. Please refer to relevant literature and consult experts in the field for a more accurate representation of liquid argon properties in your simulations.
+This model is based on the widely accepted Lennard-Jones potential and may require further customization for specific applications.
