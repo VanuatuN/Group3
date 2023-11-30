@@ -1,17 +1,17 @@
-# GROUP 3
+## GROUP 3
 - Edward  -  ed-ntim
 - Jenny   -  jalmerol-mhpc
 - Natalia -  VanuatuN 
 
-## PROJECT:  LJ MD Model for Liquid Argon
+### PROJECT:  Lennard-Jones (LJ) MD Model for Simulating Liquid Argon
 
-## Overview
+### Overview
 
 This repository provides a molecular dynamics (MD) model using the Lennard-Jones potential 
 for simulating the behavior of liquid argon. The Lennard-Jones potential is a mathematical 
 model commonly used in molecular dynamics (MD) simulations to describe intermolecular interactions.
 
-## Lennard-Jones Potential Equation
+### Lennard-Jones Potential Equation
 
 The Lennard-Jones potential is expressed by the following equation:
 
@@ -27,13 +27,13 @@ the repulsive forces dominate.
 The first term $\( \left(\frac{\sigma}{r}\right)^{12} \)$ represents the attractive forces, 
 and the second term $\( \left(\frac{\sigma}{r}\right)^6 \)$ represents the repulsive forces.
 
-## Usage
+### Usage
 
 To use this model for liquid argon simulations, follow the instructions in the provided codebase. 
 The values of $\( \epsilon \)$ and $\( \sigma \)$ can be adjusted based on experimental data or quantum mechanical calculations to better represent the specific properties of argon.
 
 
-## Simulation/Programming steps
+### Simulation/Programming steps
 1. Read in parameters and initial status and compute what is missing (e.g. accelerations) <br>
 2. Integrate Equations of motion with Velocity Verlet for a given number of steps <br>
 a) Propagate all velocities for half a step <br>
@@ -42,11 +42,11 @@ c) Compute forces on all atoms to get accelerations <br>
 d) Propagate all velocities for half a step <br>
 e) Output intermediate results, if needed <br> 
 
-## Expected output:
+### Expected output:
 ![Animation](ljmd.gif)\
-Figure 1: Animation of the simulation of Argon (108 atoms) in a cubic box for 10000 MD steps
+**Figure 1:** Animation of the simulation of Argon (108 atoms) in a cubic box for 10000 MD steps
 
-## Goals:
+### Goals:
 
 **I. Group Level**\
 To :
@@ -63,11 +63,11 @@ a) Optimize the force computation: *refactor the code* for better optimization a
 b) Add *MPI parallelization*. Document the *parallel efficiency* of changes.\
 c) Add *OpenMP parallelization*. Document the *parallel efficiency* of changes
 
-## How to build (Serial code):
+### How to build (Serial code):
 
 To compile the default serial code with No optimizations, use the following commands:
 ```C
-cmake -S . - B build
+cmake -S . -B build
 cmake --build build
 cd build
 ctest
@@ -81,22 +81,22 @@ in the "#Add Definitions" section of the CMakeLists.txt file, and repeat the com
 - To compile with both -O3 and  Refactoring optimizations, uncomment both 
 and repeat the compilation steps. 
 
-## How to Build (With MPI parallelism):
+### How to Build (With MPI parallelism):
 
-## How to Build (With OpenMP parallelism):
+### How to Build (With OpenMP parallelism):
 
 
-## How to Run (Serial code):
+### How to Run (Serial code):
 ```C
 cd examples/
 ../build/./md < argon_108.inp > output.dat
 more output.dat       
 ```
-## How to Run (With MPI parallelism):
+### How to Run (With MPI parallelism):
 
-## How to Run (With OpenMP parallelism):
+### How to Run (With OpenMP parallelism):
 
-## Benchmark Report (a):
+### Benchmark Report (a):
 
 ![Serial code with different optimizations](md_serial-1.png)<br>
 
@@ -106,7 +106,7 @@ more output.dat
 
 ![Alt text](speedupleo.png)
 **Figure 3:** Plot of speedup of serial code with different optimization configurations (purple : -O3 compiler flag, green: Refactoring of force computation kernel, blue: combination of -O3 and refactoring) vs. Number of atoms (system size).
-## Performance Analysis
+### Performance Analysis
 
 **Table 1:** Summary of performance counter statistics for the LJMD code compiled with different optimization options for simulation of 108 Ar-atoms (best case)
 
@@ -160,10 +160,10 @@ The worst-case scenario confirms the scalability of the LJMD code under differen
 The combination of -O3 optimization and refactoring continues to stand out as providing a balanced improvement in user and system times while maintaining reasonable cache misses and branch mispredictions, irrespective of the dataset size.
 In summary, the LJMD code demonstrates scalability in its performance characteristics across different dataset sizes, and the optimization configurations continue to show consistent trends in improving efficiency, particularly in the -O3 optimization and refactoring combination.
 
-## Benchmark Report (b):
+### Benchmark Report (b):
 
-## Benchmark Report (c):
+### Benchmark Report (c):
 
-## Acknowledgments
+### Acknowledgments
 
 This model is based on the widely accepted Lennard-Jones potential and may require further customization for specific applications. Please refer to relevant literature and consult experts in the field for a more accurate representation of liquid argon properties in your simulations.
