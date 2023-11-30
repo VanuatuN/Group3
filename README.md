@@ -48,8 +48,8 @@ e) Output intermediate results, if needed <br>
 
 **I. Group Level**\
 To :
-- break down the single file ljmd.c into multiple files (force compute, verlet time integration (split into two functions in one file), input, output, utilities, cleanup, main function, and header for data structures and prototypes); update the CMakeLists.txt file accordingly so that you build one executable from main.c and a library, mdlib.
-- set up some simple unit tests with the googletest library (write C++ code that allocates/fills data structure(s), calls the respective functions and uses assertions to check if the result is as expected) and integrate those tests into the CMake procedure so the tests can be run with ctest.\
+- break down the single file ljmd.c into multiple files (force compute, verlet time integration (split into two functions in one file), input, output, utilities, cleanup, main function, and header for data structures and prototypes); update the CMakeLists.txt file accordingly in order to build one executable from main.c and a library, mdlib.
+- set up some simple unit tests with the googletest library (write C++ code that allocates/fills data structure(s), calls the respective functions and uses assertions to check if the result is as expected) and integrate the aforementioned tests into the CMake procedure so the tests can be run with ctest.\
 For example:\
 a) compute forces for a few 2-3 particle systems with atoms inside/outside the cutoff (directly and with images via PBC)\
 b) compute part of the time integration for given positions, forces and velocities (no call to force())\
@@ -57,9 +57,9 @@ c) compute kinetic energy for given velocities and mass\
 d) create a minimal input file (containing a few atoms) and matching restart on the fly and verify that that data is read correctly
 
 **II. Individual Level**\
-a) Optimize the force computation: *refactor the code* for better optimization and to avoid costly operations or redundant work. Adapt data structures as needed. *Document improvements with profiling/benchmark data.*\
-b) Add *MPI parallelization*. Document the *parallel efficiency* of changes.\
-c) Add *OpenMP parallelization*. Document the *parallel efficiency* of changes
+a) Edward: Optimize the force computation: *refactor the code* for better optimization and to avoid costly operations or redundant work. Adapt data structures as needed. *Document improvements with profiling/benchmark data.*<br> 
+b) Jenny: Add *MPI parallelization*. Document the *parallel efficiency* of changes.<br>
+c) Natalia: Add *OpenMP parallelization*. Document the *parallel efficiency* of changes. 
 
 ### How to build (Serial code):
 
@@ -78,10 +78,6 @@ in the "#Add Definitions" section of the CMakeLists.txt file, and repeat the com
 
 - To compile with both -O3 and  Refactoring optimizations, uncomment both 
 and repeat the compilation steps. 
-
-### How to Build (With MPI parallelism):
-
-### How to Build (With OpenMP parallelism):
 
 
 ### How to Run (Serial code):
@@ -156,10 +152,9 @@ In conclusion, the performance counters provided a nuanced understanding of how 
 
 
 
-### Benchmark Report (b):
-
-### Benchmark Report (c):
-
 ### Acknowledgments
 
-This model is based on the widely accepted Lennard-Jones potential and may require further customization for specific applications.
+- This model is based on the widely accepted Lennard-Jones potential and may require further customization for specific applications.
+
+### References
+- P1.7 Part-3 Lecture Slides, MHPC-2023, by Dr. Axel Kohlmeyer
