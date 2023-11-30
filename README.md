@@ -95,7 +95,7 @@ more output.dat
 
 
 
-![Alt text](speedupleo.png)
+![Alt text](speedupleo.png)\
 **Figure 3:** Plot of speedup of serial code with different optimization configurations (purple : -O3 compiler flag, green: Refactoring of force computation kernel, blue: combination of -O3 and refactoring) vs. Number of atoms (system size).
 ### Performance Analysis
 
