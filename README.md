@@ -44,7 +44,7 @@ d) Propagate all velocities for half a step <br>
 e) Output intermediate results, if needed <br> 
 
 ## Expected output:
-![Animation](ljmd.gif)\
+![Animation](ljmd1.gif)\
 Figure 1: Animation of the simulation of Argon (108 atoms) in a cubic box for 10000 MD steps
 
 ## Goals:
