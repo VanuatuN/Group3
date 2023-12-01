@@ -1,0 +1,87 @@
+ Performance counter stats for compilation of LJMD code without optimization '../build/./md':
+
+       49645261018      cache-references          #   21.566 M/sec
+        2021796427      cache-misses              #    4.072 % of all cache refs
+    21920635306451      instructions              #    2.80  insn per cycle
+     3915983000472      branches                  #    1.701 G/sec
+        6138462629      branch-misses             #    0.16% of all branches
+     3915983000472      branch-instructions       #    1.701 G/sec
+     7826488517967      cpu-cycles                #    3.400 GHz
+        2302021.52 msec cpu-clock                 #    1.000 CPUs utilized
+
+    2302.322979237 seconds time elapsed
+
+    2298.346007000 seconds user
+       0.036945000 seconds sys
+
+
+LJMD version 1.0
+Startup time:    108.769s
+Starting simulation with 78732 atoms for 20 steps.
+Simulation Done. Run time:   2173.832s
+
+Performance counter stats for ljmd code compiled with -O3 optimization '../buildo3/./md':
+
+       48385201496      cache-references          #   43.822 M/sec
+         162798135      cache-misses              #    0.336 % of all cache refs
+     9618766252068      instructions              #    2.56  insn per cycle
+     2612814357740      branches                  #    2.366 G/sec
+        4411930738      branch-misses             #    0.17% of all branches
+     2612814357740      branch-instructions       #    2.366 G/sec
+     3753781362782      cpu-cycles                #    3.400 GHz
+        1104134.45 msec cpu-clock                 #    1.000 CPUs utilized
+
+    1104.308161830 seconds time elapsed
+
+    1101.951603000 seconds user
+       0.034945000 seconds sys
+
+
+LJMD version 1.0
+Startup time:     50.655s
+Starting simulation with 78732 atoms for 20 steps.
+Simulation Done. Run time:   1012.016s
+
+Performance counter stats for ljmd code compiled with refactoring of the force kernel '../buildr/./md':
+
+       11397470929      cache-references          #   10.729 M/sec
+          95025773      cache-misses              #    0.834 % of all cache refs
+     9874898991741      instructions              #    2.73  insn per cycle
+     1547853578274      branches                  #    1.457 G/sec
+        2753446008      branch-misses             #    0.18% of all branches
+     1547853578274      branch-instructions       #    1.457 G/sec
+     3611524079414      cpu-cycles                #    3.400 GHz
+        1062265.09 msec cpu-clock                 #    1.000 CPUs utilized
+
+    1062.451719521 seconds time elapsed
+
+    1060.683989000 seconds user
+       0.039936000 seconds sys
+
+
+LJMD version 1.0
+Startup time:     51.202s
+Starting simulation with 78732 atoms for 20 steps.
+Simulation Done. Run time:   1013.974s
+
+Performance counter stats for ljmd code compiled with both -O3 optimization and Refactoring of force kernel '../buildo3r/./md':
+
+       10870339099      cache-references          #   21.013 M/sec
+          45084505      cache-misses              #    0.415 % of all cache refs
+     4269572362743      instructions              #    2.43  insn per cycle
+     1156683875480      branches                  #    2.236 G/sec
+        2412078077      branch-misses             #    0.21% of all branches
+     1156683875480      branch-instructions       #    2.236 G/sec
+     1758797017096      cpu-cycles                #    3.400 GHz
+         517321.09 msec cpu-clock                 #    1.000 CPUs utilized
+
+     517.478576413 seconds time elapsed
+
+     516.543890000 seconds user
+       0.033944000 seconds sys
+
+
+LJMD version 1.0
+Startup time:     24.670s
+Starting simulation with 78732 atoms for 20 steps.
+Simulation Done. Run time:    492.251s
