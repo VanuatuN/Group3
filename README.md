@@ -152,7 +152,8 @@ A simple parallelization of the code is implemented where the computation of the
 
 ### Benchmark Report with MPI:
 
-We get a linear scaling in the speedup with just the simple parallelization of the compute_force() function for big problem size (as shown in the figure below). For natoms = 108, the maximum speedup 
+We get a linear scaling in the speedup with just the simple parallelization of the compute_force() function for the big problem size natoms = 78732 (as shown in the figure below). For natoms = 108, the maximum speedup is only up to 7x using 8 processing elements. 
+
 <img src="mpi_speedup_plot.png" alt="animation" width="500" style="display: block; margin: auto;" /><br>
 
 Figure 2: Speedup using MPI for different number of atoms.
