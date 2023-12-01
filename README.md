@@ -175,7 +175,17 @@ We get a linear scaling in the speedup with just the simple parallelization of t
 
 Figure 2: Speedup using MPI for different number of atoms.
 
-### Benchmark Report (c):
+### MPI+OpenMP Parallelization:
+
+A simple parallelization of the code is implemented where the computation of the force is distributed to several processing elements. The positions are broadcasted from rank 0. Then eack rank computes the force for different atoms. The results are collected back to rank 0 after compute_force().
+
+### Benchmark Report with MPI+OpenMP:
+
+We get a linear scaling in the speedup with just the simple parallelization of the compute_force() function for big problem size (as shown in the figure below). For natoms = 108, the maximum speedup
+
+<img src="mpi_speedup_plot.png" alt="animation" width="500" style="display: block; margin: auto;" /><br>
+
+Figure 3: Speedup using MPI+OpenMP for different number of atoms.
 
 ### Acknowledgments
 
