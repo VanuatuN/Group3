@@ -50,7 +50,11 @@ void force(mdsys_t *sys)
     #endif
 
     #if defined(_OPENMP)
+    #if defined(_MORSE)
+    #pragma omp parallel private(i, j, ii, rx, ry, rz, rsq, ffac,thid) firstprivate(exponent, R, alpha, coeffs) reduction(+:epot) 
+    #else
     #pragma omp parallel private(i, j, ii, rx, ry, rz, rsq, ffac, r6, rinv,thid) firstprivate(c12, c6, rcsq) reduction(+:epot) 
+    #endif 
     { 
       //#pragma omp critical 
       //{
