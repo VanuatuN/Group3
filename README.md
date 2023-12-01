@@ -146,7 +146,13 @@ In summary, there were trade-offs and benefits of different optimization configu
 The permutation of metrics revealed that while some optimizations possibly improved certain hardware-level aspects (e.g., cache efficiency), they could introduce challenges in others (e.g., increased branch misses). The combination of -O3 optimization and refactoring appears to strike a balance, resulting in the most favorable overall performance.
 In conclusion, the performance counters provided  a recognition and appreciation of the complexity, intricacies, and subtleties involved when adopting a configuration for optimization, rather than a simplistic or one-dimensional view of how different aspects of code optimization impact efficiency. It highlights the need for a holistic approach, considering the interplay of various metrics to achieve optimal results.
 
-### Benchmark Report (b):
+### MPI Parallelization:
+
+A simple parallelization of the code is implemented where the computation of the force is distributed to several processing elements. The positions are broadcasted from rank 0. Then eack rank computes the force for different atoms. The results are collected back to rank 0 after compute_force().
+
+### Benchmark Report with MPI:
+
+We get a linear scaling in the speedup with just the simple parallelization of the compute_force() function for big problem size (as shown in the figure below). For natoms = 108, the maximum speedup 
 <img src="mpi_speedup_plot.png" alt="animation" width="500" style="display: block; margin: auto;" /><br>
 
 Figure 2: Speedup using MPI for different number of atoms.
