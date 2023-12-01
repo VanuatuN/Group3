@@ -5,7 +5,7 @@ try:
 except ImportError:
     _MPI = False
 
-mdlib = CDLL('../buildserial/libmd_lib.dylib')
+mdlib = CDLL('../build-serial/libmd_lib.dylib')
 
 class MDSYS(Structure):
     _fields_ = (
@@ -77,29 +77,26 @@ if __name__ == "__main__":
 
     efile = ergfile[0].encode('utf-8')
     tfile = trajfile[0].encode('utf-8')
-    # erg = open(efile, "w")
-    # traj = open(tfile, "w")
 
     erg = mdlib.openfile(efile, "w")
     traj = mdlib.openfile(tfile, "w")
 
     print("Startup time: ", mdlib.wallclock()-t_start)
-    print("Starting simulation with ", md.natoms, " atoms for ", md.nsteps)
+    print("Starting simulation with ", md.natoms, " atoms for ", md.nsteps, " steps")
     print("     NFI            TEMP            EKIN                 EPOT              ETOT")
 
     t_start = mdlib.wallclock()
     for i in range(md.nfi + 1, md.nsteps):
       md.nfi = i
       if ((md.nfi % md.nprint)):
+          print(" i ", i)
           mdlib.output(byref(md), erg, traj)
       mdlib.velverlet(byref(md))
       mdlib.ekin(byref(md))
 
     print("Simulation Done. Run time: ", mdlib.wallclock()-t_start)
-    erg.close()
-    traj.close()
 
-    # mdlib.closefile(erg)
-    # mdlib.closefile(traj)
+    mdlib.closefile(erg)
+    mdlib.closefile(traj)
 
     mdlib.cleanup_mdsys(byref(md))

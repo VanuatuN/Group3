@@ -74,3 +74,12 @@ void ekin(mdsys_t *sys)
     }
     sys->temp = 2.0*sys->ekin/(3.0*sys->natoms-3.0)/kboltz;
 }
+
+void openfile(char *file){
+    FILE *fp;
+    fp=fopen(file,"w");
+}
+
+void closefile(FILE *fp){
+    fclose(fp);
+}
