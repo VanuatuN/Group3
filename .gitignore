@@ -1,7 +1,6 @@
 build/
 *.x
 *.swp
-examples/
 .vscode
 dump.txt
 original_cmakelist.txt

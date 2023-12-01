@@ -4,8 +4,12 @@
 #include "datastructure.h"
 #include "utilities.h"
 
-#if defined(USE_MPI)
+#if defined(_MPI)
 #include "mpi.h"
+#endif
+
+#if defined(_OPENMP)
+#include "omp.h"
 #endif
 
 /* compute forces */
@@ -17,7 +21,8 @@ void morse_force(mdsys_t *sys)
     double ffac, rx, ry, rz, rsq, rsqrt_B;
     int step = 1;
     sys->epot = 0.0;
-    int ii;
+    int ii, i, j;
+    int thid;
     
     #if defined(_MPI)
     double epotsum = 0.0;
@@ -98,10 +103,11 @@ void force(mdsys_t *sys)
     double c12 = 4.0 * sys->epsilon * pow(sys->sigma, 12.0);
     double c6 = 4.0 * sys->epsilon * pow(sys->sigma, 6.0);
     double rcsq = sys->rcut * sys->rcut;
-    double ffac, rx, ry, rz, rsq;
+    double ffac, rx, ry, rz, rsq, r6, rinv, epot=0.0;
     int step = 1;
     sys->epot = 0.0;
-    int ii;
+    int ii, i, j;
+    int thid;
     
     #if defined(_MPI)
     double epotsum = 0.0;
@@ -119,14 +125,31 @@ void force(mdsys_t *sys)
     azzero(sys->fy, sys->natoms);
     azzero(sys->fz, sys->natoms);
     #endif
+
+    #if defined(_OPENMP)
+    #pragma omp parallel private(i, j, ii, rx, ry, rz, rsq, ffac, r6, rinv,thid) firstprivate(c12, c6, rcsq) reduction(+:epot) 
+    { 
+      //#pragma omp critical 
+      //{
+        #pragma omp barrier
+        sys->nthreads = omp_get_num_threads();
+        thid = omp_get_thread_num();
+      //}
+     //printf("Threads number %d reporting thread %d\n", sys->nthreads, thid);
+     #endif             
     
-    for (int i = 0; i < (sys->natoms) - 1; i += step)
+    
+    for (int i = 0; i < (sys->natoms ) - 1; i += step *  sys->nthreads)
     {
         #if defined(_MPI)
+        #if defined(_OPENMP)
+        ii =  i + sys->rank * sys->nthreads + thid;
+        #else
         ii =  i + sys->rank;
         if (ii >=(sys->natoms-1)) break;
+        #endif
         #else
-        ii = i;
+        ii = i * sys->nthreads;
         #endif
         for (int j = ii + 1; j < (sys->natoms); ++j)
         {
@@ -164,11 +187,16 @@ void force(mdsys_t *sys)
                 sys->fx[j] -= rx * ffac;
                 sys->fy[j] -= ry * ffac;
                 sys->fz[j] -= rz * ffac;
-                sys->epot += r6 * (c12 * r6 - c6);
+                epot += r6 * (c12 * r6 - c6);
                 #endif
             }
         }
     }
+    #if defined(_OPENMP)
+    } // omp parallel
+    #endif
+
+    sys->epot = epot;
     #if defined(_MPI)
     MPI_Reduce(sys->cx, sys->fx, sys->natoms, MPI_DOUBLE, MPI_SUM, 0, sys->syscomm); 
     MPI_Reduce(sys->cy, sys->fy, sys->natoms, MPI_DOUBLE, MPI_SUM, 0, sys->syscomm); 
@@ -176,5 +204,3 @@ void force(mdsys_t *sys)
     MPI_Reduce(&epotsum, &sys->epot, 1, MPI_DOUBLE, MPI_SUM, 0, sys->syscomm);
     #endif
 }
-
-#endif
