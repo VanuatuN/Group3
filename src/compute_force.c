@@ -107,8 +107,9 @@ void force(mdsys_t *sys)
             }
         }
     }
-
+    #if defined(_OPENMP)
     } // omp parallel
+    #endif
 
     sys->epot = epot;
     #if defined(_MPI)

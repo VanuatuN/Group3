@@ -2,14 +2,13 @@ cmake_minimum_required(VERSION 3.12)
 
 project(MD_SIMULATION LANGUAGES C CXX)
 
-option(USE_MPI "Use MPI for compilation" ON)
-option(USE_OPENMP "Use OpenMP for compilation" ON)
+option(USE_MPI "Use MPI for compilation" OFF)
+option(USE_OPENMP "Use OpenMP for compilation" OFF)
 
 set(CMAKE_CXX_STANDARD 17)
-#set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fopenmp")
-#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fopenmp")
 
 if(USE_MPI)
+    set(CMAKE_C_COMPILER mpicc)
     find_package(MPI REQUIRED)
     message(STATUS "MPI include path: ${MPI_C_INCLUDE_PATH}")
     message(STATUS "MPI libraries: ${MPI_C_LIBRARIES}")
