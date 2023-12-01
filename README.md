@@ -43,7 +43,8 @@ d) Propagate all velocities for half a step <br>
 e) Output intermediate results, if needed <br> 
 
 ## Expected output:
-<img src="ljmd1.gif" alt="animation" width="500"/><br> 
+<img src="ljmd1.gif" alt="animation" width="500" style="display: block; margin: auto;" /><br>
+
 
 Figure 1: Animation of the simulation of Argon (108 atoms) in a cubic box for 10000 MD steps
 
@@ -93,7 +94,7 @@ more output.dat
 ```
 
 ### Benchmark Report (a):
-<img src="speedupleo.png" alt="drawing" width="500"/><br> 
+<img src="speedupleo.png" alt="animation" width="500" style="display: block; margin: auto;" /><br>
 **Figure 1:** Plot of speedup of serial code with different optimization configurations (purple : -O3 compiler flag, green: Refactoring of force computation kernel, blue: combination of -O3 and refactoring) vs. Number of atoms (system size).
 ### Performance Analysis
 
@@ -146,8 +147,8 @@ The permutation of metrics revealed that while some optimizations possibly impro
 In conclusion, the performance counters provided  a recognition and appreciation of the complexity, intricacies, and subtleties involved when adopting a configuration for optimization, rather than a simplistic or one-dimensional view of how different aspects of code optimization impact efficiency. It highlights the need for a holistic approach, considering the interplay of various metrics to achieve optimal results.
 
 ### Benchmark Report (b):
+<img src="mpi_speedup_plot.png" alt="animation" width="500" style="display: block; margin: auto;" /><br>
 
-<img src="mpi_speedup_plot.png" alt="drawing" width="500"/><br> 
 Figure 2: Speedup using MPI for different number of atoms.
 
 ### Benchmark Report (c):
