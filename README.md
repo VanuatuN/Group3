@@ -89,14 +89,8 @@ more output.dat
 
 ### Benchmark Report (a):
 
-![Serial code with different optimizations](md_serial-1.png)<br>
-
-**Figure 2:** Plot of the MD Runtimes(s) vs. Number of Atoms using different optimisation configuration on a MacBook, showing a general decrease in runtime with optimization.
-
-
-
 ![Alt text](speedupleo.png)\
-**Figure 3:** Plot of speedup of serial code with different optimization configurations (purple : -O3 compiler flag, green: Refactoring of force computation kernel, blue: combination of -O3 and refactoring) vs. Number of atoms (system size).
+**Figure 1:** Plot of speedup of serial code with different optimization configurations (purple : -O3 compiler flag, green: Refactoring of force computation kernel, blue: combination of -O3 and refactoring) vs. Number of atoms (system size).
 ### Performance Analysis
 
 **Table 1:** Summary of performance counter statistics for the LJMD code compiled with different optimization options for simulation of 108 Ar-atoms **(Best case)**
@@ -149,7 +143,6 @@ The combination of -O3 optimization and refactoring continued to stand out as pr
 In summary, there were trade-offs and benefits of different optimization configurations.
 The permutation of metrics revealed that while some optimizations possibly improved certain hardware-level aspects (e.g., cache efficiency), they could introduce challenges in others (e.g., increased branch misses). The combination of -O3 optimization and refactoring appears to strike a balance, resulting in the most favorable overall performance.
 In conclusion, the performance counters provided  a recognition and appreciation of the complexity, intricacies, and subtleties involved when adopting a configuration for optimization, rather than a simplistic or one-dimensional view of how different aspects of code optimization impact efficiency. It highlights the need for a holistic approach, considering the interplay of various metrics to achieve optimal results.
-
 
 
 ### Acknowledgments
