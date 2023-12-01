@@ -61,7 +61,24 @@ a) Edward: Optimize the force computation: *refactor the code* for better optimi
 b) Jenny: Add *MPI parallelization*. Document the *parallel efficiency* of changes.<br>
 c) Natalia: Add *OpenMP parallelization*. Document the *parallel efficiency* of changes. 
 
-### How to build (Serial code):
+### Serial code:
+Force Computation:
+
+**Original Version of Force Kernel:**<br>
+- Computes pairwise interactions in a nested loop.<br>
+- Uses conditional checks to skip self-interactions.<br>
+- Computes forces and energy with detailed expressions.<br>
+
+**Optimized Version of Force Kernel (Refactoring & Newton's Third Law):**<br>
+- Uses a more compact expression for force computation.<br>
+- Avoids self-interaction check by starting the inner loop from i + 1.<br>
+- Uses constants computed outside the loop.<br>
+- Uses vectorized operations to update forces for both particles simultaneously.<br>
+
+**Serial code with refactoring optimization :**
+The optimized version explicitly implements Newton's third law, updating forces for both particles involved in the interaction.
+Also, energy accumulation is simplified.
+The goal was to improve performance by simplifying expressions, eliminating redundant calculations, and taking advantage of vectorized operations. It maintains the same functionality as the original version but is more concise and potentially faster due to optimization techniques.
 
 To compile the default serial code with No optimizations, use the following commands:
 ```C
