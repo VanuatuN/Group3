@@ -85,7 +85,7 @@ The optimized version explicitly implements Newton's third law, updating forces 
 Also, energy accumulation is simplified.
 The goal was to improve performance by simplifying expressions, eliminating redundant calculations, and taking advantage of vectorized operations. It maintains the same functionality as the original version but is more concise and potentially faster due to optimization techniques.
 
-**Serial code:**
+**Compiling Serial Code:**
 To compile the default serial code, use the following commands:
 ```C
 cmake -S . -B build -DENABLE_TESTING=ON
@@ -159,7 +159,7 @@ The combination of -O3 optimization and refactoring continued to stand out as pr
 
 **Summary :**
 
-In summary, there were trade-offs and benefits of different optimization configurations.
+Though the serial code was generally inefficient with large system sizes, a good scaling with the best case provided insights into the trade-offs and benefits of different optimization configurations.
 The permutation of metrics revealed that while some optimizations possibly improved certain hardware-level aspects (e.g., cache efficiency), they could introduce challenges in others (e.g., increased branch misses). The combination of -O3 optimization and refactoring appears to strike a balance, resulting in the most favorable overall performance.
 In conclusion, the performance counters provided  a recognition and appreciation of the complexity, intricacies, and subtleties involved when adopting a configuration for optimization, rather than a simplistic or one-dimensional view of how different aspects of code optimization impact efficiency. It highlights the need for a holistic approach, considering the interplay of various metrics to achieve optimal results.
 
@@ -175,7 +175,22 @@ By integrating MPI parallelism into a refactored force kernel and utilizing the 
 
 Figure 2: Speedup using MPI for different number of atoms.
 
-### Benchmark Report (c):
+### MPI+OpenMP Parallelization:
+
+Another level of parallelization added by application of OpenMP inside of the each MPI process. OpenMP is used to take advantage of the shared memory inside the nodes. OpenMP is used to spawn N threads inside of the each MPI rank. The OpenMP Parallel directive is used inside the loop that calculates foces for each atom, inside the each MPI rank. So there are two metrics that can be applied to analyse the efficiency: 
+- the speedup for the ration  N Threads/ N MPI ranks
+- combination of the MPI ranks/N Threads that gives the best speed up.  
+
+When applying OpenMP we keep variables that declare indices and constants as private and firstprivate to protect
+them from modification be all OpenMP threads and to avoid race conditions.
+
+### Benchmark Report with MPI+OpenMP:
+
+We get a linear scaling in the speedup with just the simple parallelization of the compute_force() function for big problem size (as shown in the figure below). For natoms = 108, the maximum speedup
+
+<img src="mpi_speedup_plot.png" alt="animation" width="500" style="display: block; margin: auto;" /><br>
+
+Figure 3: Speedup using MPI+OpenMP for different number of atoms.
 
 ### Acknowledgments
 
