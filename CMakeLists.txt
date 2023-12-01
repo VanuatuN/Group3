@@ -3,10 +3,15 @@ cmake_minimum_required(VERSION 3.12)
 project(MD_SIMULATION LANGUAGES C CXX)
 
 option(USE_MPI "Use MPI for compilation" OFF)
+option(USE_OPENMP "Use OpenMP for compilation" OFF)
+
 set(CMAKE_CXX_STANDARD 17)
 
 if(USE_MPI)
+    set(CMAKE_C_COMPILER mpicc)
     find_package(MPI REQUIRED)
+    message(STATUS "MPI include path: ${MPI_C_INCLUDE_PATH}")
+    message(STATUS "MPI libraries: ${MPI_C_LIBRARIES}")
     set(CMAKE_C_COMPILER ${MPI_C_COMPILER})
     include_directories(SYSTEM ${MPI_C_INCLUDE_PATH})
     add_definitions(-D_MPI)
@@ -14,6 +19,18 @@ if(USE_MPI)
 else()
     set(CMAKE_C_COMPILER gcc)
 endif()
+
+if(USE_OPENMP)
+    find_package(OpenMP)
+    message(STATUS "OpenMP include path: ${OpenMP_C_INCLUDE_PATH}")
+    set(CMAKE_C_COMPILER ${OpenMP_C_COMPILER})
+    include_directories(SYSTEM ${OpenMP_C_INCLUDE_PATH})
+    add_definitions(-D_OPENMP -fopenmp)
+    set(OpenMP_LIBRARIES "${OpenMP_C_LIBRARIES}")
+else()
+    set(CMAKE_C_COMPILER gcc)
+endif()
+
 
 add_definitions(-O3)
 
@@ -46,6 +63,14 @@ if(USE_MPI)
     target_link_libraries(md PRIVATE ${MPI_C_LIBRARIES})
     target_compile_definitions(md PRIVATE _MPI)
 endif()
+
+if(USE_OPENMP)
+    target_include_directories(md_lib SYSTEM PRIVATE ${OpenMP_C_INCLUDE_PATH})
+    target_include_directories(md SYSTEM PRIVATE ${OpenMP_C_INCLUDE_PATH})
+    target_link_libraries(md PRIVATE OpenMP::OpenMP_C)
+    target_compile_definitions(md PRIVATE _OPENMP)
+endif()    
+
 
 #Unit tests
 option(ENABLE_TESTING "Enable building unit tests" OFF)

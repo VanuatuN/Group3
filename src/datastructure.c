@@ -7,30 +7,34 @@
 #include "mpi.h"
 #endif
 
+#if defined(_OPENMP)
+#include "omp.h"
+#endif
+
 // Function to initialize the mdsys_t structure
 void init_mdsys(mdsys_t *sys) {
-    sys->rx = (double *)malloc(sys->natoms * sizeof(double));
-    sys->ry = (double *)malloc(sys->natoms * sizeof(double));
-    sys->rz = (double *)malloc(sys->natoms * sizeof(double));
-    sys->vx = (double *)malloc(sys->natoms * sizeof(double));
-    sys->vy = (double *)malloc(sys->natoms * sizeof(double));
-    sys->vz = (double *)malloc(sys->natoms * sizeof(double));
-    sys->fx = (double *)malloc(sys->natoms * sizeof(double));
-    sys->fy = (double *)malloc(sys->natoms * sizeof(double));
-    sys->fz = (double *)malloc(sys->natoms * sizeof(double));
+    sys->rx = (double *)malloc(sys->natoms * sys->nthreads * sizeof(double));
+    sys->ry = (double *)malloc(sys->natoms * sys->nthreads * sizeof(double));
+    sys->rz = (double *)malloc(sys->natoms * sys->nthreads * sizeof(double));
+    sys->vx = (double *)malloc(sys->natoms * sys->nthreads * sizeof(double));
+    sys->vy = (double *)malloc(sys->natoms * sys->nthreads * sizeof(double));
+    sys->vz = (double *)malloc(sys->natoms * sys->nthreads * sizeof(double));
+    sys->fx = (double *)malloc(sys->natoms * sys->nthreads * sizeof(double));
+    sys->fy = (double *)malloc(sys->natoms * sys->nthreads * sizeof(double));
+    sys->fz = (double *)malloc(sys->natoms * sys->nthreads * sizeof(double));
 }
 
 #if defined(_MPI)
 void init_mpi_c(mdsys_t *sys) {
-    sys->cx = (double *)malloc(sys->natoms * sizeof(double));
-    sys->cy = (double *)malloc(sys->natoms * sizeof(double));
-    sys->cz = (double *)malloc(sys->natoms * sizeof(double));
+    sys->cx = (double *)malloc(sys->natoms * sys->nthreads * sizeof(double));
+    sys->cy = (double *)malloc(sys->natoms * sys->nthreads * sizeof(double));
+    sys->cz = (double *)malloc(sys->natoms * sys->nthreads * sizeof(double));
 }
 
 void init_mpi_r(mdsys_t *sys) {
-    sys->rx = (double *)malloc(sys->natoms * sizeof(double));
-    sys->ry = (double *)malloc(sys->natoms * sizeof(double));
-    sys->rz = (double *)malloc(sys->natoms * sizeof(double));
+    sys->rx = (double *)malloc(sys->natoms * sys->nthreads * sizeof(double));
+    sys->ry = (double *)malloc(sys->natoms * sys->nthreads * sizeof(double));
+    sys->rz = (double *)malloc(sys->natoms * sys->nthreads * sizeof(double));
 }
 
 void cleanup_mpi_c(mdsys_t *sys){
