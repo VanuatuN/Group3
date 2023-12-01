@@ -43,11 +43,7 @@ d) Propagate all velocities for half a step <br>
 e) Output intermediate results, if needed <br> 
 
 ## Expected output:
-<!-- ![Animation](ljmd1.gif){ width: 200px; }\ -->
-
-<p align="center">
-  <img src="ljmd1.gifg" style="width: 300px;" />
-</p>
+![Animation](ljmd1.gif){ width=500px }
 
 Figure 1: Animation of the simulation of Argon (108 atoms) in a cubic box for 10000 MD steps
 
@@ -98,7 +94,7 @@ more output.dat
 
 ### Benchmark Report (a):
 
-![Alt text](speedupleo.png){ width: 200px; }\
+![Alt text](speedupleo.png){ width=500px }\
 **Figure 1:** Plot of speedup of serial code with different optimization configurations (purple : -O3 compiler flag, green: Refactoring of force computation kernel, blue: combination of -O3 and refactoring) vs. Number of atoms (system size).
 ### Performance Analysis
 
@@ -152,7 +148,7 @@ In conclusion, the performance counters provided  a recognition and appreciation
 
 ### Benchmark Report (b):
 
-![Serial code with different optimizations](mpi_speedup_plot.png){ width: 200px; }<br>
+![Serial code with different optimizations](mpi_speedup_plot.png){ width=500px }<br>
 Figure 2: Speedup using MPI for different number of atoms.
 
 ### Benchmark Report (c):
