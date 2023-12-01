@@ -43,11 +43,12 @@ target_link_libraries(md PRIVATE md_lib m)
 if(USE_MPI)
     target_include_directories(md_lib SYSTEM PRIVATE ${MPI_C_INCLUDE_PATH})
     target_include_directories(md SYSTEM PRIVATE ${MPI_C_INCLUDE_PATH})
+    target_link_libraries(md PRIVATE ${MPI_C_LIBRARIES})
     target_compile_definitions(md PRIVATE _MPI)
 endif()
 
 #Unit tests
-option(ENABLE_TESTING "Enable building unit tests" ON)
+option(ENABLE_TESTING "Enable building unit tests" OFF)
 if(ENABLE_TESTING)
   enable_testing()
   enable_language(CXX)
