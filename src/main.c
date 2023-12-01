@@ -75,11 +75,7 @@ int main(int argc, char **argv)
 
     /* initialize forces and energies.*/
     sys.nfi=0;
-    #if defined(_MORSE)
-    morse_force(&sys);
-    #else
     force(&sys);
-    #endif
 
     #if defined(_MPI)
     if (sys.rank == 0) {

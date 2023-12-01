@@ -9,20 +9,10 @@ int input(FILE *fp, char *line, char *restfile, char *trajfile, char *ergfile, m
     sys->natoms=atoi(line);
     if(get_a_line(stdin,line, BLEN)) return 1;
     sys->mass=atof(line);
-    #if defined(_MORSE)
-        double dt, mass, xm, B, D, box, rcut;
-        if(get_a_line(stdin,line, BLEN)) return 1;
-        sys->xm=atof(line);
-        if(get_a_line(stdin,line, BLEN)) return 1;
-        sys->B=atof(line);
-        if(get_a_line(stdin,line, BLEN)) return 1;
-        sys->D=atof(line);
-    #else
-        if(get_a_line(stdin,line, BLEN)) return 1;
-        sys->epsilon=atof(line);
-        if(get_a_line(stdin,line, BLEN)) return 1;
-        sys->sigma=atof(line);
-    #endif
+    if(get_a_line(stdin,line, BLEN)) return 1;
+    sys->epsilon=atof(line);
+    if(get_a_line(stdin,line, BLEN)) return 1;
+    sys->sigma=atof(line);
     if(get_a_line(stdin,line, BLEN)) return 1;
     sys->rcut=atof(line);
     if(get_a_line(stdin,line, BLEN)) return 1;

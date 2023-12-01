@@ -14,12 +14,8 @@ extern const double kboltz; // = 0.0019872067;     /* boltzmann constant in kcal
 extern const double mvsq2e; // = 2390.05736153349; /* m*v^2 in kcal/mol */
 
 struct mdsys {
-    int natoms, nfi, nsteps;
-    #if defined(_MORSE)
-    double dt, mass, xm, B, D, box, rcut;
-    #else
+    int natoms, nfi, nsteps, nthreads, thid;
     double dt, mass, epsilon, sigma, box, rcut;
-    #endif
     double ekin, epot, temp;
     double *rx, *ry, *rz;
     double *vx, *vy, *vz;

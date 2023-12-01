@@ -13,95 +13,18 @@
 #endif
 
 /* compute forces */
-#if defined(_MORSE)
-void morse_force(mdsys_t *sys)
-{
-    double consts = 2.0 * sys->B * sys->D;
-    double rcsq = sys->rcut * sys->rcut;
-    double ffac, rx, ry, rz, rsq, rsqrt_B;
-    int step = 1;
-    sys->epot = 0.0;
-    int ii, i, j;
-    int thid;
-    
-    #if defined(_MPI)
-    double epotsum = 0.0;
-    step = sys->npes;
-    azzero(sys->cx, sys->natoms);
-    azzero(sys->cy, sys->natoms);
-    azzero(sys->cz, sys->natoms);
-
-    MPI_Bcast(sys->rx, sys->natoms, MPI_DOUBLE, 0, sys->syscomm);
-    MPI_Bcast(sys->ry, sys->natoms, MPI_DOUBLE, 0, sys->syscomm);
-    MPI_Bcast(sys->rz, sys->natoms, MPI_DOUBLE, 0, sys->syscomm);
-    
-    #else
-    azzero(sys->fx, sys->natoms);
-    azzero(sys->fy, sys->natoms);
-    azzero(sys->fz, sys->natoms);
-    #endif
-    
-    for (int i = 0; i < (sys->natoms) - 1; i += step)
-    {
-        #if defined(_MPI)
-        ii =  i + sys->rank;
-        if (ii >=(sys->natoms-1)) break;
-        #else
-        ii = i;
-        #endif
-        for (int j = ii + 1; j < (sys->natoms); ++j)
-        {
-            rx = pbc(sys->rx[ii] - sys->rx[j], 0.5 * sys->box);
-            ry = pbc(sys->ry[ii] - sys->ry[j], 0.5 * sys->box);
-            rz = pbc(sys->rz[ii] - sys->rz[j], 0.5 * sys->box);
-            rsq = rx * rx + ry * ry + rz * rz;
-
-            if (rsq < rcsq)
-            {
-                rsqrt_B = -sys->B * (sqrt(rsq) - sys->xm);
-                double exp_term = exp(rsqrt_B);
-                ffac = consts * exp_term * (exp_term - 1.0); // replace with morse
-
-                #if defined(_MPI)
-                // Update forces using vectorized operations
-                sys->cx[ii] += rx * ffac;
-                sys->cy[ii] += ry * ffac;
-                sys->cz[ii] += rz * ffac;
-
-                // Newton's third law: opposite force on particle j
-                sys->cx[j] -= rx * ffac;
-                sys->cy[j] -= ry * ffac;
-                sys->cz[j] -= rz * ffac;
-
-                epotsum += sys->D * (1.0 - exp_term) * (1.0 - exp_term) - sys->D;
-                #else
-                // Update forces using vectorized operations
-                sys->fx[ii] += rx * ffac;
-                sys->fy[ii] += ry * ffac;
-                sys->fz[ii] += rz * ffac;
-
-                // Newton's third law: opposite force on particle j
-                sys->fx[j] -= rx * ffac;
-                sys->fy[j] -= ry * ffac;
-                sys->fz[j] -= rz * ffac;
-                sys->epot += sys->D * (1.0 - exp_term) * (1.0 - exp_term) - sys->D;
-                #endif
-            }
-        }
-    }
-    #if defined(_MPI)
-    MPI_Reduce(sys->cx, sys->fx, sys->natoms, MPI_DOUBLE, MPI_SUM, 0, sys->syscomm); 
-    MPI_Reduce(sys->cy, sys->fy, sys->natoms, MPI_DOUBLE, MPI_SUM, 0, sys->syscomm); 
-    MPI_Reduce(sys->cz, sys->fz, sys->natoms, MPI_DOUBLE, MPI_SUM, 0, sys->syscomm); 
-    MPI_Reduce(&epotsum, &sys->epot, 1, MPI_DOUBLE, MPI_SUM, 0, sys->syscomm);
-    #endif
-}
-#else
 
 void force(mdsys_t *sys)
-{
+{   
+    #if defined(_MORSE)
+    double exponent = 1.0 /6.0;
+    double R = pow(2.0, exponent) * sys->sigma;
+    double alpha = 6.0 / R;
+    double coeffs = 2.0 * sys->epsilon * alpha;
+    #else
     double c12 = 4.0 * sys->epsilon * pow(sys->sigma, 12.0);
     double c6 = 4.0 * sys->epsilon * pow(sys->sigma, 6.0);
+    #endif
     double rcsq = sys->rcut * sys->rcut;
     double ffac, rx, ry, rz, rsq, r6, rinv, epot=0.0;
     int step = 1;
@@ -136,8 +59,7 @@ void force(mdsys_t *sys)
         thid = omp_get_thread_num();
       //}
      //printf("Threads number %d reporting thread %d\n", sys->nthreads, thid);
-     #endif             
-    
+    #endif             
     
     for (int i = 0; i < (sys->natoms ) - 1; i += step *  sys->nthreads)
     {
@@ -160,10 +82,16 @@ void force(mdsys_t *sys)
 
             if (rsq < rcsq)
             {
+                #if defined(_MORSE)
+                double r = sqrt(rsq);
+                double expoterm = exp(-alpha * (r - R));
+                ffac = coeffs * expoterm * (expoterm - 1.0);
+                #else
                 double r6, rinv;
                 rinv = 1.0 / rsq;
                 r6 = rinv * rinv * rinv;
                 ffac = (12.0 * c12 * r6 - 6.0 * c6) * r6 * rinv; // replace with morse
+                #endif
 
                 #if defined(_MPI)
                 // Update forces using vectorized operations
@@ -175,8 +103,11 @@ void force(mdsys_t *sys)
                 sys->cx[j] -= rx * ffac;
                 sys->cy[j] -= ry * ffac;
                 sys->cz[j] -= rz * ffac;
-
+                #if defined(_MORSE)
+                epotsum += sys->epsilon * (1.0 - expoterm) * (1.0 - expoterm);
+                #else
                 epotsum += r6 * (c12 * r6 - c6);
+                #endif
                 #else
                 // Update forces using vectorized operations
                 sys->fx[ii] += rx * ffac;
@@ -187,7 +118,11 @@ void force(mdsys_t *sys)
                 sys->fx[j] -= rx * ffac;
                 sys->fy[j] -= ry * ffac;
                 sys->fz[j] -= rz * ffac;
+                #if defined(_MORSE)
+                epot += sys->epsilon * (1.0 - expoterm) * (1.0 - expoterm);
+                #else
                 epot += r6 * (c12 * r6 - c6);
+                #endif
                 #endif
             }
         }

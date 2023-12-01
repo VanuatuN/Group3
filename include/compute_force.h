@@ -14,11 +14,7 @@
 extern "C" {
 #endif
 
-#if defined(_MORSE)
-    void morse_force(mdsys_t *sys);
-#else
-    void force(mdsys_t *sys);
-#endif
+void force(mdsys_t *sys);
 
 #ifdef __cplusplus
 }
