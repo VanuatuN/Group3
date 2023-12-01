@@ -165,11 +165,11 @@ In conclusion, the performance counters provided  a recognition and appreciation
 
 ### MPI Parallelization:
 
-A simple parallelization of the code is implemented where the computation of the force is distributed to several processing elements. The positions are broadcasted from rank 0. Then eack rank computes the force for different atoms. The results are collected back to rank 0 after compute_force().
+A straightforward parallelization of the optimized serial code has been implemented, wherein the computation of forces is distributed across multiple processing elements. Initially, positions are broadcasted from rank 0. Subsequently, each rank calculates the force for different atoms. After the `compute_force()` operation, results are collected back to rank 0.
 
 ### Benchmark Report with MPI:
 
-We get a linear scaling in the speedup with just the simple parallelization of the compute_force() function for big problem size (as shown in the figure below). For natoms = 108, the maximum speedup
+By integrating MPI parallelism into a refactored force kernel and utilizing the -O3 compiler flag for optimization, a consistent linear scaling was achieved with an increasing number of processes. For a system size of natoms = 108, the maximum speedup reaches only up to 7x when employing 8 processing elements. When utilizing more than 8 processing elements for 108 atoms, the communication overhead from the MPI calls becomes significant. After which the linear plot is observed to plateau. In contrast, for the worst-case scenario (natoms = 78732), the speedup linearly increases up to 96 tasks (refer to Figure 2). The size constraint of the serial code has been effectively eliminated with the incorporation of MPI parallelization.
 
 <img src="mpi_speedup_plot.png" alt="animation" width="500" style="display: block; margin: auto;" /><br>
 
