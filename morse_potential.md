@@ -1,18 +1,18 @@
 # Morse Potential
 
-The Morse Potential constitutes an interatomic interaction model describing the potential energy of a diatomic molecule. Mathematically, it is expressed as follows:
+The Morse Potential constitutes an interatomic interaction model describing the potential energy of a diatomic molecule. The expression for the Morse potential is
 
 $U_{M} = D_M [1 - \exp(-\alpha(r - R))]^{2}$ .
 
 In this equation, $D_M$ represents the pair potential well depth, $\alpha$ is an adjustable parameter determining the range of interparticle forces, and $R$ denotes the equilibrium separation between atoms.
 
-Near equilibrium ($r \approx R$),  $D_M = \varepsilon$ of the Lennard-Jones potential. The relationship for $\alpha$ and $R$ is constant, that is, $\alpha R = 6$. Here, we use $R = 2^{1/6} \sigma$.
+Near equilibrium ($r \approx R$),  $D_M = \varepsilon$ of the Lennard-Jones potential. The relationship for $\alpha$ and $R$ is constant, that is, $\alpha R = 6$. Here, we use $R = 2^{1/6} \sigma$ where $\sigma$ is the distance at which the particle-particle potential energy $V$ is zero.
 
-The first derivative of the Morse potential is
+Moreover, the first derivative of the Morse potential is
 
 $F(r) = 2\alpha D_M \exp(-\alpha(r - R)) [\exp(-\alpha(r - R) -1 ])$ .
 
-The Morse Potenatial is implemented as follows
+The Morse Potential is implemented as follows
 
 ```C
 double exponent = 1.0 /6.0;
@@ -25,10 +25,10 @@ for the constant variables.
 The potential and force are implemented as follows
 
 ```C
+epot += sys->epsilon * (1.0 - expoterm) * (1.0 - expoterm);
+
 double expoterm = exp(-alpha * (r - R));
 ffac = coeffs * expoterm * (expoterm - 1.0)
-
-epot += sys->epsilon * (1.0 - expoterm) * (1.0 - expoterm);
 ```
 
 To compile using Morse potential, use the following commands:
