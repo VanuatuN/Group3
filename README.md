@@ -43,7 +43,7 @@ d) Propagate all velocities for half a step <br>
 e) Output intermediate results, if needed <br> 
 
 ## Expected output:
-![Animation](ljmd1.gif)\
+![Animation](ljmd1.gif){ width: 200px; }\
 Figure 1: Animation of the simulation of Argon (108 atoms) in a cubic box for 10000 MD steps
 
 
@@ -64,26 +64,27 @@ a) Edward: Optimize the force computation: *refactor the code* for better optimi
 b) Jenny: Add *MPI parallelization*. Document the *parallel efficiency* of changes.<br>
 c) Natalia: Add *OpenMP parallelization*. Document the *parallel efficiency* of changes. 
 
-### How to build (Serial code):
+### How to build:
 
-To compile the default serial code with No optimizations, use the following commands:
+**Serial code:**
+To compile the default serial code, use the following commands:
 ```C
-cmake -S . -B build
+cmake -S . -B build -DENABLE_TESTING=ON
 cmake --build build
 cd build
 ctest
 ```
-- To compile with -O3 optimization, uncomment "# add_definitions(-O3)" in the 
-"#Add Definitions" section of the CMakeLists.txt file, and repeat the compilation steps.
+with google tests turned on.
 
-- To compile with Refactoring, uncomment "# add_definitions(-DREFACTOR)"
-in the "#Add Definitions" section of the CMakeLists.txt file, and repeat the compilation steps.
+**Parallel (MPI) code:**
+To compile the with MPI, use the following commands:
+```C
+cmake -S . -B build -DUSE_MPI=ON
+cmake --build build
+```
 
-- To compile with both -O3 and  Refactoring optimizations, uncomment both 
-and repeat the compilation steps. 
+### How to Run:
 
-
-### How to Run (Serial code):
 ```C
 cd examples/
 ../build/./md < argon_108.inp > output.dat
@@ -92,19 +93,12 @@ more output.dat
 
 ### Benchmark Report (a):
 
-![Alt text](speedupleo.png)\
+![Alt text](speedupleo.png){ width: 200px; }\
 **Figure 1:** Plot of speedup of serial code with different optimization configurations (purple : -O3 compiler flag, green: Refactoring of force computation kernel, blue: combination of -O3 and refactoring) vs. Number of atoms (system size).
 ### Performance Analysis
 
 **Table 1:** Summary of performance counter statistics for the LJMD code compiled with different optimization options for simulation of 108 Ar-atoms **(Best case)**
 
-
-![Serial code with different optimizations](mpi_speedup_plot.png)<br>
-Figure 2: Speedup using MPI for different number of atoms.
-
-
-
-## Benchmark Report (c):
 | Metric                             | No Optimization | -O3 Optimization | Refactoring | -O3 Optimization + Refactoring |
 |------------------------------------|-----------------|-------------------|-------------|--------------------------------|
 | Cache References (K/sec)            | 1.579           | 22.723            | 74.305      | 155.732                        |
@@ -116,8 +110,6 @@ Figure 2: Speedup using MPI for different number of atoms.
 | User Time (seconds)                 | 15.061          | 12.729            | 2.321       | 1.204                         |
 | System Time (seconds)               | 0.004           | 0.005             | 0.002       | 0.004                          |
 | Elapsed Time (seconds)              | 15.090          | 12.753            | 2.331       | 1.217                         |
-
-
 
 **Cache Metrics (References and Misses):**
 
@@ -153,6 +145,12 @@ In summary, there were trade-offs and benefits of different optimization configu
 The permutation of metrics revealed that while some optimizations possibly improved certain hardware-level aspects (e.g., cache efficiency), they could introduce challenges in others (e.g., increased branch misses). The combination of -O3 optimization and refactoring appears to strike a balance, resulting in the most favorable overall performance.
 In conclusion, the performance counters provided  a recognition and appreciation of the complexity, intricacies, and subtleties involved when adopting a configuration for optimization, rather than a simplistic or one-dimensional view of how different aspects of code optimization impact efficiency. It highlights the need for a holistic approach, considering the interplay of various metrics to achieve optimal results.
 
+### Benchmark Report (b):
+
+![Serial code with different optimizations](mpi_speedup_plot.png){ width: 200px; }<br>
+Figure 2: Speedup using MPI for different number of atoms.
+
+### Benchmark Report (c):
 
 ### Acknowledgments
 
