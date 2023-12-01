@@ -85,7 +85,7 @@ The optimized version explicitly implements Newton's third law, updating forces 
 Also, energy accumulation is simplified.
 The goal was to improve performance by simplifying expressions, eliminating redundant calculations, and taking advantage of vectorized operations. It maintains the same functionality as the original version but is more concise and potentially faster due to optimization techniques.
 
-**Serial code:**
+**Compiling Serial Code:**
 To compile the default serial code, use the following commands:
 ```C
 cmake -S . -B build -DENABLE_TESTING=ON
@@ -159,7 +159,7 @@ The combination of -O3 optimization and refactoring continued to stand out as pr
 
 **Summary :**
 
-In summary, there were trade-offs and benefits of different optimization configurations.
+Though the serial code was generally inefficient with large system sizes, the a good scaling with the best case provided insights into the trade-offs and benefits of different optimization configurations.
 The permutation of metrics revealed that while some optimizations possibly improved certain hardware-level aspects (e.g., cache efficiency), they could introduce challenges in others (e.g., increased branch misses). The combination of -O3 optimization and refactoring appears to strike a balance, resulting in the most favorable overall performance.
 In conclusion, the performance counters provided  a recognition and appreciation of the complexity, intricacies, and subtleties involved when adopting a configuration for optimization, rather than a simplistic or one-dimensional view of how different aspects of code optimization impact efficiency. It highlights the need for a holistic approach, considering the interplay of various metrics to achieve optimal results.
 
