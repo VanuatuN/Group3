@@ -9,7 +9,7 @@
 extern "C" {
 #endif
 
-int input(FILE *fp, char *line, char *restfile, char *trajfile, char *ergfile, mdsys_t *sys, int* nprint, int BLEN);
+int input(FILE *fp, char *line, char *restfile, char *trajfile, char *ergfile, mdsys_t *sys, int *nprint, int BLEN);
 
 #ifdef __cplusplus
 }

@@ -3,7 +3,7 @@
 #include "datastructure.h"
 #include "utilities.h"
 
-int input(FILE *fp, char *line, char *restfile, char *trajfile, char *ergfile, mdsys_t *sys, int* nprint, int BLEN){
+int input(FILE *fp, char *line, char *restfile, char *trajfile, char *ergfile, mdsys_t *sys, int *nprint, int BLEN){
     /* read input file */
     if(get_a_line(stdin,line, BLEN)) return 1;
     sys->natoms=atoi(line);
