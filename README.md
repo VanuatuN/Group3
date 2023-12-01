@@ -110,6 +110,9 @@ Figure 2: Scaling plot of the MD Runtimes(s) vs. Number of Atoms using different
 
 ![Serial code with different optimizations](mpi_speedup_plot.png)<br>
 Figure 2: Speedup using MPI for different number of atoms.
+
+
+
 ## Benchmark Report (c):
 
 ## Acknowledgments
