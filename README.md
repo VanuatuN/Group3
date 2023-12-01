@@ -148,7 +148,8 @@ In conclusion, the performance counters provided  a recognition and appreciation
 
 ### Benchmark Report (b):
 
-![Serial code with different optimizations{ width=500px }](mpi_speedup_plot.png)<br>
+<!-- ![Serial code with different optimizations{ width=500px }](mpi_speedup_plot.png)<br> -->
+<img src="mpi_speedup_plot.png" alt="drawing" width="500"/><br> 
 Figure 2: Speedup using MPI for different number of atoms.
 
 ### Benchmark Report (c):
