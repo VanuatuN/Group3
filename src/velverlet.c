@@ -4,6 +4,9 @@
 #include "datastructure.h"
 #include "utilities.h"
 #include "compute_force.h"
+#if defined(USE_MPI)
+#include "mpi.h"
+#endif
 
 #if defined(USE_MPI)
 #include "mpi.h"

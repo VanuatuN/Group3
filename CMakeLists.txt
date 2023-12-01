@@ -10,7 +10,6 @@ set(CMAKE_CXX_STANDARD 17)
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fopenmp")
 
 if(USE_MPI)
-    set(CMAKE_C_COMPILER mpicc)
     find_package(MPI REQUIRED)
     message(STATUS "MPI include path: ${MPI_C_INCLUDE_PATH}")
     message(STATUS "MPI libraries: ${MPI_C_LIBRARIES}")
@@ -74,8 +73,8 @@ if(USE_OPENMP)
 endif()    
 
 
-#Unit test for compute force function
-option(ENABLE_TESTING "Enable building unit tests" ON)
+#Unit tests
+option(ENABLE_TESTING "Enable building unit tests" OFF)
 if(ENABLE_TESTING)
   enable_testing()
   enable_language(CXX)

@@ -1,5 +1,5 @@
 // tests/test_compute_force.cpp
-#include "gtest/gtest.h"
+#include <gtest/gtest.h>
 #include "utilities.h"
 #include "compute_force.h"
 

@@ -34,7 +34,7 @@ void force(mdsys_t *sys)
     MPI_Bcast(sys->rx, sys->natoms, MPI_DOUBLE, 0, sys->syscomm);
     MPI_Bcast(sys->ry, sys->natoms, MPI_DOUBLE, 0, sys->syscomm);
     MPI_Bcast(sys->rz, sys->natoms, MPI_DOUBLE, 0, sys->syscomm);
-
+    
     #else
     azzero(sys->fx, sys->natoms);
     azzero(sys->fy, sys->natoms);
