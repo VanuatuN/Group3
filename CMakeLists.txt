@@ -1,10 +1,41 @@
-cmake_minimum_required(VERSION 3.12)  # Set a valid CMake version
+cmake_minimum_required(VERSION 3.12)
 
 project(MD_SIMULATION LANGUAGES C CXX)
 
-set(CMAKE_CXX_STANDARD 14)
+option(USE_MPI "Use MPI for compilation" ON)
+option(USE_OPENMP "Use OpenMP for compilation" ON)
 
-# Add your source files here
+set(CMAKE_CXX_STANDARD 17)
+#set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fopenmp")
+#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fopenmp")
+
+if(USE_MPI)
+    set(CMAKE_C_COMPILER mpicc)
+    find_package(MPI REQUIRED)
+    message(STATUS "MPI include path: ${MPI_C_INCLUDE_PATH}")
+    message(STATUS "MPI libraries: ${MPI_C_LIBRARIES}")
+    set(CMAKE_C_COMPILER ${MPI_C_COMPILER})
+    include_directories(SYSTEM ${MPI_C_INCLUDE_PATH})
+    add_definitions(-D_MPI)
+    set(MPI_LIBRARIES "${MPI_C_LIBRARIES}")
+else()
+    set(CMAKE_C_COMPILER gcc)
+endif()
+
+if(USE_OPENMP)
+    find_package(OpenMP)
+    message(STATUS "OpenMP include path: ${OpenMP_C_INCLUDE_PATH}")
+    set(CMAKE_C_COMPILER ${OpenMP_C_COMPILER})
+    include_directories(SYSTEM ${OpenMP_C_INCLUDE_PATH})
+    add_definitions(-D_OPENMP -fopenmp)
+    set(OpenMP_LIBRARIES "${OpenMP_C_LIBRARIES}")
+else()
+    set(CMAKE_C_COMPILER gcc)
+endif()
+
+
+add_definitions(-O3)
+
 set(SOURCES
     src/utilities.c
     src/compute_force.c
@@ -12,9 +43,8 @@ set(SOURCES
     src/input.c
     src/output.c
     src/datastructure.c
-  )
+)
 
-# Add your header files here
 set(HEADERS
     include/datastructure.h
     include/utilities.h
@@ -24,20 +54,25 @@ set(HEADERS
     include/output.h
 )
 
-# Create a library target for common code
 add_library(md_lib SHARED ${SOURCES} ${HEADERS})
-
-# Specify include directories
 target_include_directories(md_lib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
-
-# Create an executable
 add_executable(md src/main.c)
-
-# Enable debugging symbols
-set(CMAKE_BUILD_TYPE Debug)
-
-# Link the executable against the library
 target_link_libraries(md PRIVATE md_lib m)
+
+if(USE_MPI)
+    target_include_directories(md_lib SYSTEM PRIVATE ${MPI_C_INCLUDE_PATH})
+    target_include_directories(md SYSTEM PRIVATE ${MPI_C_INCLUDE_PATH})
+    target_link_libraries(md PRIVATE ${MPI_C_LIBRARIES})
+    target_compile_definitions(md PRIVATE _MPI)
+endif()
+
+if(USE_OPENMP)
+    target_include_directories(md_lib SYSTEM PRIVATE ${OpenMP_C_INCLUDE_PATH})
+    target_include_directories(md SYSTEM PRIVATE ${OpenMP_C_INCLUDE_PATH})
+    target_link_libraries(md PRIVATE OpenMP::OpenMP_C)
+    target_compile_definitions(md PRIVATE _OPENMP)
+endif()    
+
 
 #Unit test for compute force function
 option(ENABLE_TESTING "Enable building unit tests" ON)
