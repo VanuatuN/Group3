@@ -177,7 +177,12 @@ Figure 2: Speedup using MPI for different number of atoms.
 
 ### MPI+OpenMP Parallelization:
 
-A simple parallelization of the code is implemented where the computation of the force is distributed to several processing elements. The positions are broadcasted from rank 0. Then eack rank computes the force for different atoms. The results are collected back to rank 0 after compute_force().
+Another level of parallelization added by application of OpenMP inside of the each MPI process. OpenMP is used to take advantage of the shared memory inside the nodes. OpenMP is used to spawn N threads inside of the each MPI rank. The OpenMP Parallel directive is used inside the loop that calculates foces for each atom, inside the each MPI rank. So there are two metrics that can be applied to analyse the efficiency: 
+- the speedup for the ration  N Threads/ N MPI ranks
+- combination of the MPI ranks/N Threads that gives the best speed up.  
+
+When applying OpenMP we keep variables that declare indices and constants as private and firstprivate to protect
+them from modification be all OpenMP threads and to avoid race conditions.
 
 ### Benchmark Report with MPI+OpenMP:
 
