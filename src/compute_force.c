@@ -13,10 +13,18 @@
 #endif
 
 /* compute forces */
+
 void force(mdsys_t *sys)
-{
+{   
+    #if defined(_MORSE)
+    double exponent = 1.0 /6.0;
+    double R = pow(2.0, exponent) * sys->sigma;
+    double alpha = 6.0 / R;
+    double coeffs = 2.0 * sys->epsilon * alpha;
+    #else
     double c12 = 4.0 * sys->epsilon * pow(sys->sigma, 12.0);
     double c6 = 4.0 * sys->epsilon * pow(sys->sigma, 6.0);
+    #endif
     double rcsq = sys->rcut * sys->rcut;
     double ffac, rx, ry, rz, rsq, r6, rinv, epot=0.0;
     int step = 1;
@@ -42,7 +50,11 @@ void force(mdsys_t *sys)
     #endif
 
     #if defined(_OPENMP)
+    #if defined(_MORSE)
+    #pragma omp parallel private(i, j, ii, rx, ry, rz, rsq, ffac,thid) firstprivate(exponent, R, alpha, coeffs) reduction(+:epot) 
+    #else
     #pragma omp parallel private(i, j, ii, rx, ry, rz, rsq, ffac, r6, rinv,thid) firstprivate(c12, c6, rcsq) reduction(+:epot) 
+    #endif 
     { 
       //#pragma omp critical 
       //{
@@ -51,8 +63,7 @@ void force(mdsys_t *sys)
         thid = omp_get_thread_num();
       //}
      //printf("Threads number %d reporting thread %d\n", sys->nthreads, thid);
-     #endif             
-    
+    #endif             
     
     for (int i = 0; i < (sys->natoms ) - 1; i += step *  sys->nthreads)
     {
@@ -75,10 +86,16 @@ void force(mdsys_t *sys)
 
             if (rsq < rcsq)
             {
+                #if defined(_MORSE)
+                double r = sqrt(rsq);
+                double expoterm = exp(-alpha * (r - R));
+                ffac = coeffs * expoterm * (expoterm - 1.0);
+                #else
                 double r6, rinv;
                 rinv = 1.0 / rsq;
                 r6 = rinv * rinv * rinv;
                 ffac = (12.0 * c12 * r6 - 6.0 * c6) * r6 * rinv; // replace with morse
+                #endif
 
                 #if defined(_MPI)
                 // Update forces using vectorized operations
@@ -90,8 +107,11 @@ void force(mdsys_t *sys)
                 sys->cx[j] -= rx * ffac;
                 sys->cy[j] -= ry * ffac;
                 sys->cz[j] -= rz * ffac;
-
+                #if defined(_MORSE)
+                epotsum += sys->epsilon * (1.0 - expoterm) * (1.0 - expoterm);
+                #else
                 epotsum += r6 * (c12 * r6 - c6);
+                #endif
                 #else
                 // Update forces using vectorized operations
                 sys->fx[ii] += rx * ffac;
@@ -102,7 +122,11 @@ void force(mdsys_t *sys)
                 sys->fx[j] -= rx * ffac;
                 sys->fy[j] -= ry * ffac;
                 sys->fz[j] -= rz * ffac;
+                #if defined(_MORSE)
+                epot += sys->epsilon * (1.0 - expoterm) * (1.0 - expoterm);
+                #else
                 epot += r6 * (c12 * r6 - c6);
+                #endif
                 #endif
             }
         }

@@ -53,6 +53,7 @@ void velverlet(mdsys_t *sys)
     #if defined(_MPI)
     }
     #endif
+
     /* compute forces and potential energy */
     force(sys);
 
