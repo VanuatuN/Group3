@@ -179,10 +179,38 @@ Figure 2: Speedup using MPI for different number of atoms.
 
 Another level of parallelization added by application of OpenMP inside of the each MPI process. OpenMP is used to take advantage of the shared memory inside the nodes. OpenMP is used to spawn N threads inside of the each MPI rank. The OpenMP Parallel directive is used inside the loop that calculates foces for each atom, inside the each MPI rank. So there are two metrics that can be applied to analyse the efficiency: 
 - the speedup for the ration  N Threads/ N MPI ranks
-- combination of the MPI ranks/N Threads that gives the best speed up.  
+- combination of the MPI ranks/ N Threads that gives the best speed up.  
 
 When applying OpenMP we keep variables that declare indices and constants as private and firstprivate to protect
 them from modification be all OpenMP threads and to avoid race conditions.
+
+**Parallel (MPI+OpenMP) code:**
+
+To compile the with MPI, use the following commands:
+```C
+cmake -S . -B build -DUSE_MPI=ON -DUSE_OPENMP=ON
+cmake --build build
+```
+Leonardo has 2 NUMA nodes, each with 32 physical cores (supports multithreading, but we keep if off). In total there are 64 physical cores on Leonardo. So the optimal maximal configuration for total number of processes suggesrs that anks of MPI multiplied by threads of OpenMP (if we use both nodes) is 64 (e.g 2MPI*32 PpenMP, or 8 MPI *16 OpenMP) 
+
+```C
+Architecture:        x86_64
+CPU op-mode(s):      32-bit, 64-bit
+Byte Order:          Little Endian
+CPU(s):              128
+On-line CPU(s) list: 0-127
+Thread(s) per core:  2
+Core(s) per socket:  32
+Socket(s):           2
+NUMA node(s):        2
+```
+Each core has two threads. 
+We run the program XX times with XX different inputs.
+We use 1 node, so, 2 programs on each node.
+Each program uses 6 MPI processes (12 per node).
+Each process uses 3 threads
+Therefore, each run uses 18 cores
+
 
 ### Benchmark Report with MPI+OpenMP:
 
