@@ -191,7 +191,7 @@ To compile the with MPI, use the following commands:
 cmake -S . -B build -DUSE_MPI=ON -DUSE_OPENMP=ON
 cmake --build build
 ```
-Leonardo has 2 NUMA nodes, each with 32 physical cores (supports multithreading, but we keep if off). In total there are 64 physical cores on Leonardo. So the optimal maximal configuration for total number of processes suggests that max ranks of MPI multiplied by max threads of OpenMP (if we use both nodes) is 64 (e.g 2MPI*32 PpenMP, or 8 MPI *16 OpenMP) 
+Leonardo has 2 NUMA nodes, each with 32 physical cores (supports multithreading, but we keep if off). In total there are 64 physical cores on Leonardo. So the optimal maximal configuration for total number of processes suggests that max ranks of MPI multiplied by max threads of OpenMP (if we use both nodes) is 64 (e.g 2MPI * 32OpenMP, or 8 MPI * 16 OpenMP) 
 
 ```C
 Architecture:        x86_64
@@ -205,38 +205,44 @@ Socket(s):           2
 NUMA node(s):        2
 ```
 
-We submit sbatch scripts with the following structure:
+We submit sbatch scripts with the following structure that runs all combinations of the number of MPI processes and number of OPEN MP ranks, we keep the total processes below 32 to satisfy the size of the Leonardo, we also use *--cpu_bind=cores* option to bind MPI processes to specific CPU cores:
 
 ```C
 #!/bin/bash
-
-#SBATCH --job-name="ljmd"
-#SBATCH --nodes=2
-#SBATCH --ntasks-per-node=2
-#SBATCH --cpus-per-task=2
+#SBATCH --job-name=benchmark_test
+#SBATCH --output=benchmark_test.out
+#SBATCH --error=benchmark_test.err
+#SBATCH --nodes=1
+#SBATCH --cpus-per-task=32
 #SBATCH -A ICT23_MHPC
-#SBATCH --hint=nomultithread 
-#SBATCH --time=00:10:00
-#SBATCH --mem=490000MB
-#SBATCH -p boost_usr_prod
+#SBATCH --time=00:30:00
+#SBATCH --partition=boost_usr_prod
 
-# Define the array of thread counts and rank counts
-threads=$SLURM_CPUS_PER_TASK
-ranks=$SLURM_TASKS_PER_NODE
-atom=2916 
+# Define the number of MPI processes and OpenMP threads
+MPI_PROCS=(1 2 4 8 16 32)
+OMP_THREADS=(32 16 8 4 2 1)
+atom=78732
 
-    output_file="${atom}-${ranks}ranks-${threads}threads_tt.out"
-    # Set the number of threads and run the program
-    export OMP_NUM_THREADS=$threads
-    mpirun ./md <argon_${atom}.inp >"${output_file}"  # Redirect the output to the specified file
-
+for MPI_PROC in "${MPI_PROCS[@]}"; do
+  for OMP_THREAD in "${OMP_THREADS[@]}"; do
+    output_file="${atom}-benchmark-openmp+mpi.out"
+    export OMP_NUM_THREADS=$OMP_THREAD
+    srun -n $MPI_PROC -c $OMP_THREAD --cpu_bind=cores  ./md <argon_${atom}.inp >> "${output_file}" 
+  done
+done
 ```
 
-Making different configuration of nodes, tasks per node and cpus per task to achieve the best performance. Example script uses 2 nodes, 2 tasks per node - resulting in 4 MPI processes, and 2 cpus per task - resulting in 2 OpenMP threads. 
+We test different configurations of tasks per node and cpu cores per task to achieve the best performance. Example script uses 1 node and combinations of () MPI processes together with () OPEN MP threads keeping the total number below 32. 
+
 
 ### Benchmark Report with MPI+OpenMP:
 
 We get a linear scaling in the speedup with just the simple parallelization of the compute_force() function for big problem size (as shown in the figure below). For natoms = 108, the maximum speedup
+
+n this case, with 4 MPI tasks, each using 24 threads, the performance is around 2x the serial performance, but worse than either the single node OpenMP performance or the pure MPI performance using an equivalent number of CPUs. It seems that for this pi estimation job, pure MPI parallelization is probably the superior option.
+
+
+
 
 <img src="mpi_speedup_plot.png" alt="animation" width="500" style="display: block; margin: auto;" /><br>
 
