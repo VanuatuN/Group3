@@ -75,7 +75,7 @@ int main(int argc, char **argv)
 
     /* initialize forces and energies.*/
     sys.nfi=0;
-    force(&sys); // ALL ranks
+    force(&sys);
 
     #if defined(_MPI)
     if (sys.rank == 0) {

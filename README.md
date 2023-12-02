@@ -165,11 +165,11 @@ In conclusion, the performance counters provided  a recognition and appreciation
 
 ### MPI Parallelization:
 
-A straightforward parallelization of the optimized serial code has been implemented, wherein the computation of forces is distributed across multiple processing elements. Initially, positions are broadcasted from rank 0. Subsequently, each rank calculates the force for different atoms. After the `compute_force()` operation, results are collected back to rank 0.
+A straightforward parallelization of the optimized serial code has been implemented using MPI, where the computation of forces is distributed across multiple processing elements. The parallelization is implemented in the force kernel, wherein positions are initially broadcasted from rank 0 to all other ranks before computing the force. Then each rank calculates the force on different atoms. After the `compute_force()` operation, the results are collected back to rank 0.
 
 ### Benchmark Report with MPI:
 
-By integrating MPI parallelism into a refactored force kernel and utilizing the -O3 compiler flag for optimization, a consistent linear scaling was achieved with an increasing number of processes. For a system size of natoms = 108, the maximum speedup reaches only up to 7x when employing 8 processing elements. When utilizing more than 8 processing elements for 108 atoms, the communication overhead from the MPI calls becomes significant. After which the linear plot is observed to plateau. In contrast, for the worst-case scenario (natoms = 78732), the speedup linearly increases up to 96 tasks (refer to Figure 2). The size constraint of the serial code has been effectively eliminated with the incorporation of MPI parallelization.
+By integrating MPI parallelism into the refactored force kernel and utilizing the -O3 compiler flag for optimization, a consistent linear scaling was achieved with an increasing number of processes. For a system size of natoms = 108, the maximum speedup reaches only up to 7x when using 8 processing elements. When utilizing more than 8 processing elements for 108 atoms, the communication overhead from the MPI calls becomes significant. After which, the linear plot is observed to plateau. In contrast, for the worst-case scenario (natoms = 78732), the speedup linearly increases up to 96 tasks (refer to Figure 2). The size constraint of the serial code that has been previously observed has been effectively eliminated with the incorporation of MPI parallelization.
 
 <img src="mpi_speedup_plot.png" alt="animation" width="500" style="display: block; margin: auto;" /><br>
 

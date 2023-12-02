@@ -4,6 +4,7 @@ project(MD_SIMULATION LANGUAGES C CXX)
 
 option(USE_MPI "Use MPI for compilation" OFF)
 option(USE_OPENMP "Use OpenMP for compilation" OFF)
+option(USE_MORSE "Use Morse potential" OFF)
 
 set(CMAKE_CXX_STANDARD 17)
 
@@ -31,8 +32,12 @@ else()
     set(CMAKE_C_COMPILER gcc)
 endif()
 
-
 add_definitions(-O3)
+
+option(USE_MORSE "Use morse potential" OFF)
+if(USE_MORSE)
+  add_definitions(-D_MORSE)
+endif()
 
 set(SOURCES
     src/utilities.c
