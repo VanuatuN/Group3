@@ -191,7 +191,7 @@ To compile the with MPI, use the following commands:
 cmake -S . -B build -DUSE_MPI=ON -DUSE_OPENMP=ON
 cmake --build build
 ```
-Leonardo has 2 NUMA nodes, each with 32 physical cores (supports multithreading, but we keep if off). In total there are 64 physical cores on Leonardo. So the optimal maximal configuration for total number of processes suggesrs that anks of MPI multiplied by threads of OpenMP (if we use both nodes) is 64 (e.g 2MPI*32 PpenMP, or 8 MPI *16 OpenMP) 
+Leonardo has 2 NUMA nodes, each with 32 physical cores (supports multithreading, but we keep if off). In total there are 64 physical cores on Leonardo. So the optimal maximal configuration for total number of processes suggests that max ranks of MPI multiplied by max threads of OpenMP (if we use both nodes) is 64 (e.g 2MPI*32 PpenMP, or 8 MPI *16 OpenMP) 
 
 ```C
 Architecture:        x86_64
@@ -204,13 +204,35 @@ Core(s) per socket:  32
 Socket(s):           2
 NUMA node(s):        2
 ```
-Each core has two threads. 
-We run the program XX times with XX different inputs.
-We use 1 node, so, 2 programs on each node.
-Each program uses 6 MPI processes (12 per node).
-Each process uses 3 threads
-Therefore, each run uses 18 cores
 
+We submit sbatch scripts with the following structure:
+
+```C
+#!/bin/bash
+
+#SBATCH --job-name="ljmd"
+#SBATCH --nodes=2
+#SBATCH --ntasks-per-node=2
+#SBATCH --cpus-per-task=2
+#SBATCH -A ICT23_MHPC
+#SBATCH --hint=nomultithread 
+#SBATCH --time=00:10:00
+#SBATCH --mem=490000MB
+#SBATCH -p boost_usr_prod
+
+# Define the array of thread counts and rank counts
+threads=$SLURM_CPUS_PER_TASK
+ranks=$SLURM_TASKS_PER_NODE
+atom=2916 
+
+    output_file="${atom}-${ranks}ranks-${threads}threads_tt.out"
+    # Set the number of threads and run the program
+    export OMP_NUM_THREADS=$threads
+    mpirun ./md <argon_${atom}.inp >"${output_file}"  # Redirect the output to the specified file
+
+```
+
+Making different configuration of nodes, tasks per node and cpus per task to achieve the best performance. Example script uses 2 nodes, 2 tasks per node - resulting in 4 MPI processes, and 2 cpus per task - resulting in 2 OpenMP threads. 
 
 ### Benchmark Report with MPI+OpenMP:
 
