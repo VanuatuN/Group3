@@ -24,6 +24,9 @@
 #if defined(_MPI)
     #include "mpi.h"
 #endif
+#if defined _OPENMP
+    #include "omp.h"
+#endif
 
 /* generic file- or pathname buffer length */
 #define BLEN 200
@@ -39,6 +42,9 @@ int main(int argc, char **argv)
     FILE *fp,*traj,*erg;
     mdsys_t sys;
     double t_start;
+    sys.nthreads = 1;
+    sys.thid = 0;
+    
 
     #if defined(_MPI)
     MPI_Init(&argc, &argv);
@@ -69,7 +75,7 @@ int main(int argc, char **argv)
 
     /* initialize forces and energies.*/
     sys.nfi=0;
-    force(&sys); // ALL ranks
+    force(&sys);
 
     #if defined(_MPI)
     if (sys.rank == 0) {

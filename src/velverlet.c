@@ -8,6 +8,14 @@
 #include "mpi.h"
 #endif
 
+#if defined(USE_MPI)
+#include "mpi.h"
+#endif
+
+#if defined(_OPENMP)
+#include "omp.h"
+#endif
+
 // /* a few physical constants */
 extern const double kboltz;     /* boltzman constant in kcal/mol/K */
 extern const double mvsq2e; /* m*v^2 in kcal/mol */
@@ -45,6 +53,7 @@ void velverlet(mdsys_t *sys)
     #if defined(_MPI)
     }
     #endif
+
     /* compute forces and potential energy */
     force(sys);
 
