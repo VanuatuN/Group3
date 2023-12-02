@@ -36,7 +36,12 @@ To compile using Morse potential, use the following commands:
 cmake -S . -B build -DUSE_MORSE=ON
 cmake --build build
 ```
+#### RESULTS:
 
 <img src="morse.gif" alt="animation" width="500" style="display: block; margin: auto;" /><br>
 
-Figure 1. Visualization of the trajectory of 108 Ar atoms using Morse potential.
+Figure 1. Visualization of the trajectory of 108 Ar atoms using Morse potential. The behavior of atoms here are comparable to that of the atoms with Lennard-Jones potential.
+
+#### References
+- https://en.wikipedia.org/wiki/Lennard-Jones_potential
+- https://www.degruyter.com/document/doi/10.1515/zna-2003-1104/html
