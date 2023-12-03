@@ -178,8 +178,8 @@ Figure 2: Speedup using MPI for different number of atoms.
 ### MPI+OpenMP Parallelization:
 
 Another level of parallelization added by application of OpenMP inside of the each MPI process. OpenMP is used to take advantage of the shared memory inside the nodes. OpenMP is used to spawn N threads inside of the each MPI rank. The OpenMP Parallel directive is used inside the loop that calculates foces for each atom, inside the each MPI rank. So there are two metrics that can be applied to analyse the efficiency: 
-- the speedup for the ration  N Threads/ N MPI ranks
-- combination of the MPI ranks/ N Threads that gives the best speed up.  
+- the speedup for the ration  N Threads / N MPI ranks
+- combination of the MPI ranks / N Threads that gives the best speed up.  
 
 When applying OpenMP we keep variables that declare indices and constants as private and firstprivate to protect
 them from modification be all OpenMP threads and to avoid race conditions.
@@ -205,7 +205,7 @@ Socket(s):           2
 NUMA node(s):        2
 ```
 
-We submit sbatch scripts with the following structure that runs all combinations of the number of MPI processes and number of OPEN MP ranks, we keep the total processes below 32 to satisfy the size of the Leonardo, we also use *--cpu_bind=cores* option to bind MPI processes to specific CPU cores:
+We submit sbatch scripts with the following structure that runs all combinations of the number of MPI processes and number of OpenMP ranks, we keep the total processes below 32 to satisfy the size of the Leonardo, we also use *--cpu_bind=cores* option to bind MPI processes to specific CPU cores:
 
 ```C
 #!/bin/bash
@@ -232,16 +232,16 @@ for MPI_PROC in "${MPI_PROCS[@]}"; do
 done
 ```
 
-We test different configurations of tasks per node and cpu cores per task to achieve the best performance. Example script uses 1 node and combinations of (1 2 4 8 16 32) MPI processes together with (32 16 8 4 2 1) OPEN MP threads keeping the total number below 32. 
+We test different configurations of tasks per node and cpu cores per task to achieve the best performance. Example script uses 1 node and combinations of (1 2 4 8 16 32) MPI processes together with (32 16 8 4 2 1) OpenMP threads keeping the total number below 32. 
 
-Note, that without specification of the option *--cpu_bind=cores* OPEN MPI do not provide improvement in performance, rather makes running time higher, likely due to communication time and nonuniform (among cores) memory distribution. 
+Note, that without specification of the option *--cpu_bind=cores* OpenMP nad MPI do not provide improvement in performance, rather makes running time higher, likely due to communication time and nonuniform (among cores) memory distribution. 
 
 
 ### Benchmark Report with MPI+OpenMP:
 
 ## 108 atoms ##
 
-For the system size 108 atoms the combination of MPI and OPEN MP do not provide any meaningful results, as likely system size is too small to be distributed properly across cores. Usage of 1 OPENMP thread and diffent number of MPI tasks results in the following speedup comparing to the serial run:
+For the system size 108 atoms the combination of MPI and OpenMP do not provide any meaningful results, as likely system size is too small to be distributed properly across cores. Usage of 1 OPENMP thread and diffent number of MPI tasks results in the following speedup comparing to the serial run:
 
 <img src="speedup_plot_108.png" alt="animation" width="500" style="display: block; margin: auto;" /><br>
 
