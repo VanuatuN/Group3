@@ -95,13 +95,6 @@ ctest
 ```
 with google tests turned on.
 
-**Parallel (MPI) code:**
-To compile the with MPI, use the following commands:
-```C
-cmake -S . -B build -DUSE_MPI=ON
-cmake --build build
-```
-
 ### How to Run:
 
 ```C
@@ -167,13 +160,28 @@ In conclusion, the performance counters provided  a recognition and appreciation
 
 A straightforward parallelization of the optimized serial code has been implemented using MPI, where the computation of forces is distributed across multiple processing elements. The parallelization is implemented in the force kernel, wherein positions are initially broadcasted from rank 0 to all other ranks before computing the force. Then each rank calculates the force on different atoms. After the `compute_force()` operation, the results are collected back to rank 0.
 
+**Parallel (MPI) code:**
+To compile the code with MPI, use the following commands:
+```C
+cmake -S . -B build -DUSE_MPI=ON
+cmake --build build
+```
+
 ### Benchmark Report with MPI:
 
-By integrating MPI parallelism into the refactored force kernel and utilizing the -O3 compiler flag for optimization, a consistent linear scaling was achieved with an increasing number of processes. For a system size of natoms = 108, the maximum speedup reaches only up to 7x when using 8 processing elements. When utilizing more than 8 processing elements for 108 atoms, the communication overhead from the MPI calls becomes significant. After which, the linear plot is observed to plateau. In contrast, for the worst-case scenario (natoms = 78732), the speedup linearly increases up to 96 tasks (refer to Figure 2). The size constraint of the serial code that has been previously observed has been effectively eliminated with the incorporation of MPI parallelization.
+By integrating MPI parallelism into the refactored force kernel and utilizing the -O3 compiler flag for optimization, a consistent linear scaling was achieved with an increasing number of processes. For a system size of natoms = 108, the maximum speedup reaches only up to 7x when using 8 processing elements. When utilizing more than 8 processing elements for 108 atoms, the communication overhead from the MPI calls becomes significant. After which, the linear plot is observed to plateau. In contrast, for the worst-case scenario (natoms = 78732), the speedup linearly increases up to 96 tasks (refer to Figure 2). The size constraint of the serial code that has been previously observed has been effectively eliminated with the incorporation of MPI parallelization. 
 
 <img src="mpi_speedup_plot.png" alt="animation" width="500" style="display: block; margin: auto;" /><br>
 
 Figure 2: Speedup using MPI for different number of atoms.
+
+Looking at the parallel efficiency in Figure 3, we can observe a good level of scalability for the case where natoms = 78732. In this scenario, the parallel efficiency consistently remains at or above 80%, indicating effective utilization of processing elements. This also suggests that the parallel algorithm scales well when solving problems with a larger number of atoms in the system.
+
+Furthermore, our results show that favorable scalability for the case of natoms=108 is achieved if the number of processing elements does not exceed NPEs=8. Similarly, for natoms=2916, we achieve optimal scalability when employing NPEs=24. These findings underscore the importance of carefully selecting the number of processing elements based on the specific characteristics of the problem size. Maintaining a balance between computational resources and parallel efficiency is crucial for achieving optimal performance in parallel computing environments.
+
+<img src="mpi_efficiency.png" alt="animation" width="500" style="display: block; margin: auto;" /><br>
+
+Figure 3: MPI Parallel efficiency versus the number of processing elements for different number of atoms.
 
 ### MPI+OpenMP Parallelization:
 
@@ -245,7 +253,7 @@ For the system size 108 atoms the combination of MPI and OpenMP do not provide a
 
 <img src="speedup_plot_108.png" alt="animation" width="500" style="display: block; margin: auto;" /><br>
 
-**Figure 3:**  Speedup using MPI+OpenMP for system of 108 atoms size.
+**Figure 4:**  Speedup using MPI+OpenMP for system of 108 atoms size.
 
 The speedup makes drop after 16 MPI ranks likely due to the communication time between processes and separation of the array across multiple processes.
 
@@ -257,12 +265,13 @@ The subsequent runs follow a similar pattern with different combinations of npes
 
 <img src="speedup_comparison_78732.png" alt="animation" width="500" style="display: block; margin: auto;" /><br>
 
-**Figure 4:**  Speedup using MPI+OpenMP for system of 78732 atoms size.
+**Figure 5:**  Speedup using MPI+OpenMP for system of 78732 atoms size.
 
 
 <img src="execution_startup_time_comparison_78732.png" alt="animation" width="500" style="display: block; margin: auto;" /><br>
 
 **Figure 5:**  Execution and startup times using MPI+OpenMP for system of 78732 atoms size.
+**Figure 6:**  Speedup using MPI+OpenMP for system of 2916 atoms size.
 
 
 ***Startup Time:***
@@ -302,6 +311,10 @@ The optimal configuration for the LJMD simulation with a system size of 2916 ato
 ### Conclusions
 
 The system size plays critical role for the scalability of the task on Leonardo. For the largest system size of 78732 atoms the scalability of the most prominent and demostrates hish sensitivity the configuration of MPI npes and OPENMP nthreads. 
+### Extra:
+- The code can be run using Morse potentential instead of Lennard-Jones potential. Follow the [link](https://github.com/VanuatuN/Group3/blob/development/morse_potential.md) on how to run the progam with Morse potential.
+
+- A python wrapper has been implemented so the mdlib library can be called from python. The python main can be found [here](https://github.com/VanuatuN/Group3/blob/development/python/ljmd-python.py). You can find instruction on how to run the program [here](https://github.com/VanuatuN/Group3/blob/development/python/readme.md).
 
 ### Acknowledgments
 
