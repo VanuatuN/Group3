@@ -79,6 +79,7 @@ void ekin(mdsys_t *sys)
     sys->temp = 2.0*sys->ekin/(3.0*sys->natoms-3.0)/kboltz;
 }
 
+#if defined(_MPI)
 void mpi_init(mdsys_t *sys){
     MPI_Init(NULL, NULL);
     sys->syscomm = MPI_COMM_WORLD;
@@ -94,3 +95,4 @@ void mpi_get_rank(mdsys_t *sys){
 void mpi_get_size(mdsys_t *sys){
     MPI_Comm_size(MPI_COMM_WORLD, &sys->npes);
 };
+#endif
