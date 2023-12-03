@@ -234,19 +234,28 @@ done
 
 We test different configurations of tasks per node and cpu cores per task to achieve the best performance. Example script uses 1 node and combinations of () MPI processes together with () OPEN MP threads keeping the total number below 32. 
 
+Note, that without specification of the option *--cpu_bind=cores* OPEN MPI do not provide improvement in performance, rather makes running time higher, likely due to communication time and nonuniform (among cores) memory distribution. 
+
 
 ### Benchmark Report with MPI+OpenMP:
+
+#### 108 atoms
+
+For the system size 108 the combination of MPI and OPEN MP do not provide any meaningful results, as the system size is too small to be distributed properly across cores. Usage of 1 OPENMP thread and diffent number of MPI tasks results in the following speedup comparing to the serial run:
+
+<img src="speedup_plot_108.png" alt="animation" width="500" style="display: block; margin: auto;" /><br>
+
+**Figure 3:**  Speedup using MPI+OpenMP for system of 108 atoms size.
+
+The speedup makes  drops after 16 MPI ranks likely dur to the communication time between processes and separation the array of the size 108 across multiple processes.
 
 We get a linear scaling in the speedup with just the simple parallelization of the compute_force() function for big problem size (as shown in the figure below). For natoms = 108, the maximum speedup
 
 n this case, with 4 MPI tasks, each using 24 threads, the performance is around 2x the serial performance, but worse than either the single node OpenMP performance or the pure MPI performance using an equivalent number of CPUs. It seems that for this pi estimation job, pure MPI parallelization is probably the superior option.
 
-
-
-
 <img src="mpi_speedup_plot.png" alt="animation" width="500" style="display: block; margin: auto;" /><br>
 
-Figure 3: Speedup using MPI+OpenMP for different number of atoms.
+**Figure 3:**  Speedup using MPI+OpenMP for system of 108 atoms size.
 
 ### Acknowledgments
 
