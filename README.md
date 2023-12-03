@@ -232,49 +232,76 @@ for MPI_PROC in "${MPI_PROCS[@]}"; do
 done
 ```
 
-We test different configurations of tasks per node and cpu cores per task to achieve the best performance. Example script uses 1 node and combinations of () MPI processes together with () OPEN MP threads keeping the total number below 32. 
+We test different configurations of tasks per node and cpu cores per task to achieve the best performance. Example script uses 1 node and combinations of (1 2 4 8 16 32) MPI processes together with (32 16 8 4 2 1) OPEN MP threads keeping the total number below 32. 
 
 Note, that without specification of the option *--cpu_bind=cores* OPEN MPI do not provide improvement in performance, rather makes running time higher, likely due to communication time and nonuniform (among cores) memory distribution. 
 
 
 ### Benchmark Report with MPI+OpenMP:
 
-#### 108 atoms
+## 108 atoms ##
 
-For the system size 108 the combination of MPI and OPEN MP do not provide any meaningful results, as the system size is too small to be distributed properly across cores. Usage of 1 OPENMP thread and diffent number of MPI tasks results in the following speedup comparing to the serial run:
+For the system size 108 atoms the combination of MPI and OPEN MP do not provide any meaningful results, as likely system size is too small to be distributed properly across cores. Usage of 1 OPENMP thread and diffent number of MPI tasks results in the following speedup comparing to the serial run:
 
 <img src="speedup_plot_108.png" alt="animation" width="500" style="display: block; margin: auto;" /><br>
 
 **Figure 3:**  Speedup using MPI+OpenMP for system of 108 atoms size.
 
-The speedup makes  drops after 16 MPI ranks likely dur to the communication time between processes and separation the array of the size 108 across multiple processes.
+The speedup makes drop after 16 MPI ranks likely due to the communication time between processes and separation of the array across multiple processes.
 
-#### 78732 and 2916 atoms##
+## 78732 atoms ##
 
-The simulations were run with 78732 atoms for 20 steps.
-The startup time varies with the number of threads used.
+The simulations were run with 78732 atoms for 20 steps. The startup time varies with the number of threads used.
 
-Run 1 (npes 1, nthreads 32):
-Startup time: 1.176s
-Simulation time: 20 steps, Run time: 18.060s
 The subsequent runs follow a similar pattern with different combinations of npes and nthreads. The run times generally increase as the number of processing elements or threads decreases.
-
 
 <img src="speedup_comparison_78732.png" alt="animation" width="500" style="display: block; margin: auto;" /><br>
 
 **Figure 4:**  Speedup using MPI+OpenMP for system of 78732 atoms size.
 
-<img src="speedup_comparison_2916.png" alt="animation" width="500" style="display: block; margin: auto;" /><br>
-
-**Figure 5:**  Speedup using MPI+OpenMP for system of 2916 atoms size.
-
-The optimal combination within one node for 78732 as well as 2916 is nPEs 8 and nthreads  4, however the differences are minor.
 
 <img src="execution_startup_time_comparison_78732.png" alt="animation" width="500" style="display: block; margin: auto;" /><br>
-**Figure 6:**  execution and startup times using MPI+OpenMP for system of 78732 atoms size.
+
+**Figure 5:**  Execution and startup times using MPI+OpenMP for system of 78732 atoms size.
+
+
+***Startup Time:***
+
+Startup time appears to be relatively consistent for a given configuration (npes and nthreads). It is expected that startup time remains relatively stable since it is often related to initializing the simulation environment and data structures.
+
+***Simulation Time:***
+
+As expected, simulation time increases as the number of processing elements (npes) decreases, reflecting the parallel nature of the simulation. Fewer npes mean fewer parallel processes, leading to longer simulation times.
+
+***Impact of Threads:***
+
+With a fixed number of processing elements (npes), the simulation time increases as the number of threads decreases. This is consistent with the typical behavior of parallel simulations, where fewer threads result in less parallelism and longer runtimes.
+
+***Overall Performance:***
+
+The fastest simulation is achieved with the highest level of parallelism (npes and threads). For example, the simulation with npes=1 and nthreads=32 has the lowest total runtime (18.060 seconds).
+
+***Speedup:***
+
+The optimal configuration is the one that achieves the highest speedup. In this case, the configuration with npes 16 and nthreads 2 provides the highest speedup, however the differences are very small. This configuration strikes a balance between the number of processing elements and threads, resulting in the best overall performance for the given simulation workload.
+
+## 2916 atoms ##
+
+The optimal configuration for the LJMD simulation with a system size of 2916 atoms is npes 32 and nthreads 1, however the speedup gains diminish as the number of processing elements or threads increases, indicating potential bottlenecks or overhead. 
+
+<img src="speedup_comparison_2916.png" alt="animation" width="500" style="display: block; margin: auto;" /><br>
+
+**Figure 6:**  Speedup using MPI+OpenMP for system of 2916 atoms size.
+
 
 <img src="execution_startup_time_comparison_2916.png" alt="animation" width="500" style="display: block; margin: auto;" /><br>
+
 **Figure 7:**  execution and startup times using MPI+OpenMP for system of 2916 atoms size.
+
+
+### Conclusions
+
+The system size plays critical role for the scalability of the task on Leonardo. For the largest system size of 78732 atoms the scalability of the most prominent and demostrates hish sensitivity the configuration of MPI npes and OPENMP nthreads. 
 
 ### Acknowledgments
 
