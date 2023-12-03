@@ -19,9 +19,6 @@ extern void azzero(double *d, const int n);
 extern double pbc(double x, const double boxby2);
 extern void ekin(mdsys_t *sys);
 
-void openfile(char *file);
-void closefile(FILE *fp);
-
 #ifdef __cplusplus
 }
 #endif
