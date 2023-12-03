@@ -169,11 +169,15 @@ cmake --build build
 
 ### Benchmark Report with MPI:
 
-By integrating MPI parallelism into the refactored force kernel and utilizing the -O3 compiler flag for optimization, a consistent linear scaling was achieved with an increasing number of processes. For a system size of natoms = 108, the maximum speedup reaches only up to 7x when using 8 processing elements. When utilizing more than 8 processing elements for 108 atoms, the communication overhead from the MPI calls becomes significant. After which, the linear plot is observed to plateau. In contrast, for the worst-case scenario (natoms = 78732), the speedup linearly increases up to 96 tasks (refer to Figure 2). The size constraint of the serial code that has been previously observed has been effectively eliminated with the incorporation of MPI parallelization. Looking at the parallel effiency in Figure 3, we observe a good scalibility for natoms=78732 where we get parallel efficiency that is greater than or equal to 80%. We get a good scalability if we use NPEs less than or equal to 8 for natoms=108 and NPEs less than or equal to 24 for natoms=2916.
+By integrating MPI parallelism into the refactored force kernel and utilizing the -O3 compiler flag for optimization, a consistent linear scaling was achieved with an increasing number of processes. For a system size of natoms = 108, the maximum speedup reaches only up to 7x when using 8 processing elements. When utilizing more than 8 processing elements for 108 atoms, the communication overhead from the MPI calls becomes significant. After which, the linear plot is observed to plateau. In contrast, for the worst-case scenario (natoms = 78732), the speedup linearly increases up to 96 tasks (refer to Figure 2). The size constraint of the serial code that has been previously observed has been effectively eliminated with the incorporation of MPI parallelization. 
 
 <img src="mpi_speedup_plot.png" alt="animation" width="500" style="display: block; margin: auto;" /><br>
 
 Figure 2: Speedup using MPI for different number of atoms.
+
+Looking at the parallel efficiency in Figure 3, we can observe a good level of scalability for the case where natoms = 78732. In this scenario, the parallel efficiency consistently remains at or above 80%, indicating effective utilization of processing elements. This also suggests that the parallel algorithm scales well when solving problems with a larger number of atoms in the system.
+
+Furthermore, our results show that favorable scalability for the case of natoms=108 is achieved if the number of processing elements does not exceed NPEs=8. Similarly, for natoms=2916, we achieve optimal scalability when employing NPEs=24. These findings underscore the importance of carefully selecting the number of processing elements based on the specific characteristics of the problem size. Maintaining a balance between computational resources and parallel efficiency is crucial for achieving optimal performance in parallel computing environments.
 
 <img src="mpi_efficiency.png" alt="animation" width="500" style="display: block; margin: auto;" /><br>
 
