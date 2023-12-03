@@ -257,7 +257,7 @@ For the system size 108 atoms the combination of MPI and OpenMP do not provide a
 
 The speedup makes drop after 16 MPI ranks likely due to the communication time between processes and separation of the array across multiple processes.
 
-## 78732 atoms ##
+### 78732 atoms 
 
 The simulations were run with 78732 atoms for 20 steps. The startup time varies with the number of threads used.
 
@@ -270,8 +270,7 @@ The subsequent runs follow a similar pattern with different combinations of npes
 
 <img src="execution_startup_time_comparison_78732.png" alt="animation" width="500" style="display: block; margin: auto;" /><br>
 
-**Figure 5:**  Execution and startup times using MPI+OpenMP for system of 78732 atoms size.
-**Figure 6:**  Speedup using MPI+OpenMP for system of 2916 atoms size.
+**Figure 6:**  Execution and startup times using MPI+OpenMP for system of 78732 atoms size.
 
 
 ***Startup Time:***
@@ -294,24 +293,26 @@ The fastest simulation is achieved with the highest level of parallelism (npes a
 
 The optimal configuration is the one that achieves the highest speedup. In this case, the configuration with npes 16 and nthreads 2 provides the highest speedup, however the differences are very small. This configuration strikes a balance between the number of processing elements and threads, resulting in the best overall performance for the given simulation workload.
 
-## 2916 atoms ##
+### 2916 atoms 
 
 The optimal configuration for the LJMD simulation with a system size of 2916 atoms is npes 32 and nthreads 1, however the speedup gains diminish as the number of processing elements or threads increases, indicating potential bottlenecks or overhead. 
 
 <img src="speedup_comparison_2916.png" alt="animation" width="500" style="display: block; margin: auto;" /><br>
 
-**Figure 6:**  Speedup using MPI+OpenMP for system of 2916 atoms size.
+**Figure 7:**  Speedup using MPI+OpenMP for system of 2916 atoms size.
 
 
 <img src="execution_startup_time_comparison_2916.png" alt="animation" width="500" style="display: block; margin: auto;" /><br>
 
-**Figure 7:**  execution and startup times using MPI+OpenMP for system of 2916 atoms size.
+**Figure 8:**  execution and startup times using MPI+OpenMP for system of 2916 atoms size.
 
 
 ### Conclusions
 
 The system size plays critical role for the scalability of the task on Leonardo. For the largest system size of 78732 atoms the scalability of the most prominent and demostrates hish sensitivity the configuration of MPI npes and OPENMP nthreads. 
+
 ### Extra:
+
 - The code can be run using Morse potentential instead of Lennard-Jones potential. Follow the [link](https://github.com/VanuatuN/Group3/blob/development/morse_potential.md) on how to run the progam with Morse potential.
 
 - A python wrapper has been implemented so the mdlib library can be called from python. The python main can be found [here](https://github.com/VanuatuN/Group3/blob/development/python/ljmd-python.py). You can find instruction on how to run the program [here](https://github.com/VanuatuN/Group3/blob/development/python/readme.md).
