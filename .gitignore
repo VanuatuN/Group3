@@ -4,3 +4,5 @@ build/
 .vscode
 dump.txt
 original_cmakelist.txt
+*.ipynb
+*.gnu
