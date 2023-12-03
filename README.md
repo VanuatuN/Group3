@@ -270,6 +270,12 @@ The subsequent runs follow a similar pattern with different combinations of npes
 
 The optimal combination within one node for 78732 as well as 2916 is nPEs 8 and nthreads  4, however the differences are minor.
 
+<img src="execution_startup_time_comparison_78732.png" alt="animation" width="500" style="display: block; margin: auto;" /><br>
+**Figure 6:**  execution and startup times using MPI+OpenMP for system of 78732 atoms size.
+
+<img src="execution_startup_time_comparison_2916.png" alt="animation" width="500" style="display: block; margin: auto;" /><br>
+**Figure 7:**  execution and startup times using MPI+OpenMP for system of 2916 atoms size.
+
 ### Acknowledgments
 
 - This model is based on the widely accepted Lennard-Jones potential and may require further customization for specific applications.
