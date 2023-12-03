@@ -247,7 +247,7 @@ Note, that without specification of the option *--cpu_bind=cores* OpenMP nad MPI
 
 ### Benchmark Report with MPI+OpenMP:
 
-## 108 atoms ##
+### 108 atoms
 
 For the system size 108 atoms the combination of MPI and OpenMP do not provide any meaningful results, as likely system size is too small to be distributed properly across cores. Usage of 1 OPENMP thread and diffent number of MPI tasks results in the following speedup comparing to the serial run:
 
@@ -304,7 +304,7 @@ The optimal configuration for the LJMD simulation with a system size of 2916 ato
 
 <img src="execution_startup_time_comparison_2916.png" alt="animation" width="500" style="display: block; margin: auto;" /><br>
 
-**Figure 8:**  execution and startup times using MPI+OpenMP for system of 2916 atoms size.
+**Figure 8:**  Execution and startup times using MPI+OpenMP for system of 2916 atoms size.
 
 
 ### Conclusions
