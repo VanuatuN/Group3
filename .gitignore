@@ -4,3 +4,6 @@ build/
 .vscode
 dump.txt
 original_cmakelist.txt
+buildmorse/
+*.gp
+morse_pot_rcut.py
