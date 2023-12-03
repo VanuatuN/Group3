@@ -284,6 +284,11 @@ The optimal combination within one node for 78732 as well as 2916 is nPEs 8 and 
 <img src="execution_startup_time_comparison_2916.png" alt="animation" width="500" style="display: block; margin: auto;" /><br>
 **Figure 7:**  execution and startup times using MPI+OpenMP for system of 2916 atoms size.
 
+### Extra:
+- The code can be run using Morse potentential instead of Lennard-Jones potential. Follow the [link](https://github.com/VanuatuN/Group3/blob/development/morse_potential.md) on how to run the progam with Morse potential.
+
+- A python wrapper has been implemented so the mdlib library can be called from python. The python main can be found [here](https://github.com/VanuatuN/Group3/blob/development/python/ljmd-python.py). You can find instruction on how to run the program [here](https://github.com/VanuatuN/Group3/blob/development/python/readme.md).
+
 ### Acknowledgments
 
 - This model is based on the widely accepted Lennard-Jones potential and may require further customization for specific applications.
