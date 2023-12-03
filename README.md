@@ -85,7 +85,7 @@ The optimized version explicitly implements Newton's third law, updating forces 
 Also, energy accumulation is simplified.
 The goal was to improve performance by simplifying expressions, eliminating redundant calculations, and taking advantage of vectorized operations. It maintains the same functionality as the original version but is more concise and potentially faster due to optimization techniques.
 
-**Serial code:**
+**Compiling Serial Code:**
 To compile the default serial code, use the following commands:
 ```C
 cmake -S . -B build -DENABLE_TESTING=ON
@@ -159,23 +159,116 @@ The combination of -O3 optimization and refactoring continued to stand out as pr
 
 **Summary :**
 
-In summary, there were trade-offs and benefits of different optimization configurations.
+Though the serial code was generally inefficient with large system sizes, a good scaling with the best case provided insights into the trade-offs and benefits of different optimization configurations.
 The permutation of metrics revealed that while some optimizations possibly improved certain hardware-level aspects (e.g., cache efficiency), they could introduce challenges in others (e.g., increased branch misses). The combination of -O3 optimization and refactoring appears to strike a balance, resulting in the most favorable overall performance.
 In conclusion, the performance counters provided  a recognition and appreciation of the complexity, intricacies, and subtleties involved when adopting a configuration for optimization, rather than a simplistic or one-dimensional view of how different aspects of code optimization impact efficiency. It highlights the need for a holistic approach, considering the interplay of various metrics to achieve optimal results.
 
 ### MPI Parallelization:
 
-A simple parallelization of the code is implemented where the computation of the force is distributed to several processing elements. The positions are broadcasted from rank 0. Then eack rank computes the force for different atoms. The results are collected back to rank 0 after compute_force().
+A straightforward parallelization of the optimized serial code has been implemented using MPI, where the computation of forces is distributed across multiple processing elements. The parallelization is implemented in the force kernel, wherein positions are initially broadcasted from rank 0 to all other ranks before computing the force. Then each rank calculates the force on different atoms. After the `compute_force()` operation, the results are collected back to rank 0.
 
 ### Benchmark Report with MPI:
 
-We get a linear scaling in the speedup with just the simple parallelization of the compute_force() function for big problem size (as shown in the figure below). For natoms = 108, the maximum speedup
+By integrating MPI parallelism into the refactored force kernel and utilizing the -O3 compiler flag for optimization, a consistent linear scaling was achieved with an increasing number of processes. For a system size of natoms = 108, the maximum speedup reaches only up to 7x when using 8 processing elements. When utilizing more than 8 processing elements for 108 atoms, the communication overhead from the MPI calls becomes significant. After which, the linear plot is observed to plateau. In contrast, for the worst-case scenario (natoms = 78732), the speedup linearly increases up to 96 tasks (refer to Figure 2). The size constraint of the serial code that has been previously observed has been effectively eliminated with the incorporation of MPI parallelization.
 
 <img src="mpi_speedup_plot.png" alt="animation" width="500" style="display: block; margin: auto;" /><br>
 
 Figure 2: Speedup using MPI for different number of atoms.
 
-### Benchmark Report (c):
+### MPI+OpenMP Parallelization:
+
+Another level of parallelization added by application of OpenMP inside of the each MPI process. OpenMP is used to take advantage of the shared memory inside the nodes. OpenMP is used to spawn N threads inside of the each MPI rank. The OpenMP Parallel directive is used inside the loop that calculates foces for each atom, inside the each MPI rank. So there are two metrics that can be applied to analyse the efficiency: 
+- the speedup for the ration  N Threads/ N MPI ranks
+- combination of the MPI ranks/ N Threads that gives the best speed up.  
+
+When applying OpenMP we keep variables that declare indices and constants as private and firstprivate to protect
+them from modification be all OpenMP threads and to avoid race conditions.
+
+**Parallel (MPI+OpenMP) code:**
+
+To compile the with MPI, use the following commands:
+```C
+cmake -S . -B build -DUSE_MPI=ON -DUSE_OPENMP=ON
+cmake --build build
+```
+Leonardo has 2 NUMA nodes, each with 32 physical cores (supports multithreading, but we keep if off). In total there are 64 physical cores on Leonardo. So the optimal maximal configuration for total number of processes suggests that max ranks of MPI multiplied by max threads of OpenMP (if we use both nodes) is 64 (e.g 2MPI * 32OpenMP, or 8 MPI * 16 OpenMP) 
+
+```C
+Architecture:        x86_64
+CPU op-mode(s):      32-bit, 64-bit
+Byte Order:          Little Endian
+CPU(s):              128
+On-line CPU(s) list: 0-127
+Thread(s) per core:  2
+Core(s) per socket:  32
+Socket(s):           2
+NUMA node(s):        2
+```
+
+We submit sbatch scripts with the following structure that runs all combinations of the number of MPI processes and number of OPEN MP ranks, we keep the total processes below 32 to satisfy the size of the Leonardo, we also use *--cpu_bind=cores* option to bind MPI processes to specific CPU cores:
+
+```C
+#!/bin/bash
+#SBATCH --job-name=benchmark_test
+#SBATCH --output=benchmark_test.out
+#SBATCH --error=benchmark_test.err
+#SBATCH --nodes=1
+#SBATCH --cpus-per-task=32
+#SBATCH -A ICT23_MHPC
+#SBATCH --time=00:30:00
+#SBATCH --partition=boost_usr_prod
+
+# Define the number of MPI processes and OpenMP threads
+MPI_PROCS=(1 2 4 8 16 32)
+OMP_THREADS=(32 16 8 4 2 1)
+atom=78732
+
+for MPI_PROC in "${MPI_PROCS[@]}"; do
+  for OMP_THREAD in "${OMP_THREADS[@]}"; do
+    output_file="${atom}-benchmark-openmp+mpi.out"
+    export OMP_NUM_THREADS=$OMP_THREAD
+    srun -n $MPI_PROC -c $OMP_THREAD --cpu_bind=cores  ./md <argon_${atom}.inp >> "${output_file}" 
+  done
+done
+```
+
+We test different configurations of tasks per node and cpu cores per task to achieve the best performance. Example script uses 1 node and combinations of () MPI processes together with () OPEN MP threads keeping the total number below 32. 
+
+Note, that without specification of the option *--cpu_bind=cores* OPEN MPI do not provide improvement in performance, rather makes running time higher, likely due to communication time and nonuniform (among cores) memory distribution. 
+
+
+### Benchmark Report with MPI+OpenMP:
+
+#### 108 atoms
+
+For the system size 108 the combination of MPI and OPEN MP do not provide any meaningful results, as the system size is too small to be distributed properly across cores. Usage of 1 OPENMP thread and diffent number of MPI tasks results in the following speedup comparing to the serial run:
+
+<img src="speedup_plot_108.png" alt="animation" width="500" style="display: block; margin: auto;" /><br>
+
+**Figure 3:**  Speedup using MPI+OpenMP for system of 108 atoms size.
+
+The speedup makes  drops after 16 MPI ranks likely dur to the communication time between processes and separation the array of the size 108 across multiple processes.
+
+#### 78732 and 2916 atoms##
+
+The simulations were run with 78732 atoms for 20 steps.
+The startup time varies with the number of threads used.
+
+Run 1 (npes 1, nthreads 32):
+Startup time: 1.176s
+Simulation time: 20 steps, Run time: 18.060s
+The subsequent runs follow a similar pattern with different combinations of npes and nthreads. The run times generally increase as the number of processing elements or threads decreases.
+
+
+<img src="speedup_comparison_78732.png" alt="animation" width="500" style="display: block; margin: auto;" /><br>
+
+**Figure 4:**  Speedup using MPI+OpenMP for system of 78732 atoms size.
+
+<img src="speedup_comparison_2916.png" alt="animation" width="500" style="display: block; margin: auto;" /><br>
+
+**Figure 5:**  Speedup using MPI+OpenMP for system of 2916 atoms size.
+
+The optimal combination within one node for 78732 as well as 2916 is nPEs 8 and nthreads  4, however the differences are minor.
 
 ### Acknowledgments
 
